@@ -1,5 +1,5 @@
-import ContentHome from '../../component/client/ContentHome';
-import DefaultLayout from '../../component/client/DefaultLayout';
+import { DefaultLayout } from '../../layout/client/DefaultLayout';
+import ContentHome from './ContentHome';
 
 function HomePage() {
     return (

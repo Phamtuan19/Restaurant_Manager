@@ -2,7 +2,6 @@ import { Box, Stack, styled } from '@mui/material';
 import { useState } from 'react';
 import { DownArrow, Search } from '~/component/Icons';
 import { Card } from '~/component/client/Card';
-import { TitleViewAll } from '~/component/client/TitleViewAll';
 import ProductCategory from './ProductCategory';
 
 function Categories() {

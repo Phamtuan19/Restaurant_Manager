@@ -20,7 +20,7 @@ function Sidebar(props) {
                 sx={{ justifyContent: `${sidebarActive ? 'space-between' : 'center'}` }}
                 onClick={() => setSidebarActive(!sidebarActive)}
             >
-                <SvgLogo width="100px" height="80%" display={sidebarActive ? 'block' : 'none'} />
+                <SvgLogo width="100px" height="80%" sx={{ display: `${sidebarActive ? 'block' : 'none'}` }} />
                 <Right width="36px" />
             </SidebarHeader>
             <ListItem sidebarActive={sidebarActive} />

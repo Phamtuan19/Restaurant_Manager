@@ -1,19 +1,19 @@
-import { Box, FormControl, Grid, MenuItem, Select, Stack } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Grid, Stack } from '@mui/material';
+// import { useEffect, useState } from 'react';
 import { Card } from '~/component/client/Card';
 import { TitleViewAll } from '~/component/client/TitleViewAll';
 import ProductItem from './ProductItem';
 
 function Content() {
-    const [valueSelect, setValueSelect] = useState('Ten');
+    // const [valueSelect, setValueSelect] = useState('Ten');
 
-    const handleChange = (event) => {
-        setValueSelect(event.target.value);
-    };
+    // const handleChange = (event) => {
+    //     setValueSelect(event.target.value);
+    // };
 
-    useEffect(() => {
-        console.log(valueSelect);
-    }, [valueSelect]);
+    // useEffect(() => {
+    //     console.log(valueSelect);
+    // }, [valueSelect]);
 
     return (
         <Card className={{ padding: '1.5rem' }}>

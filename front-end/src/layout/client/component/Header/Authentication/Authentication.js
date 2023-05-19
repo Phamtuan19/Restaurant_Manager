@@ -2,7 +2,7 @@ import { Stack, Avatar, Popover, Typography, Box, Grid } from '@mui/material';
 import { useState } from 'react';
 
 import styled from '@emotion/styled';
-import LoginIcon from '~/assets/imageSvg/LoginIcon';
+import LoginIcon from '~/assets/iconSvg/LoginIcon';
 
 function Authentication() {
     const user = false;
@@ -26,7 +26,7 @@ const UserLogin = () => {
     return (
         <CustomButtom size="small" variant="filled">
             <LoginIcon className="HeaderUser_Icon" />
-            Đăng nhập
+            Login
         </CustomButtom>
     );
 };

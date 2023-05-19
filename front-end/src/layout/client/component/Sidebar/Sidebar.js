@@ -1,10 +1,9 @@
 import { styled } from '@mui/material';
 
-
 import { useEffect, useState } from 'react';
 import ListItem from './ListItem';
-import SvgLogo from '~/assets/imageSvg/SvgLogo';
-import SvgRight from '~/assets/imageSvg/SvgRight';
+import SvgLogo from '~/assets/iconSvg/SvgLogo';
+import { Right } from '~/component/Icons';
 
 function Sidebar(props) {
     const { sidebarActive, setSidebarActive } = props;
@@ -22,7 +21,7 @@ function Sidebar(props) {
                 onClick={() => setSidebarActive(!sidebarActive)}
             >
                 <SvgLogo width="100px" height="80%" display={sidebarActive ? 'block' : 'none'} />
-                <SvgRight width="36px" />
+                <Right width="36px" />
             </SidebarHeader>
             <ListItem sidebarActive={sidebarActive} />
         </Wrap>

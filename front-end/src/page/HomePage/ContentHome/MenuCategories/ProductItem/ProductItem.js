@@ -1,5 +1,6 @@
 import { Box, Rating, Stack, Typography, styled } from '@mui/material';
 import { AddNewIcon } from '~/component/Icons';
+import Skeleton from '~/component/Skeleton';
 
 function ProductItem(props) {
     const { data } = props;
@@ -110,5 +111,11 @@ const PriceSale = styled('small')({
     fontWeight: 'bold',
     textDecoration: 'line-through',
 });
+
+const Loading = () => {
+    return <Skeleton className={{ width: '100%', height: '300px' }}></Skeleton>;
+};
+
+ProductItem.Loading = Loading;
 
 export default ProductItem;

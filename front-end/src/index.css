@@ -6,6 +6,13 @@
 
 :root {
 	--white: #fff;
+	--black: rgba(33, 37, 41);
+	--bg-skeleton: linear-gradient(100deg,
+			rgba(255, 255, 255, 0) 40%,
+			rgba(255, 255, 255, .5) 50%,
+			rgba(255, 255, 255, 0) 60%) var(--loading-grey);
+	--loading-grey: #ededed;
+	--color-default: rgb(234, 106, 18);
 }
 
 .bg-white {
@@ -31,6 +38,12 @@ body {
 	100% {
 		-webkit-transform: rotate(1turn);
 		transform: rotate(1turn);
+	}
+}
+
+@keyframes loading {
+	to {
+		background-position-x: -20%;
 	}
 }
 

@@ -1,7 +1,7 @@
 import { Box, Typography, styled } from '@mui/material';
 import { AddNewIcon } from '~/component/Icons';
 
-function Trending({ data }) {
+function ProductItem({ data }) {
     return (
         <Wrap>
             <Box
@@ -49,7 +49,7 @@ function Trending({ data }) {
                             }}
                         >
                             <Price>$ 7.6</Price>
-                            {/* {data.price_sale !== undefined ? <PriceSale>$ {data.price}</PriceSale> : ''} */}
+                            {/* {data.price_sale && <PriceSale>$ {data.price}</PriceSale>} */}
                         </Box>
 
                         <AddNewIcon className={'AddNewIcon'} style={{ color: '#fff' }} />
@@ -131,10 +131,10 @@ const Price = styled('span')({
     fontWeight: 'bold',
 });
 
-const PriceSale = styled('small')({
-    fontSize: '0.9rem',
-    fontWeight: 'bold',
-    textDecoration: 'line-through',
-});
+// const PriceSale = styled('small')({
+//     fontSize: '0.9rem',
+//     fontWeight: 'bold',
+//     textDecoration: 'line-through',
+// });
 
-export default Trending;
+export default ProductItem;

@@ -3,15 +3,46 @@ import { Button } from '~/component/client/Button';
 import { Card } from '~/component/client/Card';
 import { TitleViewAll } from '~/component/client/TitleViewAll';
 
+const listCategories = [
+    'Burgers',
+    'Fizza',
+    'Soup',
+    'Dessert',
+    'Dessert',
+    'Biscuits',
+    'cheese',
+    'Tomato soup',
+    'Chicken fingers',
+    'Chicken ',
+    'nuggets',
+    'Flatbread pizza',
+    'Mini pizzas',
+    'Burgers',
+    'Fizza',
+    'Soup',
+    'Dessert',
+    'Dessert',
+    'Biscuits',
+    'cheese',
+    'Tomato soup',
+    'Chicken fingers',
+    'Chicken ',
+    'nuggets',
+    'Flatbread pizza',
+    'Mini pizzas',
+];
+
 function Categories() {
     return (
         <Card>
             <TitleViewAll
                 title="Categories"
-                styleWrap={{ padding: '1.5rem 0', borderBottom: '1px solid #e3e1e1', margin: '0 1.5rem' }}
+                sx={{ padding: '1.5rem 0', borderBottom: '1px solid #e3e1e1', margin: '0 1.5rem' }}
             />
             <WrapContent>
-                <Button styleProps={{ ...styleButton }} title="Burgers" />
+                {listCategories.map((item, index) => (
+                    <Button key={index} styleProps={{ ...styleButton }} title={item} />
+                ))}
             </WrapContent>
         </Card>
     );
@@ -19,6 +50,9 @@ function Categories() {
 
 const WrapContent = styled('div')({
     padding: '1.5rem',
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '12px',
 });
 
 const styleButton = {
@@ -36,7 +70,6 @@ const styleButton = {
         ':after': {
             clipPath: 'circle(100%)',
             transition: 'clip-path .5s ease,-webkit-clip-path .5s ease',
-            opacity: 1,
         },
     },
 
@@ -50,7 +83,7 @@ const styleButton = {
         background: '#ea6a12',
         webkitClipPath: 'circle(0 at 50% 50%)',
         clipPath: 'circle(0 at 50% 50%)',
-        opacity: 0,
+        zIndex: -1,
     },
 };
 

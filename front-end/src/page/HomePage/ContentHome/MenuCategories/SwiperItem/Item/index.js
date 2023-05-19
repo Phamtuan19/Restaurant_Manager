@@ -1,4 +1,5 @@
 import { Box, Typography, styled } from '@mui/material';
+import { CategoryIcon } from '~/component/Icons';
 
 function Item() {
     return (
@@ -74,28 +75,5 @@ const CategoryItemIcon = styled('div')({
         },
     },
 });
-
-export const CategoryIcon = (props) => {
-    return (
-        <svg
-            width="32"
-            height="32"
-            style={{ ...props }}
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <rect width="24" height="24" rx="12" fill="#ea6a12"></rect>
-            <path
-                color="var(--white)"
-                d="M10.25 8.5L13.75 12L10.25 15.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            ></path>
-        </svg>
-    );
-};
 
 export default Item;

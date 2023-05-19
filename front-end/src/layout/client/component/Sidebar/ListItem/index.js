@@ -1,17 +1,22 @@
-import SvgHome from '~/assets/imageSvg/SvgHome';
-import { SidebarBody, LinkItem, ItemTitle } from './style';
-import SvgMenu from '~/assets/imageSvg/SvgMenu';
+
+import { Home, Menu, ShoppingCart } from '~/component/Icons';
+import { ItemTitle, LinkItem, SidebarBody } from './styleComponent';
 
 const ListItemSidebar = [
     {
         path: '/',
-        iconComponent: SvgHome,
+        iconComponent: Home,
         title: 'trang chủ',
     },
     {
         path: '/menu',
-        iconComponent: SvgMenu,
+        iconComponent: Menu,
         title: 'Thực đơn',
+    },
+    {
+        path: '/shopping-cart',
+        iconComponent: ShoppingCart,
+        title: 'Giỏ hàng',
     },
 ];
 
@@ -32,7 +37,7 @@ function ListItem({ sidebarActive }) {
                             whiteSpace: 'nowrap',
                         }}
                     >
-                        <IconComponent className="sidebarActive_Item_Icon" width="28px" fill="#07143b" />
+                        <IconComponent className="sidebarActive_Item_Icon"  fill="#07143b" />
                         <ItemTitle
                             className="sidebarActive_Item_Title"
                             style={{

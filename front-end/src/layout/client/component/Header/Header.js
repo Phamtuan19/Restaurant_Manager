@@ -1,6 +1,6 @@
 import { Grid, Stack, styled } from '@mui/material';
-import SvgBar from '~/assets/imageSvg/SvgBar';
-import SvgLogo from '~/assets/imageSvg/SvgLogo';
+import SvgBar from '~/assets/iconSvg/SvgBar';
+import SvgLogo from '~/assets/iconSvg/SvgLogo';
 import { HeaderSearch } from './HeaderSearch';
 import { Authentication } from './Authentication';
 
@@ -36,6 +36,7 @@ const Wrap = styled(Stack)({
     zIndex: 10,
     alignItems: 'center',
     padding: { xs: '8px 12px' },
+    boxShadow: 'var(--box-shadow-fa)',
 });
 
 export default Header;

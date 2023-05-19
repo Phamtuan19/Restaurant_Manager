@@ -1,10 +1,15 @@
 import { styled } from '@mui/material';
+import { images } from '~/assets/image';
 import { Button } from '~/component/client/Button';
 
-function Banner() {
+function Banner({ imageUrl }) {
     return (
         <Wrap>
-            <BannerImage />
+            <BannerImage
+                sx={{
+                    backgroundImage: `url(${imageUrl || images.noImage})`,
+                }}
+            />
             <BannerTitle>
                 <span>
                     <small>Deal of the weekend</small>
@@ -35,8 +40,7 @@ const Wrap = styled('div')({
 });
 
 const BannerImage = styled('div')({
-    background:
-        'url(https://templates.iqonic.design/aprycot/react/build/static/media/01.adcc5f80.png) center center / cover no-repeat',
+    background: 'center center/cover no-repeat ',
     transform: 'translate(0px, 0px)',
     opacity: 1,
     maxWidth: '100%',

@@ -1,18 +1,32 @@
 import styled from '@emotion/styled';
 import { NavLink } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import { CategoryIcon } from '~/page/HomePage/ContentHome/MenuCategories/SwiperItem/Item';
+import { CategoryIcon } from '~/component/Icons';
 
-function TitleViewAll({ title, path = '/', titleRoute = 'View All', styleWrap, styleNavLink, styleIcon }) {
+
+function TitleViewAll({
+    title,
+    path = '/',
+    component,
+    titleRoute = 'View All',
+    sx,
+    sxTypo,
+    sizeTitle,
+    sxLink,
+    sxIcon,
+}) {
     return (
-        <WrapCategory style={{ ...styleWrap }}>
-            <Typography variant="h3" component="h3" sx={{ fontSize: 'calc(1.2978rem + .5736vw)' }}>
+        <WrapCategory style={{ ...sx }}>
+            <Typography
+                component={component || 'h3'}
+                sx={{ ...sxTypo, fontSize: sizeTitle || 'calc(1.2978rem + .5736vw)' }}
+            >
                 {title}
             </Typography>
 
-            <NavLinkRoute to={path} style={{ ...styleNavLink }}>
+            <NavLinkRoute to={path} style={{ ...sxLink }}>
                 {titleRoute}
-                <CategoryIcon width="22px" {...styleIcon} />
+                <CategoryIcon width="16px" {...sxIcon} />
             </NavLinkRoute>
         </WrapCategory>
     );

@@ -1,12 +1,12 @@
 import { Box, Grid, Stack, styled } from '@mui/material';
-import SearchIcon from '~/assets/imageSvg/Search';
+import { Search } from '~/component/Icons';
 
 function HeaderSearch() {
     return (
         <Grid item lg={3} md={5} sm={6} sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Stack sx={{ position: 'relative' }} direction="row" alignItems="center">
                 <Box sx={BoxCss}>
-                    <SearchICon />
+                    <Search width="18px" height="18px" fill="none" style={{ color: '#959895' }} />
                 </Box>
                 <Input placeholder="Search ..." />
             </Stack>
@@ -40,11 +40,5 @@ const Input = styled('input')({
         padding: '0.5rem 1rem 0.5rem 3.5rem',
     },
 });
-
-const SearchICon = styled(SearchIcon)`
-    width: 18px;
-    fill: none;
-    color: #959895;
-`;
 
 export default HeaderSearch;

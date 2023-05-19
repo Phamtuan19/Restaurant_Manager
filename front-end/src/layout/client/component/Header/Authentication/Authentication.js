@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import styled from '@emotion/styled';
 import LoginIcon from '~/assets/iconSvg/LoginIcon';
+import { Link } from 'react-router-dom';
 
 function Authentication() {
     const user = false;
@@ -24,14 +25,14 @@ function Authentication() {
 
 const UserLogin = () => {
     return (
-        <CustomButtom size="small" variant="filled">
+        <CustomButtom to="/login">
             <LoginIcon className="HeaderUser_Icon" />
             Login
         </CustomButtom>
     );
 };
 
-const CustomButtom = styled('button')({
+const CustomButtom = styled(Link)({
     fontSize: '16px',
     fontWeight: 500,
     display: 'flex',
@@ -44,6 +45,7 @@ const CustomButtom = styled('button')({
     transition: 'all 0.3s',
     textTransform: 'capitalize',
     fontFamily: 'var(--font-poppins)',
+    color: 'var(--black) !important',
 
     '&:hover': {
         color: '#0072E5',

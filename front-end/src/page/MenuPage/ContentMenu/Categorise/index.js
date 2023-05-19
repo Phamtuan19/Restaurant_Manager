@@ -38,12 +38,7 @@ function Categories() {
                     }}
                     onClick={handleClick}
                 >
-                    <TitleViewAll
-                        sizeTitle="24px"
-                        sx={{ padding: '0', margin: '1rem 0 0.5rem 0' }}
-                        sxLink={{ display: 'none' }}
-                        title="Categories"
-                    />
+                    <h3 style={{ fontSize: '24px', padding: '0', margin: '1rem 0 0.5rem 0' }}>Categories</h3>
                     <DownArrow />
                 </Stack>
 

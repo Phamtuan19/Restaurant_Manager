@@ -1,8 +1,10 @@
-import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Typography } from '@mui/material';
-import { CategoryIcon } from '~/component/Icons';
+import { Typography, styled } from '@mui/material';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
+import { CategoryIcon } from '~/component/Icons';
 
 function TitleViewAll({
     title,
@@ -15,20 +17,31 @@ function TitleViewAll({
     sxLink,
     sxIcon,
 }) {
-    return (
-        <WrapCategory style={{ ...sx }}>
-            <Typography
-                component={component || 'h3'}
-                sx={{ ...sxTypo, fontSize: sizeTitle || 'calc(1.2978rem + .5736vw)' }}
-            >
-                {title}
-            </Typography>
+    const [skeleton, setSkeleton] = useState(true);
 
-            <NavLinkRoute to={path} style={{ ...sxLink }}>
-                {titleRoute}
-                <CategoryIcon width="16px" {...sxIcon} />
-            </NavLinkRoute>
-        </WrapCategory>
+    useEffect(() => {
+        setTimeout(() => setSkeleton(false), 5000);
+    }, []);
+
+    return (
+        <>
+            {skeleton ? (
+                <Skeleton height="32px" count={1} style={{ marginTop: '1.5rem', marginBottom: '2rem' }} />
+            ) : (
+                <WrapCategory sx={{ ...sx }}>
+                    <Typography
+                        component={component || 'h3'}
+                        sx={{ ...sxTypo, fontSize: sizeTitle || 'calc(1.2978rem + .5736vw)' }}
+                    >
+                        {title}
+                    </Typography>
+                    <NavLinkRoute to={path} style={{ ...sxLink }}>
+                        {titleRoute}
+                        <CategoryIcon width="16px" {...sxIcon} />
+                    </NavLinkRoute>
+                </WrapCategory>
+            )}
+        </>
     );
 }
 

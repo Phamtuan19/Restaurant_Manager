@@ -1,4 +1,4 @@
-import { DefaultLayout } from '../../layout/client/DefaultLayout';
+import { DefaultLayout } from '~/layout/client/DefaultLayout';
 import ContentHome from './ContentHome';
 
 function HomePage() {

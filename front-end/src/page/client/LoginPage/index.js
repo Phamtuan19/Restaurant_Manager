@@ -14,7 +14,7 @@ function LoginPage() {
     useEffect(() => {
         const resultGoogleApi = async () => {
             try {
-                const response = await axios(`http://127.0.0.1:8000/api/auth/google`);
+                const response = await axios(`http://127.0.0.1:8000/api/auth/login/google`);
                 setResultGoogleApi(response.data.url);
             } catch (error) {
                 console.log(error);

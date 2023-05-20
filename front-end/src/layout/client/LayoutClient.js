@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
-import routeClient from '../routes/RouteClient';
+import routeClient from '../../routes/RouteClient';
+
 
 function LayoutClient() {
     return (

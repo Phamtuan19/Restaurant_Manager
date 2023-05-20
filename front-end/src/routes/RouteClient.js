@@ -1,8 +1,8 @@
-import MenuPage from '~/page/MenuPage';
-import HomePage from '~/page/HomePage';
-import CartPage from '~/page/CartPage';
-import LoginPage from '~/page/LoginPage';
-import LoginGoogle from '~/page/LoginGoogle';
+import MenuPage from '~/page/client/MenuPage';
+import HomePage from '~/page/client/HomePage';
+import CartPage from '~/page/client/CartPage';
+import LoginPage from '~/page/client/LoginPage';
+import LoginGoogle from '~/page/client/LoginGoogle';
 
 const routeClient = [
     {

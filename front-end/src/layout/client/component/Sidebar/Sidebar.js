@@ -42,7 +42,7 @@ const Wrap = styled('div')({
 const SidebarHeader = styled('div')({
     padding: '8px 12px',
     display: 'flex',
-    height: 'var(--header-height)',
+    height: 'var(--height-header-client)',
     alignItems: 'center',
     borderBottom: '1px solid #e9e7e7',
     cursor: 'pointer',

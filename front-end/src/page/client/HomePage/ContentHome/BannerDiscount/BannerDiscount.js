@@ -21,6 +21,7 @@ function BannerDiscount() {
                         sx={{
                             marginBottom: '0.5rem',
                             fontSize: '2.074rem',
+                            fontFamily: '"Playfair Display",serif',
                         }}
                         variant="h2"
                         component="h2"

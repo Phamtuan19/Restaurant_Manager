@@ -6,7 +6,7 @@ import LoginIcon from '~/assets/iconSvg/LoginIcon';
 import { Link } from 'react-router-dom';
 
 function Authentication() {
-    const user = false;
+    const user = true;
 
     const [show, setShow] = useState(false);
 

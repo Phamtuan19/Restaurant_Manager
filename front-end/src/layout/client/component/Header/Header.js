@@ -10,7 +10,7 @@ function Header({ setSidebarActive }) {
             <Grid container alignItems="center">
                 <Grid item xs={9} sm={4} sx={{ display: { xs: 'flex', md: 'none' } }}>
                     <Stack alignItems="flex-start" flexDirection="row" sx={{ alignItems: 'center' }}>
-                        <SvgLogo style={{ width: '100px', height: '100%' }} />
+                        <SvgLogo sx={{ width: '100px', height: '100%' }} />
                         <div onClick={setSidebarActive}>
                             <SvgBar width="1.5rem" />
                         </div>

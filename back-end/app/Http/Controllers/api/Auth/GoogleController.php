@@ -38,6 +38,8 @@ class GoogleController extends Controller
             }
         });
 
+        dd($googleUser);
+
         return redirect('http://localhost:3000/auth/google');
     }
 }

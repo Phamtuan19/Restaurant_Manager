@@ -4,8 +4,6 @@ import { useState } from 'react';
 import { Sidebar } from '../component/Sidebar';
 import { Header } from '../component/Header';
 
-import './DefaultLayout.css';
-
 function DefaultLayout({ children }) {
     const [sidebarActive, setSidebarActive] = useState(false);
 
@@ -15,7 +13,7 @@ function DefaultLayout({ children }) {
             <Wrap sx={{ marginLeft: { xs: '0', md: 'var(--width-sidebar)' } }}>
                 <Header setSidebarActive={setSidebarActive} />
                 <Content
-                    sx={{ marginTop: { xs: 'var(--header-height-table)', md: 'var(--header-height)' } }}
+                    sx={{ marginTop: { xs: 'var(--header-height-table)', md: 'var(--height-header-client)' } }}
                     onClick={() => setSidebarActive(false)}
                 >
                     {children}

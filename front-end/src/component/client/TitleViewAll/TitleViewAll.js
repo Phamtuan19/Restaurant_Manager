@@ -31,7 +31,11 @@ function TitleViewAll({
                 <WrapCategory sx={{ ...sx }}>
                     <Typography
                         component={component || 'h3'}
-                        sx={{ ...sxTypo, fontSize: sizeTitle || 'calc(1.2978rem + .5736vw)' }}
+                        sx={{
+                            ...sxTypo,
+                            fontSize: sizeTitle || 'calc(1.2978rem + .5736vw)',
+                            fontFamily: '"Playfair Display", serif',
+                        }}
                     >
                         {title}
                     </Typography>

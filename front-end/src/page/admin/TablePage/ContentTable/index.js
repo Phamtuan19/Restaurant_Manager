@@ -21,7 +21,7 @@ function ContentTable() {
 const WrapContentTable = styled('div')({
     position: 'fixed',
     top: 'calc(var(--height-header-admin))',
-    left: 0,
+    left: 'calc(var(--width-sidebar-admin) + 3px)',
     bottom: 0,
     width: 'var(--width-navbar-table-page)',
     backgroundColor: 'var(--white)',

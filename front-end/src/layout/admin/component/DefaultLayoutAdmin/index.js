@@ -1,4 +1,4 @@
-import { styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 
 import Header from '../Header';
 import Sidebar from '../Sidebar';
@@ -7,23 +7,31 @@ import { useState } from 'react';
 function DefaultLayoutAdmin({ children }) {
     const [activeSidebar, setActiveSidebar] = useState(false);
 
-    const handleClickSidebar = () => {
-        setActiveSidebar(!activeSidebar);
+    const handleMouseEnter = () => {
+        setActiveSidebar(true);
     };
 
+    const handleMouseLeave = () => {
+        setActiveSidebar(false);
+    };
     return (
         <>
-            <Sidebar activeSidebar={activeSidebar} />
-            <div>
-                <Header handleClickSidebar={handleClickSidebar} />
+            <Sidebar
+                activeSidebar={activeSidebar}
+                handleMouseEnter={handleMouseEnter}
+                handleMouseLeave={handleMouseLeave}
+            />
+            <Box>
+                <Header />
                 <WrapContent>{children}</WrapContent>
-            </div>
+            </Box>
         </>
     );
 }
 
 const WrapContent = styled('div')({
     marginTop: 'var(--height-header-admin)',
+    marginLeft: 'var(--width-sidebar-admin)',
     padding: '1rem',
 });
 

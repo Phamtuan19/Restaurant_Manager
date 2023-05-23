@@ -30,14 +30,14 @@ export const TableCustom = styled('table')({
     fontSize: '14px',
     borderCollapse: 'collapse',
 
-    'thead tr td:nth-child(1)': {
+    'thead tr td:nth-of-type(1)': {
         padding: '6px',
         width: '50%',
         textAlign: 'center',
         border: '1px dotted #000',
     },
 
-    'thead tr td:nth-child(2)': {
+    'thead tr td:nth-of-type(2)': {
         padding: '6px',
         width: '10%',
         textAlign: 'center',
@@ -51,7 +51,7 @@ export const TableCustom = styled('table')({
         border: '1px dotted #000',
     },
 
-    'tbody tr td:nth-child(1)': {
+    'tbody tr td:nth-of-type(1)': {
         padding: '12px',
         border: '1px dotted #000',
         textAlign: 'left',

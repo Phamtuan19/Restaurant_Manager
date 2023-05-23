@@ -25,7 +25,9 @@ function ContentRight() {
                         alignItems: 'center',
                     }}
                 >
-                    <Button title={<ButtonLink to="/menu">ORDER NOW!</ButtonLink>} />
+                    <Button>
+                        <ButtonLink to="/menu">ORDER NOW!</ButtonLink>
+                    </Button>
                 </Stack>
             </Card>
 
@@ -34,7 +36,7 @@ function ContentRight() {
                 <Stack
                     sx={{
                         flexDirection: 'row',
-                        gap: '0 24px'
+                        gap: '0 24px',
                     }}
                 >
                     <Box

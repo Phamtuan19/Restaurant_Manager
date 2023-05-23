@@ -41,8 +41,9 @@ function Delivery() {
                             borderRadius: '0 10px 10px 0',
                             marginBottom: '2rem',
                         }}
-                        title="Apply"
-                    />
+                    >
+                        Apply
+                    </Button>
                 </Stack>
             )}
 
@@ -84,7 +85,7 @@ function Delivery() {
                 ) : (
                     <Stack>
                         <Button
-                            title="Proceed to Order"
+                            title=""
                             styleProps={{
                                 color: '#fff',
                                 backgroundColor: '#0d6efd !important',
@@ -94,7 +95,9 @@ function Delivery() {
                                     borderColor: '#0d6efd',
                                 },
                             }}
-                        />
+                        >
+                            Proceed to Order
+                        </Button>
                     </Stack>
                 )}
             </Box>

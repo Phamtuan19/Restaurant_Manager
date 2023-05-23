@@ -74,7 +74,7 @@ function LoginPage() {
                                     justifyContent: 'center',
                                 }}
                             >
-                                <Button styleProps={{ borderRadius: '4px', padding: '8px 32px' }} title="Sing In" />
+                                <Button styleProps={{ borderRadius: '4px', padding: '8px 32px' }}>Sing In</Button>
                             </Box>
                             <p style={{ margin: '1rem 0', textAlign: 'center', color: '#959895' }}>
                                 or sign in with other accounts?

@@ -1,7 +1,11 @@
 import { styled } from '@mui/material';
 
-function Button({ styleProps, title }) {
-    return <BannerButton sx={{ ...styleProps }}>{title}</BannerButton>;
+function Button({ styleProps, onClick, children }) {
+    return (
+        <BannerButton sx={{ ...styleProps }} onClick={onClick}>
+            {children}
+        </BannerButton>
+    );
 }
 
 const BannerButton = styled('button')({

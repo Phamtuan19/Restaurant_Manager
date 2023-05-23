@@ -17,7 +17,7 @@ function Banner({ imageUrl }) {
                     <p>
                         Get <span>FREE delivery </span>on every weekend.
                     </p>
-                    <Button title="Check Menu" />
+                    <Button>Check Menu</Button>
                 </span>
             </BannerTitle>
         </Wrap>

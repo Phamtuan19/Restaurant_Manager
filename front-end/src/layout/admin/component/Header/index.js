@@ -1,6 +1,5 @@
 import { Avatar, Box, Stack, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
-import SvgBar from '~/assets/iconSvg/SvgBar';
 import SvgLogo from '~/assets/iconSvg/SvgLogo';
 import { Dashboard, Search, Menu, Table, WarehouseRacks } from '~/component/Icons';
 import InputCustom from '~/component/admin/InputCustom';
@@ -12,7 +11,7 @@ const ListHeaderNavItem = [
         title: 'Dashboard',
     },
     {
-        path: '/admin',
+        path: '/admin/menu',
         icon: Menu,
         title: 'Menu',
     },
@@ -28,7 +27,7 @@ const ListHeaderNavItem = [
     },
 ];
 
-function Header({ handleClickSidebar }) {
+function Header() {
     return (
         <WrapHeader>
             <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', gap: '0 32px', alignItems: 'center' }}>
@@ -36,10 +35,6 @@ function Header({ handleClickSidebar }) {
                     <Link to="/admin">
                         <SvgLogo sx={{ width: '120px', cursor: 'pointer' }} />
                     </Link>
-
-                    <Box onClick={handleClickSidebar}>
-                        <SvgBar sx={{ border: 'none', ':hover': { border: 'none' } }} />
-                    </Box>
                 </Box>
 
                 <Box sx={{ position: 'relative' }}>
@@ -90,7 +85,7 @@ const WrapHeader = styled('div')({
     gap: '0 24px',
     backgroundColor: 'var(--white)',
     boxShadow: 'var(--box-shadow-fa)',
-    zIndex: '10',
+    zIndex: '9999',
 });
 
 const HeaderNavItemLink = styled(Link)({

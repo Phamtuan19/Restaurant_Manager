@@ -24,6 +24,22 @@ export const AddNewIcon = ({ width = '1.6rem', height = '1.6rem', sx }) => {
     );
 };
 
+export const AddNew = ({ fill = '', width = '1.6rem', height = '1.6rem', sx }) => {
+    return (
+        <svg
+            style={sx}
+            width={width}
+            height={height}
+            fill={fill}
+            xmlns="http://www.w3.org/2000/svg"
+            enableBackground="new 0 0 24 24"
+            viewBox="0 0 24 24"
+        >
+            <path d="M19,11h-6V5c0-0.6-0.4-1-1-1s-1,0.4-1,1v6H5c-0.6,0-1,0.4-1,1s0.4,1,1,1h6v6c0,0.6,0.4,1,1,1h0c0.6,0,1-0.4,1-1v-6h6  c0.6,0,1-0.4,1-1S19.6,11,19,11z" />
+        </svg>
+    );
+};
+
 export const ShoppingCart = ({ width = '1.6rem', height = '1.6rem', sx }) => {
     return (
         <svg style={sx} width={width} height={height} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 66">
@@ -365,6 +381,62 @@ export const CategoryIcon = ({ width = '1.6rem', height = '1.6rem', fill = '#fff
                 strokeLinecap="round"
                 strokeLinejoin="round"
             ></path>
+        </svg>
+    );
+};
+
+export const Categories = ({ width = '1.6rem', height = '1.6rem', fill = '#fff', sx }) => {
+    return (
+        <svg
+            style={sx}
+            width={width}
+            height={height}
+            fill={fill}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 32 32"
+        >
+            <path
+                fill="#ee8eb4"
+                d="M30,8V23a1,1,0,0,1-2,0V9H15.14a1,1,0,0,1-.83-.45L12.61,6H7A1,1,0,0,1,7,4h6.14a1,1,0,0,1,.83.45L15.68,7H29A1,1,0,0,1,30,8Z"
+            />
+            <path
+                fill="#87d1ee"
+                d="M25,11H13.54L11.83,8.45A1,1,0,0,0,11,8H3A1,1,0,0,0,2,9V27a1,1,0,0,0,1,1H25a1,1,0,0,0,1-1V12A1,1,0,0,0,25,11Z"
+            />
+        </svg>
+    );
+};
+
+export const ViewGrid = ({ width = '1.6rem', height = '1.6rem', fill = '#000', sx }) => {
+    return (
+        <svg
+            style={sx}
+            width={width}
+            height={height}
+            fill={fill}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+        >
+            <path d="M10,13H3a1,1,0,0,0-1,1v7a1,1,0,0,0,1,1h7a1,1,0,0,0,1-1V14A1,1,0,0,0,10,13ZM9,20H4V15H9ZM21,2H14a1,1,0,0,0-1,1v7a1,1,0,0,0,1,1h7a1,1,0,0,0,1-1V3A1,1,0,0,0,21,2ZM20,9H15V4h5Zm1,4H14a1,1,0,0,0-1,1v7a1,1,0,0,0,1,1h7a1,1,0,0,0,1-1V14A1,1,0,0,0,21,13Zm-1,7H15V15h5ZM10,2H3A1,1,0,0,0,2,3v7a1,1,0,0,0,1,1h7a1,1,0,0,0,1-1V3A1,1,0,0,0,10,2ZM9,9H4V4H9Z" />
+        </svg>
+    );
+};
+
+export const ViewTable = ({ width = '1.6rem', height = '1.6rem', fill = '#000', sx }) => {
+    return (
+        <svg
+            style={sx}
+            width={width}
+            height={height}
+            fill={fill}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+        >
+            <path
+                fill="#303c42"
+                d="M22 1H2a1 1 0 0 0-1 1v20a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1ZM9.5 14.5v-5h5v5Zm5 2V21h-5v-4.5ZM3 9.5h4.5v5H3Zm6.5-2V3h5v4.5Zm7 2H21v5h-4.5Zm4.5-2h-4.5V3H21ZM7.5 3v4.5H3V3ZM3 16.5h4.5V21H3ZM16.5 21v-4.5H21V21Z"
+                data-name="3 by 3 Table"
+            />
         </svg>
     );
 };

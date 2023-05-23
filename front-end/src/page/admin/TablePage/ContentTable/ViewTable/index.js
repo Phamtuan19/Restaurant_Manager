@@ -1,4 +1,4 @@
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, styled } from '@mui/material';
 import { BlurNotes, RedNotes, Wrap, YellowNotes } from './customComponent';
 import TableItem from './TableItem';
 
@@ -96,7 +96,7 @@ const listNote = [
     },
     {
         component: RedNotes,
-        title: 'Bàn đang ăn',
+        title: 'Bàn đang sử dụng',
     },
 ];
 
@@ -127,28 +127,37 @@ function ViewTable() {
 
 const NoteComponent = () => {
     return (
-        <Stack sx={{ gap: '0 32px', flexDirection: 'row', alignItems: 'center' }}>
-            {listNote.map((item, index) => {
-                const Component = item.component;
+        <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <HeaderTitle>Danh sách sản phẩm</HeaderTitle>
+            <Stack sx={{ gap: '0 32px', flexDirection: 'row', alignItems: 'center' }}>
+                {listNote.map((item, index) => {
+                    const Component = item.component;
 
-                return (
-                    <Stack
-                        key={index}
-                        sx={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            color: '#959895',
-                            textTransform: 'capitalize',
-                            fontSize: '14px',
-                        }}
-                    >
-                        <Component />
-                        {item.title}
-                    </Stack>
-                );
-            })}
+                    return (
+                        <Stack
+                            key={index}
+                            sx={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                color: '#959895',
+                                textTransform: 'capitalize',
+                                fontSize: '14px',
+                            }}
+                        >
+                            <Component />
+                            {item.title}
+                        </Stack>
+                    );
+                })}
+            </Stack>
         </Stack>
     );
 };
+
+const HeaderTitle = styled('h3')({
+    fontSize: '1.6rem',
+    fontFamily: '"Roboto Slab",serif',
+    color: 'var(--black)',
+});
 
 export default ViewTable;

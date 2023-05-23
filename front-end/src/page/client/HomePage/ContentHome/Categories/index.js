@@ -41,7 +41,7 @@ function Categories() {
             />
             <WrapContent>
                 {listCategories.map((item, index) => (
-                    <Button key={index} styleProps={{ ...styleButton }} title={item} />
+                    <Button key={index} styleProps={{ ...styleButton }}>{item}</Button>
                 ))}
             </WrapContent>
         </Card>

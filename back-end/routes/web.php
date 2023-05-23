@@ -20,6 +20,6 @@ Route::get('/', function () {
 });
 
 
-Route::get('/auth/google/callback', [GoogleController::class, 'loginCallback']);
+// Route::get('/auth/google/callback', [GoogleController::class, 'loginCallback']);
 
 

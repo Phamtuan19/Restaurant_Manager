@@ -26,4 +26,4 @@ Route::get('/chinh-sach-quyen-rieng-tu', function () {
 
 Route::get('auth/login/google', [GoogleController::class, 'loginUrl']);
 
-// Route::get('/auth/google/callback', [GoogleController::class, 'loginCallback']);
+Route::get('/auth/google/callback', [GoogleController::class, 'loginCallback']);

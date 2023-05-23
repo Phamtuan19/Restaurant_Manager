@@ -1,7 +1,11 @@
-import { Box, Typography, styled } from '@mui/material';
+import { Box, Skeleton, Typography, styled } from '@mui/material';
+import { useContext } from 'react';
 import { AddNewIcon } from '~/component/Icons';
+import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 
 function ProductItem({ data }) {
+    const { notify, types, currencyFormatting } = useContext(SkeletonLoading);
+
     return (
         <Wrap>
             <Box
@@ -11,11 +15,11 @@ function ProductItem({ data }) {
                 }}
             >
                 <WrapImage>
-                    <Image className="Product_Item_Img" src={data.img} alt={data.alt} />
+                    <Image className="Product_Item_Img" src={data.img} alt={data.title} />
                 </WrapImage>
 
-                <CardBody>
-                    <small style={{ color: 'rgb(234,106,18)' }}>Top of the week</small>
+                <Box>
+                    <small style={{ color: 'rgb(234,106,18)' }}>{data.top}</small>
                     <Typography
                         variant="h6"
                         sx={{
@@ -29,7 +33,7 @@ function ProductItem({ data }) {
                             },
                         }}
                     >
-                        {data.name}
+                        {data.title}
                     </Typography>
                     <Div>60 Calories</Div>
                     <Box sx={{ fontSize: '.833rem', color: '#959895' }}>4 persons</Box>
@@ -39,6 +43,7 @@ function ProductItem({ data }) {
                             alignItems: 'center',
                             justifyContent: 'space-between',
                             marginTop: '1rem',
+                            gap: '0 12px',
                         }}
                     >
                         <Box
@@ -48,13 +53,15 @@ function ProductItem({ data }) {
                                 gap: '0 24px',
                             }}
                         >
-                            <Price>$ 7.6</Price>
+                            <Price>{currencyFormatting(data.price)}</Price>
                             {/* {data.price_sale && <PriceSale>$ {data.price}</PriceSale>} */}
                         </Box>
 
-                        <AddNewIcon className={'AddNewIcon'} style={{ color: '#fff' }} />
+                        <Box onClick={() => notify(types[0], 'Thêm thành công!')}>
+                            <AddNewIcon className={'AddNewIcon'} style={{ color: '#fff' }} />
+                        </Box>
                     </Box>
-                </CardBody>
+                </Box>
             </Box>
         </Wrap>
     );
@@ -70,12 +77,14 @@ const Wrap = styled('div')({
     display: 'flex',
     flexDirection: 'column',
     minWidth: 0,
-    backgroundColor: '#fff',
-    border: '0 solid rgba(0,0,0,.125)',
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    border: '1px solid #fff',
     borderRadius: '1.5rem',
     cursor: 'pointer',
 
     '&:hover': {
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+
         '.Product_Item_Img': {
             animation: 'rotate-smooth 14s cubic-bezier(.26,.26,1,1) infinite',
         },
@@ -98,11 +107,6 @@ const Image = styled('img')({
     minWidth: '130px',
     objectFit: 'cover',
     borderRadius: '50rem',
-});
-
-const CardBody = styled('div')({
-    backgroundColor: 'var(--white)',
-    borderRadius: '1.5rem',
 });
 
 const Div = styled('div')({
@@ -136,5 +140,59 @@ const Price = styled('span')({
 //     fontWeight: 'bold',
 //     textDecoration: 'line-through',
 // });
+
+const LoadingProduct = () => {
+    return (
+        <Wrap>
+            <Box
+                sx={{
+                    width: '100%',
+                    minHeight: '179.200px',
+                    position: 'relative',
+                    display: 'flex',
+                }}
+            >
+                <WrapImage>
+                    <Skeleton variant="circular" width={130} height={130} />
+                </WrapImage>
+
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px 0' }}>
+                    <Skeleton variant="text" width={100} height={24} />
+                    <Skeleton variant="text" width={100} height={24} />
+                    <Box>
+                        <Div>
+                            <Skeleton variant="text" width={100} height={24} />
+                        </Div>
+                        <Skeleton variant="text" width={100} height={24} />
+                    </Box>
+
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            marginTop: '1rem',
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0 24px',
+                            }}
+                        >
+                            <Skeleton variant="text" width={45} height={24} />
+                            {/* <Skeleton variant="text" width={45} height={12} /> */}
+                        </Box>
+
+                        <Skeleton variant="circular" width={25} height={25} />
+                    </Box>
+                </Box>
+            </Box>
+        </Wrap>
+    );
+};
+
+ProductItem.LoadingProduct = LoadingProduct;
 
 export default ProductItem;

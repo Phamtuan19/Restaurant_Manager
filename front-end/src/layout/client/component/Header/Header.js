@@ -4,20 +4,27 @@ import SvgLogo from '~/assets/iconSvg/SvgLogo';
 import { HeaderSearch } from './HeaderSearch';
 import { Authentication } from './Authentication';
 
-function Header({ setSidebarActive }) {
+function Header({ handleClickSidebar }) {
     return (
-        <Wrap left={{ md: 'var(--width-sidebar)', xs: '0' }}>
+        <Wrap left={{ md: 'calc(var(--width-sidebar) + 1px)', xs: '0' }}>
             <Grid container alignItems="center">
                 <Grid item xs={9} sm={4} sx={{ display: { xs: 'flex', md: 'none' } }}>
                     <Stack alignItems="flex-start" flexDirection="row" sx={{ alignItems: 'center' }}>
                         <SvgLogo sx={{ width: '100px', height: '100%' }} />
-                        <div onClick={setSidebarActive}>
+                        <div onClick={handleClickSidebar}>
                             <SvgBar width="1.5rem" />
                         </div>
                     </Stack>
                 </Grid>
-                <HeaderSearch />
-                <Authentication />
+                <Grid item sm={1} md={2} lg={2} sx={{ display: { xs: 'none', md: 'inline-block' } }}>
+                    <SvgLogo sx={{ width: '100px', height: '100%' }} />
+                </Grid>
+                <Grid item md={5} sm={6} lg={4} sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                    <HeaderSearch />
+                </Grid>
+                <Grid item xs={3} sm={2} md={4} lg={6}>
+                    <Authentication />
+                </Grid>
             </Grid>
         </Wrap>
     );

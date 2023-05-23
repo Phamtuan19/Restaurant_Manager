@@ -1,12 +1,11 @@
-import { Stack, Avatar, Popover, Typography, Box, Grid } from '@mui/material';
+import { Stack, Avatar, Popover, Typography, Box,styled } from '@mui/material';
 import { useState } from 'react';
 
-import styled from '@emotion/styled';
-import LoginIcon from '~/assets/iconSvg/LoginIcon';
 import { Link } from 'react-router-dom';
+import { CartHeader, LoginIcon, Notification } from '~/component/Icons';
 
 function Authentication() {
-    const user = true;
+    const user = false;
 
     const [show, setShow] = useState(false);
 
@@ -15,22 +14,39 @@ function Authentication() {
     };
 
     return (
-        <Grid item xs={3} sm={2} lg={9} md={7}>
-            <Stack alignItems="flex-end">
-                {user ? <UserInfo /> : <UserLogin show={show} handlClick={handlClick} />}
-            </Stack>
-        </Grid>
+        <Stack justifyContent="flex-end" flexDirection="row" alignItems="center">
+            <WrapIcon sx={{ display: { xs: 'none', md: 'flex' } }}>
+                <Notification width="2rem" height="2rem" className="HeaderUser_Icon" sx={{ cursor: 'pointer' }} />
+            </WrapIcon>
+            <WrapIcon sx={{ display: { xs: 'none', md: 'flex' } }}>
+                <CartHeader width="2rem" height="2rem" className="HeaderUser_Icon" sx={{ cursor: 'pointer' }} />
+            </WrapIcon>
+            <Box>{user ? <UserInfo /> : <UserLogin show={show} handlClick={handlClick} />}</Box>
+        </Stack>
     );
 }
 
 const UserLogin = () => {
     return (
         <CustomButtom to="/login">
-            <LoginIcon className="HeaderUser_Icon" />
+            <LoginIcon sx={{ marginRight: '12px' }} className="HeaderUser_Icon" />
             Login
         </CustomButtom>
     );
 };
+
+const WrapIcon = styled('div')({
+    padding: '6px 16px',
+    alignItems: 'center',
+
+    '&:hover': {
+        svg: {
+            path: {
+                fill: '#0072E5',
+            },
+        },
+    },
+});
 
 const CustomButtom = styled(Link)({
     fontSize: '16px',
@@ -48,7 +64,7 @@ const CustomButtom = styled(Link)({
     color: 'var(--black) !important',
 
     '&:hover': {
-        color: '#0072E5',
+        color: '#0072E5 !important',
 
         svg: {
             fill: '#0072E5',

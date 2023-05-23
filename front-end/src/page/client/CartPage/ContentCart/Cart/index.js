@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 import { Card } from '~/component/client/Card';
@@ -14,24 +14,19 @@ function Cart() {
     }, []);
 
     return (
-        <Card className={{ padding: '0 1.5rem 1.5rem', marginBottom: '2rem' }}>
-            <TitleViewAll
+        <Box sx={{ padding: '0 1.5rem 1.5rem', marginBottom: '2rem' }}>
+            {/* <TitleViewAll
                 title="Cart"
-                sx={{ borderBottom: '1px solid #e3e1e1', marginBottom: '2rem' }}
+                sx={{ borderBottom: '1px solid #e3e1e1'}}
                 sxLink={{ display: 'none' }}
-            />
+            /> */}
 
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    {skeleton ? <ProductItem.SkeletonProductItem /> : <ProductItem />}
+                <Grid item xs={6}>
+                    <ProductItem />
                 </Grid>
             </Grid>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    {skeleton ? <ProductItem.SkeletonProductItem /> : <ProductItem />}
-                </Grid>
-            </Grid>
-        </Card>
+        </Box>
     );
 }
 

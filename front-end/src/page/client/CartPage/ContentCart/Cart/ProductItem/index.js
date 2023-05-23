@@ -1,132 +1,57 @@
-import { useState } from 'react';
-import { Box, Stack } from '@mui/material';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
-
-import { Delete } from '~/component/Icons';
-import Select from '~/component/Select';
-
-import {
-    WrapProductItem,
-    StyleTextField,
-    ProductItemName,
-    PriceDetail,
-    BoxStatus,
-    Price,
-    PriceSale,
-    WrapDelete,
-} from './styleComponent';
+import { useContext, useState } from 'react';
+import { Box, Stack, styled } from '@mui/material';
+import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 
 function ProductItem() {
     const [valueNumber, setValueNumber] = useState(1);
 
+    const { currencyFormatting } = useContext(SkeletonLoading);
+
     return (
         <WrapProductItem sx={{ flexDirection: { xs: 'column', sm: 'row' } }}>
-            <Box
-                sx={{
-                    flex: '1 4',
-                    textAlign: 'center',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}
-            >
-                <img
-                    src="https://templates.iqonic.design/aprycot/react/build/static/media/4.15e1b34b.png"
-                    alt=""
-                    style={{ width: '100px' }}
-                />
+            <Box sx={{ marginRight: '16px' }}>
+                <Image src="https://templates.iqonic.design/aprycot/react/build/static/media/16.2717f609.png" alt="" />
             </Box>
-
-            <Box sx={{ width: '100%', display: 'flex', flex: '4 1', flexDirection: 'column', gap: '12px' }}>
-                <Stack sx={{ flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-between', gap: '8px' }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        <ProductItemName>Manchow soup</ProductItemName>
-                        <Box sx={{ display: 'flex', gap: '0 12px' }}>
-                            <PriceDetail>$12.50</PriceDetail>
-                            <BoxStatus>In stock</BoxStatus>
+            <Box sx={{ flex: '1 1' }}>
+                <Box sx={{ width: '100%', paddingBottom: '1rem', borderBottom: '1px solid #e3e1e1' }}>
+                    <ProductTitle>Mushroom</ProductTitle>
+                    <Box>
+                        <Box sx={{ fontSize: '14px', color: 'rgb(149 152 149 / 75%)', marginBottom: '.5rem' }}>
+                            <span style={{ marginRight: '12px' }}>Status: </span>
+                            <span style={{ color: 'var(--toastify-color-success)' }}>Còn hàng</span>
+                        </Box>
+                        <Box sx={{ fontSize: '16px' }}>
+                            <span style={{ marginRight: '12px' }}>{currencyFormatting(120000)}</span>
+                            <span>{currencyFormatting(160000)}</span>
                         </Box>
                     </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        <PriceSale> $12.50</PriceSale>
-                        <Price>$14.10</Price>
-                    </Box>
-                </Stack>
-                <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: '12px' }}>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-                        <Select sx={{ width: '70px', height: '32px' }}>
-                            <option value="admin">M</option>
-                            <option value="admin">XL</option>
-                        </Select>
+                </Box>
 
-                        <StyleTextField
-                            InputProps={{ inputProps: { min: 1, max: 30 } }}
-                            type="number"
-                            value={valueNumber}
-                            onChange={(e) => setValueNumber(e.target.value)}
-                            size="small"
-                        />
-                    </Box>
-
-                    <WrapDelete>
-                        <Delete />
-                    </WrapDelete>
-                </Stack>
+                <input type="number" />
             </Box>
         </WrapProductItem>
     );
 }
 
-const SkeletonProductItem = () => {
-    return (
-        <WrapProductItem sx={{ flexDirection: { xs: 'column', sm: 'row' } }}>
-            <Box
-                sx={{
-                    flex: '1 4',
-                    textAlign: 'center',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}
-            >
-                <Skeleton width="100px" height="100px" />
-            </Box>
+const WrapProductItem = styled('div')({
+    padding: '1rem',
+    display: 'flex',
+    flexWrap: 'wrap',
+    // justifyContent: 'space-around',
+    backgroundColor: 'rgba(255, 255, 255,0.5)',
+    border: '1px solid #fff',
+});
 
-            <Box sx={{ width: '100%', display: 'flex', flex: '4 1', flexDirection: 'column', gap: '12px' }}>
-                <Stack
-                    sx={{
-                        flexWrap: 'wrap',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        gap: '8px',
-                    }}
-                >
-                    <Box sx={{ width: '70%', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        <Skeleton width="100%" height="32px" />
-                        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '12px' }}>
-                            <Skeleton width="70px" height="18px" />
-                            <Skeleton width="70px" height="18px" />
-                        </Box>
-                    </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        <Skeleton width="70px" height="32px" />
-                        <Skeleton width="70px" height="32px" />
-                    </Box>
-                </Stack>
-                <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: '12px' }}>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-                        <Skeleton width="70px" height="32px" />
-                        <Skeleton width="70px" height="32px" />
-                    </Box>
-                    <WrapDelete>
-                        <Skeleton width="40px" height="32px" />
-                    </WrapDelete>
-                </Stack>
-            </Box>
-        </WrapProductItem>
-    );
-};
+const Image = styled('img')({
+    width: '120px',
+    height: '120px',
+    border: '1px solid #fff',
+    borderRadius: '50%',
+});
 
-ProductItem.SkeletonProductItem = SkeletonProductItem;
+const ProductTitle = styled('h3')({
+    marginBottom: '.5rem',
+    fontFamily: '"Roboto Slab",serif',
+});
 
 export default ProductItem;

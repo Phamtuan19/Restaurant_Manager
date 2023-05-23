@@ -1,15 +1,25 @@
-import { Box, Typography, styled } from '@mui/material';
+import { Box, Skeleton, Stack, Typography, styled } from '@mui/material';
+import { useContext } from 'react';
 import { Card } from '~/component/client/Card';
+import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 
 function BannerDiscount() {
+    const {skeleton} = useContext(SkeletonLoading);
+
     return (
         <Card className={{ backgroundColor: 'transparent', width: '100%' }}>
             <WrapSaleOf>
                 <DivImage>
-                    <Image
-                        src="https://templates.iqonic.design/aprycot/react/build/static/media/8.74cad6a3.png"
-                        alt="profile-img"
-                    />
+                    {skeleton ? (
+                        <Stack sx={{ alignItems: 'center' }}>
+                            <Skeleton variant="circular" width={150} height={150} />
+                        </Stack>
+                    ) : (
+                        <Image
+                            src="https://templates.iqonic.design/aprycot/react/build/static/media/8.74cad6a3.png"
+                            alt="profile-img"
+                        />
+                    )}
                 </DivImage>
                 <Box
                     sx={{
@@ -26,14 +36,18 @@ function BannerDiscount() {
                         variant="h2"
                         component="h2"
                     >
-                        50 % off
+                        {skeleton ? <Skeleton width={100} height={32} sx={{ margin: '0 auto' }} /> : '50 % off'}
                     </Typography>
                     <Box
                         sx={{
                             color: '#959895',
                         }}
                     >
-                        The full price of burgers
+                        {skeleton ? (
+                            <Skeleton width={300} height={32} sx={{ margin: '0 auto' }} />
+                        ) : (
+                            'The full price of burgers'
+                        )}
                     </Box>
                 </Box>
             </WrapSaleOf>
@@ -45,7 +59,8 @@ const WrapSaleOf = styled('div')({
     position: 'relative',
     marginTop: '2rem',
     padding: '1.5rem',
-    backgroundColor: 'hsla(0,0%,100%,.6)',
+    backgroundColor: 'rgba(255, 255, 255,0.5)',
+    border: '1px solid #fff',
     borderRadius: '1.5rem',
 });
 

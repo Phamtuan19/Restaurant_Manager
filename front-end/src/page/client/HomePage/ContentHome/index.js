@@ -8,8 +8,6 @@ import MenuCategories from './MenuCategories';
 import TrendingOrders from './TrendingOrders';
 import BannerDiscount from './BannerDiscount/BannerDiscount';
 
-
-
 function ContentHome() {
     return (
         <Grid container spacing={2}>
@@ -18,8 +16,7 @@ function ContentHome() {
                 <Banner imageUrl={'https://templates.iqonic.design/aprycot/react/build/static/media/01.adcc5f80.png'} />
 
                 {/* Menu category */}
-
-                <MenuCategories  />
+                <MenuCategories />
 
                 {/* Trending orders */}
 
@@ -38,6 +35,7 @@ function ContentHome() {
                     </Grid>
                 </Grid>
             </Grid>
+            
         </Grid>
     );
 }

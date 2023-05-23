@@ -1,30 +1,39 @@
-import { Box, Stack, styled } from '@mui/material';
-import { useState } from 'react';
+import { Box, Skeleton, Stack, styled } from '@mui/material';
+import { useContext, useState } from 'react';
 import { DownArrow, Search } from '~/component/Icons';
 import { Card } from '~/component/client/Card';
 import ProductCategory from './ProductCategory';
+import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 
 function Categories() {
     const [open, setOpen] = useState(true);
     const [categoriesValue, setCategoriesValue] = useState([]);
+
+    const { skeleton } = useContext(SkeletonLoading);
 
     const handleClick = () => {
         setOpen(!open);
     };
 
     return (
-        <Card className={{ padding: '1.5rem' }}>
+        <Card className={{ padding: '1.5rem', backgroundColor: 'rgba(255, 255, 255, 0.5)', border: '2px solid #fff' }}>
             <Box sx={{ position: 'relative' }}>
-                <Search
-                    width="18px"
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '15px',
-                        transform: 'translateY(-50%)',
-                    }}
-                />
-                <InputCategories placeholder="Nhập sản phẩm tìm kiếm ... " />
+                {skeleton ? (
+                    <Skeleton variant="text" width={280} height={60} />
+                ) : (
+                    <>
+                        <Search
+                            width="18px"
+                            sx={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '15px',
+                                transform: 'translateY(-50%)',
+                            }}
+                        />
+                        <InputCategories placeholder="Nhập sản phẩm tìm kiếm ... " />
+                    </>
+                )}
             </Box>
 
             <Box>
@@ -37,8 +46,23 @@ function Categories() {
                     }}
                     onClick={handleClick}
                 >
-                    <h3 style={{ fontSize: '24px', padding: '0', margin: '1rem 0 0.5rem 0' }}>Categories</h3>
-                    <DownArrow />
+                    {skeleton ? (
+                        <Skeleton variant="text" width={280} height={60} />
+                    ) : (
+                        <>
+                            <h3
+                                style={{
+                                    fontSize: '24px',
+                                    padding: '0',
+                                    margin: '1rem 0 0.5rem 0',
+                                    fontFamily: '"Roboto Slab", serif',
+                                }}
+                            >
+                                Categories
+                            </h3>
+                            <DownArrow />
+                        </>
+                    )}
                 </Stack>
 
                 <ProductCategory
@@ -61,6 +85,7 @@ const InputCategories = styled('input')({
     backgroundColor: '#fff',
     borderRadius: '1rem',
     border: '1px solid #e3e1e1',
+    // fontFamily: '"Poppins", sans-serif',
 });
 
 export default Categories;

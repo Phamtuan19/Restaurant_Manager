@@ -1,7 +1,9 @@
-import { styled } from '@mui/material';
+import { Skeleton, Stack, styled } from '@mui/material';
+import { useContext } from 'react';
 import { Button } from '~/component/client/Button';
 import { Card } from '~/component/client/Card';
 import { TitleViewAll } from '~/component/client/TitleViewAll';
+import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 
 const listCategories = [
     'Burgers',
@@ -33,16 +35,34 @@ const listCategories = [
 ];
 
 function Categories() {
+    const { skeleton } = useContext(SkeletonLoading);
+
     return (
-        <Card>
-            <TitleViewAll
-                title="Categories"
-                sx={{ padding: '1.5rem 0', borderBottom: '1px solid #e3e1e1', margin: '0 1.5rem' }}
-            />
-            <WrapContent>
-                {listCategories.map((item, index) => (
-                    <Button key={index} styleProps={{ ...styleButton }}>{item}</Button>
-                ))}
+        <Card className={{ backgroundColor: 'rgba(255, 255, 255,0.5)', border: '1px solid #fff' }}>
+            {skeleton ? (
+                <Stack
+                    sx={{ padding: '1.5rem 1.5rem 0 1.5rem', flexDirection: 'row', justifyContent: 'space-between' }}
+                >
+                    <Skeleton variant="text" width={200} height={50} sx={{ padding: '1.5rem' }} />
+                    <Skeleton variant="text" width={100} height={50} sx={{ padding: '1.5rem' }} />
+                </Stack>
+            ) : (
+                <TitleViewAll
+                    title="Categories"
+                    sx={{ padding: '1.5rem 0', borderBottom: '1px solid #e3e1e1', margin: '0 1.5rem' }}
+                />
+            )}
+
+            <WrapContent sx={{ justifyContent: skeleton ? 'space-between' : 'flex-start' }}>
+                {listCategories.map((item, index) => {
+                    return skeleton ? (
+                        <Skeleton key={index} variant="rounded" width={120} height={50} />
+                    ) : (
+                        <Button key={index} styleProps={{ ...styleButton }}>
+                            {item}
+                        </Button>
+                    );
+                })}
             </WrapContent>
         </Card>
     );
@@ -52,7 +72,7 @@ const WrapContent = styled('div')({
     padding: '1.5rem',
     display: 'flex',
     flexWrap: 'wrap',
-    gap: '12px',
+    gap: '6px',
 });
 
 const styleButton = {

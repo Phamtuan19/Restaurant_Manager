@@ -8,24 +8,30 @@
 }
 
 :root {
+	--color-default: rgb(234, 106, 18);
 	--white: #fff;
 	--black: rgba(33, 37, 41);
+	--color-primary: #A0522D;
+	--color-blur: #228B22;
+	--color-red: rgb(255, 69, 0);
 	--bg-skeleton: linear-gradient(100deg,
 			rgba(255, 255, 255, 0) 40%,
 			rgba(255, 255, 255, .5) 50%,
 			rgba(255, 255, 255, 0) 60%) var(--loading-grey);
 	--loading-grey: #ededed;
-	--color-default: rgb(234, 106, 18);
 	--bs-body-bg: #faf9f5;
 	--font-poppins: 'Poppins', sans-serif;
 	--bs-primary-rgb: 238, 106, 18;
 	--bs-text-opacity: 1;
+	--text-hover-deepSkyBlue: rgb(0, 114, 229);
+
+	/* Shadow */
 	--shadow-2: rgba(0, 0, 0, 0.2);
 	--box-shadow-fa: 0 1px 2px var(--shadow-2);
-	--text-hover-deepSkyBlue: rgb(0, 114, 229);
-	--color-primary: #A0522D;
-	--color-blur: #228B22;
-	--color-red: rgb(255, 69, 0);
+	--box-shadow-show: 0 .5rem 1rem rgba(116, 52, 9, .05);
+
+	/* Border Radius */
+	--radius-1-5: 1.5rem;
 
 	/* Client */
 	--height-header-client: 66px;
@@ -50,11 +56,12 @@
 }
 
 body {
-	font-family: 'Poppins', sans-serif;
-	/* font-family: 'Roboto Slab', serif; */
+	/* font-family: 'Poppins', sans-serif; */
+	font-family: 'Roboto Slab', serif;
 	background-color: var(--bs-body-bg);
 	-webkit-user-select: none;
 	user-select: none;
+	background-image: linear-gradient(to right, #fbf8f7, #fbf9f0, #fbf9f0);
 }
 
 @keyframes rotate-smooth {
@@ -239,6 +246,6 @@ body .Modal_Menu_Admin .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
 	color: var(--white);
 }
 
-/* th {
-	font-weight: 500;
-} */
+.radius-1-5 {
+	border-radius: var(--radius-1-5);
+}

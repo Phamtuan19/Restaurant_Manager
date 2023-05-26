@@ -6,7 +6,7 @@ import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClie
 function Product(props) {
     const { data } = props;
 
-    const { skeleton, notify, types, currencyFormatting } = useContext(SkeletonLoading);
+    const { skeleton, notifyTypes, handleAddToCart, currencyFormatting } = useContext(SkeletonLoading);
     return (
         <Wrap sx={{ marginTop: { md: '85px', xs: '100px' } }}>
             {skeleton ? (
@@ -19,12 +19,11 @@ function Product(props) {
                 </WrapImage>
             )}
             <CardBody>
-                <Box sx={{ marginTop: '1.5rem' }}>
+                <Box sx={{ marginTop: '.5rem' }}>
                     <Typography
                         variant="h6"
                         sx={{
                             fontWeight: 'bolder',
-                            marginTop: '1.5rem',
                             fontSize: '1rem',
                             fontFamily: "'Roboto Slab', serif !important",
                             '&:hover': {
@@ -48,7 +47,6 @@ function Product(props) {
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            marginTop: '1rem',
                         }}
                     >
                         <Box
@@ -72,7 +70,7 @@ function Product(props) {
                         {skeleton ? (
                             <Skeleton variant="circular" width={32} height={32} />
                         ) : (
-                            <Box onClick={() => notify(types[0], 'Thêm thành công!')}>
+                            <Box onClick={() => handleAddToCart(data, notifyTypes[0], 'Thêm thành công!')}>
                                 <AddNewIcon style={{ color: '#fff' }} />
                             </Box>
                         )}
@@ -132,7 +130,7 @@ const CardBody = styled('div')({
 });
 
 const Price = styled('span')({
-    fontSize: '1.2rem',
+    fontSize: '1rem',
     fontWeight: 'bold',
 });
 

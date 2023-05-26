@@ -1,10 +1,12 @@
 import { Box, Grid, MenuItem, Pagination, Select, Skeleton, Stack, styled } from '@mui/material';
 import { useContext, useState } from 'react';
+import { v4 } from 'uuid';
 import Product from '~/component/client/Product';
 import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 
 const productList = [
     {
+        id: v4(),
         top: 'Top of the day',
         img: 'https://templates.iqonic.design/aprycot/react/build/static/media/17.938b20db.png',
         title: 'Tôm Hùm',
@@ -12,6 +14,7 @@ const productList = [
         price: 120000,
     },
     {
+        id: v4(),
         top: 'Top of the week',
         img: 'https://templates.iqonic.design/aprycot/react/build/static/media/14.e20083c2.png',
         title: 'Tôm Hùm',
@@ -19,6 +22,7 @@ const productList = [
         price: 120000,
     },
     {
+        id: v4(),
         top: 'Top of the month',
         img: 'https://templates.iqonic.design/aprycot/react/build/static/media/18.2bcce14e.png',
         title: 'Tôm Hùm',
@@ -26,6 +30,7 @@ const productList = [
         price: 120000,
     },
     {
+        id: v4(),
         top: 'Top of the week',
         img: 'https://templates.iqonic.design/aprycot/react/build/static/media/19.5ab77ed3.png',
         title: 'Tôm Hùm',
@@ -33,6 +38,7 @@ const productList = [
         price: 120000,
     },
     {
+        id: v4(),
         top: 'Top of the week',
         img: 'https://templates.iqonic.design/aprycot/react/build/static/media/20.d3d93362.png',
         title: 'Tôm Hùm',
@@ -40,6 +46,7 @@ const productList = [
         price: 120000,
     },
     {
+        id: v4(),
         top: 'Top of the week',
         img: 'https://templates.iqonic.design/aprycot/react/build/static/media/21.8b39acdf.png',
         title: 'Tôm Hùm',
@@ -88,13 +95,11 @@ function Content() {
             </HeaderContent>
 
             <Grid container spacing={2} gap="12px 0" sx={{ marginTop: '12px', marginBottom: '2rem' }}>
-                {productList.map((data, index) => {
+                {productList.map((data) => {
                     return (
-                        <>
-                            <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-                                <Product data={data} />
-                            </Grid>
-                        </>
+                        <Grid key={v4()} item xs={12} sm={6} md={4} lg={3}>
+                            <Product data={data} />
+                        </Grid>
                     );
                 })}
             </Grid>

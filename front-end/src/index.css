@@ -8,7 +8,7 @@
 }
 
 :root {
-	--color-default: rgb(234, 106, 18);
+	--color-default: rgb(234,106,18);
 	--white: #fff;
 	--black: rgba(33, 37, 41);
 	--color-primary: #A0522D;
@@ -64,6 +64,15 @@ body {
 	background-image: linear-gradient(to right, #fbf8f7, #fbf9f0, #fbf9f0);
 }
 
+@keyframes LayoutSite_rotation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
 @keyframes rotate-smooth {
 	0% {
 		-webkit-transform: rotate(0);
@@ -89,7 +98,7 @@ body {
 	}
 
 	50% {
-		opacity: 0.3
+		opacity: 0.5
 	}
 
 	to {

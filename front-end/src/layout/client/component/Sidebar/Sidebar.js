@@ -3,9 +3,8 @@ import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import SvgLogo from '~/assets/iconSvg/SvgLogo';
-import { Home, Menu, Right, Select, ShoppingCart } from '~/component/Icons';
+import { Booking, Home, Menu, Right, ShoppingCart } from '~/component/Icons';
 import { SkeletonLoading } from '../../DefaultLayout/DefaultLayoutClient';
-import zIndex from '@mui/material/styles/zIndex';
 
 const listMenu = [
     {
@@ -15,10 +14,10 @@ const listMenu = [
         type: 'home',
     },
     {
-        path: '/services',
-        iconComponent: Select,
-        title: 'dịch vụ',
-        type: 'select',
+        path: '/booking',
+        iconComponent: Booking,
+        title: 'Đặt bàn',
+        type: 'booking',
     },
     {
         path: '/menu',
@@ -82,7 +81,7 @@ const SidebarItem = ({ listMenu, sidebarActive, carts }) => {
                                     position: 'relative',
                                 }}
                             >
-                                {item.type === 'cart' ? <TotalCart>{carts}</TotalCart> : ''}
+                                {item.type === 'cart' ? <TotalCart>{carts.length}</TotalCart> : ''}
                                 <ComponentIcomSidebar width="2rem" height="2rem" />
                             </Stack>
                             <SidebarItemTitle
@@ -129,7 +128,7 @@ const TotalCart = styled('div')({
     fontSize: '12px',
     borderRadius: '20px',
     border: '1px solid #fff',
-    backgroundColor: 'rgb(234 106 18 / 30%)',
+    backgroundColor: 'rgb(234 106 18 / 70%)',
 });
 
 const SlidebarItem = styled(NavLink)({

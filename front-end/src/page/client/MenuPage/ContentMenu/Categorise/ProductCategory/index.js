@@ -10,6 +10,7 @@ import {
     styled,
 } from '@mui/material';
 import { useContext, useState } from 'react';
+import { v4 } from 'uuid';
 import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 
 const listProductCategories = [
@@ -67,7 +68,7 @@ function ProductCategory({ open, categoriesValue, setCategoriesValue }) {
 
                 return (
                     <ListItem
-                        key={item.id}
+                        key={v4()}
                         secondaryAction={
                             skeleton ? (
                                 <Skeleton variant="text" width={50} height={30} />
@@ -108,7 +109,7 @@ const TotalCategoryItem = styled('span')({
     padding: '.5em 1.5em',
     lineHeight: 1.5,
     borderRadius: '50rem',
-    backgroundColor: 'rgb(234,106,18)',
+    backgroundColor: 'var(--color-default)',
     color: 'var(--white)',
     fontSize: '.75em',
     fontWeight: 700,

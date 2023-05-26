@@ -6,6 +6,8 @@ import PaymentInfo from './Cart/PaymentInfo';
 function ContentCart() {
     return (
         <Grid container spacing={2}>
+            {/* <Grid item xs={12} md={7} lg={3}>
+            </Grid> */}
             <Grid item xs={12} md={7} lg={8}>
                 <Cart />
             </Grid>

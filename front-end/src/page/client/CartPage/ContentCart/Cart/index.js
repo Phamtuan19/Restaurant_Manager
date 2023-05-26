@@ -15,14 +15,20 @@ function Cart() {
 
     return (
         <Box sx={{ padding: '0 1.5rem 1.5rem', marginBottom: '2rem' }}>
-            {/* <TitleViewAll
+            <TitleViewAll
                 title="Cart"
-                sx={{ borderBottom: '1px solid #e3e1e1'}}
+                sx={{
+                    padding: '1rem 1.5rem',
+                    backgroundColor: 'rgba(255, 255, 255,0.5)',
+                    border: '1px solid #fff',
+                    borderRadius: '1.5rem',
+                    marginBottom: '1rem',
+                }}
                 sxLink={{ display: 'none' }}
-            /> */}
+            />
 
             <Grid container spacing={2}>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <ProductItem />
                 </Grid>
             </Grid>

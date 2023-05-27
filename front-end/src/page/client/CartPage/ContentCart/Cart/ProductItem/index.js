@@ -1,17 +1,32 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Box, Stack, TextField, styled } from '@mui/material';
 import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 import { Delete } from '~/component/Icons';
+import { useDispatch } from 'react-redux';
+import cartSlice from '~/redux/SliceReducer/CartsReducer';
 
-function ProductItem() {
-    const [valueNumber, setValueNumber] = useState(1);
-
+function ProductItem({ data }) {
     const { currencyFormatting } = useContext(SkeletonLoading);
+
+    const dispatch = useDispatch();
+
+    const handleChangeQuantity = (e, data) => {
+        dispatch(
+            cartSlice.actions.setQuantityCartItem({
+                ...data,
+                quantityVal: e.target.value,
+            }),
+        );
+    };
+
+    const handleClickDelete = (data) => {
+        dispatch(cartSlice.actions.deleteCartItem(data));
+    };
 
     return (
         <WrapProductItem sx={{ flexDirection: { xs: 'column', sm: 'row' }, position: 'relative' }}>
             <Box sx={{ marginRight: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Image src="https://templates.iqonic.design/aprycot/react/build/static/media/16.2717f609.png" alt="" />
+                <Image src={data.img} alt={data.title} />
             </Box>
 
             <Box sx={{ flex: '1 1', padding: '1rem' }}>
@@ -26,16 +41,18 @@ function ProductItem() {
                 >
                     <Box sx={{ flex: '1', display: 'flex', alignItems: 'center' }}>
                         <Box sx={{ flex: 2 }}>
-                            <ProductTitle>Mushroom</ProductTitle>
+                            <ProductTitle>{data.title}</ProductTitle>
                             <Box sx={{ fontSize: '14px', color: 'rgb(149 152 149 / 75%)', marginBottom: '1rem' }}>
                                 <span style={{ marginRight: '12px' }}>Status : </span>
                                 <span style={{ color: 'var(--toastify-color-success)' }}>Còn hàng</span>
                             </Box>
                         </Box>
                         <Box sx={{ flex: 1, fontSize: '16px', display: 'flex', alignItems: 'center' }}>
-                            <span style={{ marginRight: '12px', fontWeight: 500 }}>{currencyFormatting(120000)}</span>
+                            <span style={{ marginRight: '12px', fontWeight: 500 }}>
+                                {currencyFormatting(data.price)}
+                            </span>
                             <span style={{ fontSize: '14px', color: 'red', textDecoration: 'line-through' }}>
-                                {currencyFormatting(160000)}
+                                {currencyFormatting(data.price)}
                             </span>
                         </Box>
                     </Box>
@@ -44,7 +61,8 @@ function ProductItem() {
                             type="number"
                             variant="outlined"
                             size="small"
-                            defaultValue="1"
+                            value={data.quantity}
+                            onChange={(e) => handleChangeQuantity(e, data)}
                             sx={{ width: '70px' }}
                         />
                     </Box>
@@ -55,7 +73,9 @@ function ProductItem() {
                     position: 'absolute',
                     top: '-.5rem',
                     right: '-.5rem',
+                    cursor: 'pointer',
                 }}
+                onClick={() => handleClickDelete(data)}
             >
                 <Delete />
             </Box>

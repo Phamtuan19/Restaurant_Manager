@@ -1,10 +1,9 @@
 import { Stack, styled } from '@mui/material';
-import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import SvgLogo from '~/assets/iconSvg/SvgLogo';
 import { Booking, Home, Menu, Right, ShoppingCart } from '~/component/Icons';
-import { SkeletonLoading } from '../../DefaultLayout/DefaultLayoutClient';
 
 const listMenu = [
     {
@@ -36,8 +35,6 @@ const listMenu = [
 function Sidebar(props) {
     const { sidebarActive, handleClickSidebar } = props;
 
-    const { carts } = useContext(SkeletonLoading);
-
     return (
         <Wrap
             sx={{
@@ -55,12 +52,14 @@ function Sidebar(props) {
                 <Right width="2rem" />
             </SidebarHeader>
 
-            <SidebarItem listMenu={listMenu} sidebarActive={sidebarActive} carts={carts} />
+            <SidebarItem listMenu={listMenu} sidebarActive={sidebarActive} />
         </Wrap>
     );
 }
 
-const SidebarItem = ({ listMenu, sidebarActive, carts }) => {
+const SidebarItem = ({ listMenu, sidebarActive }) => {
+    const carts = useSelector((state) => state.carts);
+
     return (
         <Stack sx={{ padding: '12px 12px' }}>
             {listMenu.map((item, index) => {

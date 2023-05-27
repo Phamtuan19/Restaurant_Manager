@@ -146,7 +146,7 @@ function ModalTable({
                             </Button>
                             <Button
                                 variant="contained"
-                                disabled={modalChildBooking || listProductOrder.length === 0 ? true : false}
+                                // disabled={modalChildBooking || listProductOrder.length === 0 ? true : false}
                                 onClick={handleOpenModalBooking}
                             >
                                 Đặt bàn

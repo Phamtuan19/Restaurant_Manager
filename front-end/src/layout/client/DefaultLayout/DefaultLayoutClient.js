@@ -1,12 +1,14 @@
 import { createContext, useEffect, useState } from 'react';
 import { styled } from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Sidebar } from '../component/Sidebar';
 import { Header } from '../component/Header';
 import Footer from '../component/Footer';
 import LayoutSite from '../component/LayoutSite';
+import { Provider } from 'react-redux';
+import store from '~/redux/store';
 
 export const SkeletonLoading = createContext();
 
@@ -21,16 +23,12 @@ function DefaultLayout({ children }) {
     const [skeleton, setSkeleton] = useState(true);
     const [carts, setCarts] = useState([]);
 
-    console.log(carts);
-
     const handleAddToCart = (data, typeToast, messge) => {
         // toast(messge, {
         //     type: typeToast,
         // });
 
         const product = carts.find((item) => item.id === data.id);
-
-        console.log(product);
 
         if (product) {
             return setCarts((prev) => {
@@ -59,22 +57,24 @@ function DefaultLayout({ children }) {
     };
 
     return (
-        <SkeletonLoading.Provider value={{ skeleton, notifyTypes, carts, handleAddToCart, currencyFormatting }}>
-            <Sidebar sidebarActive={sidebarActive} handleClickSidebar={handleClickSidebar} />
-            <Wrap sx={{ marginLeft: { xs: '0', md: 'var(--width-sidebar)' }, position: 'relative', zIndex: 10 }}>
-                <Header handleClickSidebar={handleClickSidebar} />
+        <Provider store={store}>
+            <SkeletonLoading.Provider value={{ skeleton, notifyTypes, carts, handleAddToCart, currencyFormatting }}>
+                <Sidebar sidebarActive={sidebarActive} handleClickSidebar={handleClickSidebar} />
+                <Wrap sx={{ marginLeft: { xs: '0', md: 'var(--width-sidebar)' }, position: 'relative', zIndex: 10 }}>
+                    <Header handleClickSidebar={handleClickSidebar} />
 
-                <Content
-                    sx={{ marginTop: { xs: 'var(--header-height-table)', md: 'var(--height-header-client)' } }}
-                    onClick={() => setSidebarActive(false)}
-                >
-                    {children}
-                </Content>
-                <Footer />
-            </Wrap>
-            <LayoutSite />
-            <ToastContainer autoClose={3000} />
-        </SkeletonLoading.Provider>
+                    <Content
+                        sx={{ marginTop: { xs: 'var(--header-height-table)', md: 'var(--height-header-client)' } }}
+                        onClick={() => setSidebarActive(false)}
+                    >
+                        {children}
+                    </Content>
+                    <Footer />
+                </Wrap>
+                <LayoutSite />
+                <ToastContainer autoClose={3000} />
+            </SkeletonLoading.Provider>
+        </Provider>
     );
 }
 

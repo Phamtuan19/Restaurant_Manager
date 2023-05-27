@@ -1,12 +1,20 @@
 import { Box, Rating, Skeleton, Stack, Typography, styled } from '@mui/material';
 import { useContext } from 'react';
+import { useDispatch } from 'react-redux';
 import { AddNewIcon } from '~/component/Icons';
 import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
+import cartSlice from '~/redux/SliceReducer/CartsReducer';
 
 function Product(props) {
     const { data } = props;
+    const { skeleton, currencyFormatting } = useContext(SkeletonLoading);
 
-    const { skeleton, notifyTypes, handleAddToCart, currencyFormatting } = useContext(SkeletonLoading);
+    const dispatch = useDispatch();
+
+    const handleClickAddCart = (dataProduct) => {
+        dispatch(cartSlice.actions.addToCart(dataProduct));
+    };
+
     return (
         <Wrap sx={{ marginTop: { md: '85px', xs: '100px' } }}>
             {skeleton ? (
@@ -70,7 +78,10 @@ function Product(props) {
                         {skeleton ? (
                             <Skeleton variant="circular" width={32} height={32} />
                         ) : (
-                            <Box onClick={() => handleAddToCart(data, notifyTypes[0], 'Thêm thành công!')}>
+                            <Box
+                                onClick={() => handleClickAddCart(data)}
+                                // onClick={() => handleAddToCart(data, notifyTypes[0], 'Thêm thành công!')}
+                            >
                                 <AddNewIcon style={{ color: '#fff' }} />
                             </Box>
                         )}

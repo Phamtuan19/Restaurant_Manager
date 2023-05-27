@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import { Box, Grid, Stack, styled } from '@mui/material';
+import { Box, Grid, styled } from '@mui/material';
 import ContentHeader from './ContentHeader';
 import Table from './Table';
 
@@ -126,11 +126,11 @@ const listTable = [
     },
 ];
 
-const colorTable = {
-    green: '#228B22',
-    yellow: '#FFBF00',
-    red: '#FF4500',
-};
+// const colorTable = {
+//     green: '#228B22',
+//     yellow: '#FFBF00',
+//     red: '#FF4500',
+// };
 
 function ContentBooking() {
     return (

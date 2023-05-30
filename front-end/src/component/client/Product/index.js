@@ -1,18 +1,18 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Box, Rating, Skeleton, Stack, Typography, styled } from '@mui/material';
 import { useContext } from 'react';
-import { useDispatch } from 'react-redux';
 import { AddNewIcon } from '~/component/Icons';
 import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
-import cartSlice from '~/redux/SliceReducer/CartsReducer';
+import { useCart } from '~/redux/SliceReducer/CartsReducer';
 
 function Product(props) {
     const { data } = props;
     const { skeleton, currencyFormatting } = useContext(SkeletonLoading);
 
-    const dispatch = useDispatch();
+    const { useAddCart } = useCart();
 
     const handleClickAddCart = (dataProduct) => {
-        dispatch(cartSlice.actions.addToCart(dataProduct));
+        useAddCart(dataProduct);
     };
 
     return (

@@ -3,11 +3,10 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 import { TitleViewAll } from '~/component/client/TitleViewAll';
 import ProductItem from './ProductItem';
-import { useSelector } from 'react-redux';
-import { listCartsSelector } from '~/redux/selectors';
+import { useCart } from '~/redux/SliceReducer/CartsReducer';
 
 function Cart() {
-    const carts = useSelector(listCartsSelector);
+    const { listCart } = useCart();
 
     return (
         <Box sx={{ padding: '0 1.5rem 1.5rem', marginBottom: '2rem' }}>
@@ -24,7 +23,7 @@ function Cart() {
             />
 
             <Grid container spacing={2}>
-                {carts.map((item) => {
+                {listCart.map((item) => {
                     return (
                         <Grid key={item.id} item xs={12}>
                             <ProductItem data={item} />

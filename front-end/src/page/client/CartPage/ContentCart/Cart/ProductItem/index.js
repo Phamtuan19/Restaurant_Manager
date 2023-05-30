@@ -1,26 +1,20 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useContext } from 'react';
 import { Box, Stack, TextField, styled } from '@mui/material';
 import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 import { Delete } from '~/component/Icons';
-import { useDispatch } from 'react-redux';
-import cartSlice from '~/redux/SliceReducer/CartsReducer';
+import { useCart } from '~/redux/SliceReducer/CartsReducer';
 
 function ProductItem({ data }) {
     const { currencyFormatting } = useContext(SkeletonLoading);
-
-    const dispatch = useDispatch();
+    const { useQuantityCartItem, useDeleteCartItem } = useCart();
 
     const handleChangeQuantity = (e, data) => {
-        dispatch(
-            cartSlice.actions.setQuantityCartItem({
-                ...data,
-                quantityVal: e.target.value,
-            }),
-        );
+        useQuantityCartItem({ ...data, quantityVal: e.target.value });
     };
 
     const handleClickDelete = (data) => {
-        dispatch(cartSlice.actions.deleteCartItem(data));
+        useDeleteCartItem(data);
     };
 
     return (

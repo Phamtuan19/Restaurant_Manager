@@ -8,7 +8,7 @@
 }
 
 :root {
-	--color-default: rgb(234,106,18);
+	--color-default: rgb(234, 106, 18);
 	--white: #fff;
 	--black: rgba(33, 37, 41);
 	--color-primary: #A0522D;
@@ -62,12 +62,18 @@ body {
 	-webkit-user-select: none;
 	user-select: none;
 	background-image: linear-gradient(to right, #fbf8f7, #fbf9f0, #fbf9f0);
+
+}
+
+body::-webkit-scrollbar {
+	width: 0 !important;	
 }
 
 @keyframes LayoutSite_rotation {
 	0% {
 		transform: rotate(0deg);
 	}
+
 	100% {
 		transform: rotate(360deg);
 	}

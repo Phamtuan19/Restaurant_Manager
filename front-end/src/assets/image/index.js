@@ -1,3 +1,3 @@
 export const images = {
-    noImage: require('./tải xuống.jpg'),
+    noImage: require('./No_Image.jpg'),
 };

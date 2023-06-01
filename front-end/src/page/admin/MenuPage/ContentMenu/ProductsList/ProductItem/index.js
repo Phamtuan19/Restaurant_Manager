@@ -9,7 +9,7 @@ function ProductItem(props) {
                 <Image src={`${data.img}`} alt={data.alt} />
             </WrapImage>
             <Box sx={{ backgroundColor: 'var(--white)', borderRadius: '1.5rem', padding: '1rem' }}>
-                <Box sx={{ marginTop: '50px', paddingTop: '24px' }}>
+                <Box sx={{ marginTop: '60px', paddingTop: '24px' }}>
                     <ProductTitle>{data.title}</ProductTitle>
                     <Stack sx={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
                         <Price>$ {data.price}</Price>

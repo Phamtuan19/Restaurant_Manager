@@ -100,10 +100,10 @@ function Categories() {
 
                     <Collapse in={openFilterSize} timeout="auto" unmountOnExit>
                         <Box sx={{ display: 'flex', gap: '0 24px' }}>
-                            <Button styleProps={styleButtonCustom}>L</Button>
-                            <Button styleProps={styleButtonCustom}>M</Button>
-                            <Button styleProps={styleButtonCustom}>S</Button>
-                            <Button styleProps={styleButtonCustom}>X</Button>
+                            <Button sx={styleButtonCustom}>L</Button>
+                            <Button sx={styleButtonCustom}>M</Button>
+                            <Button sx={styleButtonCustom}>S</Button>
+                            <Button sx={styleButtonCustom}>X</Button>
                         </Box>
                     </Collapse>
                 </Box>

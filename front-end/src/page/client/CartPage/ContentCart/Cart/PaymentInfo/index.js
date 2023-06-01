@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 
 import { Card } from '~/component/client/Card';
 import { TitleViewAll } from '~/component/client/TitleViewAll';
-import * as province from '~/apiServices/province';
+import province from '~/services/province';
 
 function PaymentInfo() {
     const [apiDistricts, setApiDistricts] = useState([]);
@@ -15,13 +15,15 @@ function PaymentInfo() {
 
     const [skeleton, setSkeleton] = useState(true);
 
+    const { getDistricts, getWards } = province();
+
     useEffect(() => {
         setTimeout(() => setSkeleton(false), 3000);
     }, []);
 
     useEffect(() => {
         const resultDistricts = async () => {
-            const result = await province.districts();
+            const result = await getDistricts();
             setApiDistricts(result);
         };
         resultDistricts();
@@ -30,7 +32,7 @@ function PaymentInfo() {
     useEffect(() => {
         if (districts !== '') {
             const resultWard = async () => {
-                const result = await province.wards(districts);
+                const result = await getWards(districts);
                 setApiWard(result);
             };
             resultWard();

@@ -1,20 +1,30 @@
 import { Box, Collapse, Stack, styled } from '@mui/material';
 import { memo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { v4 } from 'uuid';
 import { Categories, DownArrow } from '~/component/Icons';
 
 const listSidebar = [
     {
         icon: Categories,
         title: 'Danh mục',
+        subCategories: [
+            { path: '/admin/categories/create', title: 'Thêm danh mục' },
+            { path: '/admin/categories', title: 'danh sách danh mục' },
+        ],
     },
     {
         icon: Categories,
         title: 'Sản Phẩm',
+        subCategories: [
+            { path: '/admin/products/create', title: 'Thêm Sản phẩm' },
+            { path: '/admin/products', title: 'danh sách sản phẩm' },
+        ],
     },
     {
         icon: Categories,
         title: 'Kho Hàng',
+        subCategories: [{ path: '/admin/warehouse', title: 'danh sách kho hàng' }],
     },
 ];
 
@@ -94,8 +104,13 @@ const SidebarItem = ({ activeSidebar, data }) => {
                         flexDirection: 'column',
                     }}
                 >
-                    <LinkCustomCollapse>Thêm danh mục</LinkCustomCollapse>
-                    <LinkCustomCollapse>Danh sách</LinkCustomCollapse>
+                    {data.subCategories.map((item) => {
+                        return (
+                            <LinkCustomCollapse key={v4()} to={item.path}>
+                                {item.title}
+                            </LinkCustomCollapse>
+                        );
+                    })}
                 </Box>
             </Collapse>
         </>
@@ -106,6 +121,7 @@ const LinkCustomCollapse = styled(Link)({
     padding: '12px 16px',
     color: 'var(--black)',
     fontFamily: '"Roboto Slab",serif',
+    textTransform: 'capitalize',
 
     '&:hover': {
         backgroundColor: '#cccccc2b',

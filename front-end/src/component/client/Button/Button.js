@@ -1,14 +1,14 @@
 import { styled } from '@mui/material';
 
-function Button({ styleProps, onClick, children }) {
+function Button({ sx, onClick, children }) {
     return (
-        <BannerButton sx={{ ...styleProps }} onClick={onClick}>
+        <CustomButton sx={{ ...sx }} onClick={onClick}>
             {children}
-        </BannerButton>
+        </CustomButton>
     );
 }
 
-const BannerButton = styled('button')({
+const CustomButton = styled('button')({
     cursor: 'pointer',
     color: '#fff',
     backgroundColor: '#ea6a12',

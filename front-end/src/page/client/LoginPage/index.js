@@ -14,7 +14,7 @@ function LoginPage() {
     useEffect(() => {
         const resultGoogleApi = async () => {
             try {
-                const response = await axios(`http://127.0.0.1:8000/api/auth/login/google`);
+                const response = await axios(`http://127.0.0.1:8000/api/auth/google/url`);
                 setResultGoogleApi(response.data.url);
             } catch (error) {
                 console.log(error);
@@ -74,7 +74,7 @@ function LoginPage() {
                                     justifyContent: 'center',
                                 }}
                             >
-                                <Button styleProps={{ borderRadius: '4px', padding: '8px 32px' }}>Sing In</Button>
+                                <Button sx={{ borderRadius: '4px', padding: '8px 32px' }}>Sing In</Button>
                             </Box>
                             <p style={{ margin: '1rem 0', textAlign: 'center', color: '#959895' }}>
                                 or sign in with other accounts?

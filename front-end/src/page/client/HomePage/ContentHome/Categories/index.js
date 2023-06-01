@@ -58,7 +58,7 @@ function Categories() {
                     return skeleton ? (
                         <Skeleton key={index} variant="rounded" width={120} height={50} />
                     ) : (
-                        <Button key={index} styleProps={{ ...styleButton }}>
+                        <Button key={index} sx={{ ...styleButton }}>
                             {item}
                         </Button>
                     );

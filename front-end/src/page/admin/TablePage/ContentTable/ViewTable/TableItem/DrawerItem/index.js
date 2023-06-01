@@ -84,7 +84,7 @@ function DrawerItem({ showDrawer, handleClick, title }) {
 
                 <WrapAction>
                     <Button
-                        styleProps={{
+                        sx={{
                             width: '60%',
                             borderRadius: '5px',
                             backgroundColor: '#007bff',
@@ -94,7 +94,7 @@ function DrawerItem({ showDrawer, handleClick, title }) {
                         Thanh Toán
                     </Button>
                     <Button
-                        styleProps={{
+                        sx={{
                             width: '40%',
                             borderRadius: '5px',
                             backgroundColor: '#17a2b8',

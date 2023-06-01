@@ -1,6 +1,8 @@
-import AddProducts from '~/page/admin/AddProducts';
+import CategoriesList from '~/page/admin/Categories/CategoriesList';
+import CategoriesCreate from '~/page/admin/Categories/CategoriesCreate';
 import DashboardPage from '~/page/admin/DashboardPage';
 import MenuPage from '~/page/admin/MenuPage';
+import ProductCreate from '~/page/admin/Products/ProductsCreate';
 import TablePage from '~/page/admin/TablePage';
 
 const routeAdmin = [
@@ -13,12 +15,20 @@ const routeAdmin = [
         component: TablePage,
     },
     {
-        path: '/menu',
+        path: '/products',
         component: MenuPage,
     },
     {
         path: '/products/create',
-        component: AddProducts,
+        component: ProductCreate,
+    },
+    {
+        path: '/categories',
+        component: CategoriesList,
+    },
+    {
+        path: '/categories/create',
+        component: CategoriesCreate,
     },
 ];
 

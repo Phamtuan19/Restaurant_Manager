@@ -46,7 +46,7 @@ function ProductsList() {
 
                 <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Button
-                        styleProps={{
+                        sx={{
                             fontSize: '14px',
                             padding: '4px 12px',
                             borderRadius: '5px',

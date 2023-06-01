@@ -11,7 +11,7 @@ const ListHeaderNavItem = [
         title: 'Dashboard',
     },
     {
-        path: '/admin/menu',
+        path: '/admin/products',
         icon: Menu,
         title: 'Menu',
     },

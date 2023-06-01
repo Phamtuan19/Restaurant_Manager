@@ -37,7 +37,7 @@ function Delivery() {
                 >
                     <InputPromocode placeholder="Promo Code ..." />
                     <Button
-                        styleProps={{
+                        sx={{
                             borderRadius: '0 10px 10px 0',
                             marginBottom: '2rem',
                         }}
@@ -85,8 +85,7 @@ function Delivery() {
                 ) : (
                     <Stack>
                         <Button
-                            title=""
-                            styleProps={{
+                            sx={{
                                 color: '#fff',
                                 backgroundColor: '#0d6efd !important',
                                 borderColor: '#0d6efd',

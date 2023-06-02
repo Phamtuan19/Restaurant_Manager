@@ -24,9 +24,6 @@ function DefaultLayout({ children }) {
     const [carts, setCarts] = useState([]);
 
     const handleAddToCart = (data, typeToast, messge) => {
-        // toast(messge, {
-        //     type: typeToast,
-        // });
 
         const product = carts.find((item) => item.id === data.id);
 
@@ -57,24 +54,22 @@ function DefaultLayout({ children }) {
     };
 
     return (
-        <Provider store={store}>
-            <SkeletonLoading.Provider value={{ skeleton, notifyTypes, carts, handleAddToCart, currencyFormatting }}>
-                <Sidebar sidebarActive={sidebarActive} handleClickSidebar={handleClickSidebar} />
-                <Wrap sx={{ marginLeft: { xs: '0', md: 'var(--width-sidebar)' }, position: 'relative', zIndex: 10 }}>
-                    <Header handleClickSidebar={handleClickSidebar} />
+        <SkeletonLoading.Provider value={{ skeleton, notifyTypes, carts, handleAddToCart, currencyFormatting }}>
+            <Sidebar sidebarActive={sidebarActive} handleClickSidebar={handleClickSidebar} />
+            <Wrap sx={{ marginLeft: { xs: '0', md: 'var(--width-sidebar)' }, position: 'relative', zIndex: 10 }}>
+                <Header handleClickSidebar={handleClickSidebar} />
 
-                    <Content
-                        sx={{ marginTop: { xs: 'var(--header-height-table)', md: 'var(--height-header-client)' } }}
-                        onClick={() => setSidebarActive(false)}
-                    >
-                        {children}
-                    </Content>
-                    <Footer />
-                </Wrap>
-                <LayoutSite />
-                <ToastContainer autoClose={3000} />
-            </SkeletonLoading.Provider>
-        </Provider>
+                <Content
+                    sx={{ marginTop: { xs: 'var(--header-height-table)', md: 'var(--height-header-client)' } }}
+                    onClick={() => setSidebarActive(false)}
+                >
+                    {children}
+                </Content>
+                <Footer />
+            </Wrap>
+            <LayoutSite />
+            <ToastContainer autoClose={3000} />
+        </SkeletonLoading.Provider>
     );
 }
 

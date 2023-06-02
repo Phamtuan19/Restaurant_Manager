@@ -1,81 +1,115 @@
-import { Box, Checkbox, FormControlLabel, Grid, Stack, styled } from '@mui/material';
-import axios from 'axios';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-expressions */
+import { Box, Checkbox, FormControlLabel, Grid, Stack, TextField, styled } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 import SvgLogo from '~/assets/iconSvg/SvgLogo';
 import { Facebook, Google } from '~/component/Icons';
 import { Button } from '~/component/client/Button';
+import useAuth from '~/services/auth.service';
+
+const validate = yup.object({
+    email: yup.string().required('Email không được để trống').email('Email không hợp lệ'),
+    password: yup.string().required('Mật khẩu không được để trống'),
+});
 
 function LoginPage() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        criteriaMode: 'all',
+        resolver: yupResolver(validate),
+    });
+
     const [resultGoogleApi, setResultGoogleApi] = useState('');
 
-    console.log(resultGoogleApi);
+    const { loginGoogle, loginAccount } = useAuth();
 
     useEffect(() => {
         const resultGoogleApi = async () => {
-            try {
-                const response = await axios(`http://127.0.0.1:8000/api/auth/google/url`);
-                setResultGoogleApi(response.data.url);
-            } catch (error) {
-                console.log(error);
-            }
+            const response = await loginGoogle();
+            setResultGoogleApi(response);
         };
-
         resultGoogleApi();
     }, []);
 
-    // const handleGoogleApi = async () => {
-    //     try {
-    //         const response = await axios('http://127.0.0.1:8000/api/auth/google/callback');
-    //         setResultGoogle(response.data);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
+    const handleSubmitForm = (data) => {
+        loginAccount(data);
+    };
 
     return (
         <Wrap>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6} lg={5}>
                     <Box sx={{ padding: '2rem' }}>
-                        <Box sx={{ width: '100%', textAlign: 'center', marginBottom: '3rem' }}>
-                            <SvgLogo width="70%" sx={{ marginBottom: '.5rem' }} />
+                        <Box sx={{ width: '100%', textAlign: 'center', marginBottom: '1rem' }}>
+                            <SvgLogo width="70%" height="97px" />
                             <H3Component>Sing In</H3Component>
                             <p style={{ color: '#959895' }}>Sign in to stay connected.</p>
                         </Box>
 
                         <Box>
-                            <Box sx={{ marginBottom: '1.5rem' }}>
-                                <LabelCustom htmlFor="acount">Tài khoản</LabelCustom>
-                                <InputCustom type="text" id="acount" placeholder="Nhập tài khoản ..." />
-                            </Box>
-                            <Box sx={{ marginBottom: '1rem' }}>
-                                <LabelCustom htmlFor="acount">Mật khẩu</LabelCustom>
-                                <InputCustom type="password" id="acount" placeholder="Nhập mật khẩu ..." />
-                            </Box>
+                            <form onSubmit={handleSubmit(handleSubmitForm)}>
+                                <Box sx={{ marginBottom: '1.5rem' }}>
+                                    <LabelCustom htmlFor="acount">Tài khoản</LabelCustom>
+                                    <TextField
+                                        id="email"
+                                        fullWidth
+                                        sx={styleInput}
+                                        type="text"
+                                        size="small"
+                                        variant="outlined"
+                                        placeholder="Nhập tài khoản ..."
+                                        {...register('email')}
+                                        error={!!errors.email}
+                                        helperText={errors.email?.message}
+                                    />
+                                </Box>
+                                <Box sx={{ marginBottom: '1rem' }}>
+                                    <LabelCustom htmlFor="acount">Mật khẩu</LabelCustom>
+                                    <TextField
+                                        id="email"
+                                        fullWidth
+                                        sx={styleInput}
+                                        type="password"
+                                        size="small"
+                                        variant="outlined"
+                                        placeholder="Nhập tài khoản ..."
+                                        {...register('password')}
+                                        error={!!errors.password}
+                                        helperText={errors.password?.message}
+                                    />
+                                </Box>
 
-                            <Stack
-                                sx={{
-                                    marginBottom: '1.5rem',
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <FormControlLabel control={<Checkbox defaultChecked />} label="Remember Me" />
-                                <LinkForgot to="/">Forgot Password?</LinkForgot>
-                            </Stack>
+                                <Stack
+                                    sx={{
+                                        marginBottom: '1.5rem',
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <FormControlLabel control={<Checkbox defaultChecked />} label="Remember Me" />
+                                    <LinkForgot to="/">Forgot Password?</LinkForgot>
+                                </Stack>
 
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    flexWrap: 'wrap',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                }}
-                            >
-                                <Button sx={{ borderRadius: '4px', padding: '8px 32px' }}>Sing In</Button>
-                            </Box>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <Button sx={{ borderRadius: '4px', padding: '8px 32px' }}>Sing In</Button>
+                                </Box>
+                            </form>
                             <p style={{ margin: '1rem 0', textAlign: 'center', color: '#959895' }}>
                                 or sign in with other accounts?
                             </p>
@@ -91,7 +125,7 @@ function LoginPage() {
 
                             <Box>
                                 <p style={{ margin: '1rem 0', textAlign: 'center', color: '#959895' }}>
-                                    Don’t have an account? <LinkForgot to="/">Click here to sign up.</LinkForgot>
+                                    Don’t have an account? <LinkForgot to="/sing-up">Click here to sign up.</LinkForgot>
                                 </p>
                             </Box>
                         </Box>
@@ -136,17 +170,11 @@ const LabelCustom = styled('label')({
     marginBottom: '6px',
 });
 
-const InputCustom = styled('input')({
+const styleInput = {
     fontSize: '1rem',
-    padding: '12px 24px',
-    width: '100%',
-    border: '1px solid #e3e1e1 !important',
     borderRadius: '8px',
-
-    '&:active': {
-        border: '1px solid #e3e1e1 !important',
-    },
-});
+    fontFamily: '"Roboto Slab",serif !important',
+};
 
 const LinkForgot = styled(Link)({
     color: '#ea6a12',

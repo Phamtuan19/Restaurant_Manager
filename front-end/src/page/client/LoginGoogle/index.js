@@ -1,32 +1,28 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuthInfo } from '~/redux/SliceReducer/AuthReducer';
+
+import useAuth from '~/services/auth.service';
 
 function LoginGoogle() {
-    const [userInfo, setUserInfo] = useState([]);
     const location = useLocation();
+    const navigate = useNavigate();
 
-    console.log(userInfo);
+    const { loginGoogleCallback } = useAuth();
+    const { setUserInfoLogin } = useAuthInfo();
+
     useEffect(() => {
         const resultGoogleCallbackApi = async () => {
-            try {
-                const response = await axios( process.env.REACT_APP_BASE_URL + 'auth/google/callback' + location.search);
-                setUserInfo(response.data);
-            } catch (error) {
-                console.log(error);
-            }
+            const response = await loginGoogleCallback(location.search);
+            setUserInfoLogin(response);
+            navigate('/login');
         };
 
         resultGoogleCallbackApi();
     }, []);
 
-    return (
-        <div>
-            <details>
-                <p>Here is your info: </p>
-            </details>
-        </div>
-    );
+    return <React.Fragment></React.Fragment>;
 }
 
 export default LoginGoogle;

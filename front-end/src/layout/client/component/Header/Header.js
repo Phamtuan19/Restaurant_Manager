@@ -43,7 +43,8 @@ const Wrap = styled(Stack)({
     zIndex: 10,
     alignItems: 'center',
     padding: { xs: '8px 12px' },
-    boxShadow: 'var(--box-shadow-fa)',
+    // boxShadow: 'var(--box-shadow-fa)',
+    boxShadow: '0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06)',
 });
 
 export default Header;

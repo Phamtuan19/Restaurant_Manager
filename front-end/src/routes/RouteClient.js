@@ -4,6 +4,8 @@ import CartPage from '~/page/client/CartPage';
 import LoginPage from '~/page/client/LoginPage';
 import LoginGoogle from '~/page/client/LoginGoogle';
 import BookingPage from '~/page/client/BookingPage';
+import ProtectedRoute from '~/component/ProtectedRoute';
+import SignUpPage from '~/page/client/SignUpPage';
 
 const routeClient = [
     {
@@ -25,13 +27,17 @@ const routeClient = [
     {
         path: '/login',
         component: LoginPage,
+        gurad: ProtectedRoute,
+    },
+    {
+        path: '/sing-up',
+        component: SignUpPage,
+        gurad: ProtectedRoute,
     },
     {
         path: '/auth/google',
         component: LoginGoogle,
     },
 ];
-
-
 
 export default routeClient;

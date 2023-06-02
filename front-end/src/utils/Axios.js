@@ -1,17 +1,23 @@
-const { default: axios } = require('axios');
+import axios from 'axios';
+import withAuthToken from './Middleware';
 
-const createInstance = (baseUrl) => {
+// const excludeAuthenApi = [];
+
+const createInstance = (baseURL) => {
     const options = {
-        baseURL: process.env.REACT_APP_BASE_URL,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-        },
+        baseURL: baseURL,
+        // headers: {
+        //     accept: 'application/json',
+        // },
     };
 
     const instance = axios.create(options);
 
     instance.interceptors.request.use(
         async (requestConfig) => {
+            withAuthToken(requestConfig);
+
+            // console.log(requestConfig);
             return requestConfig;
         },
         async (requestError) => {
@@ -20,8 +26,11 @@ const createInstance = (baseUrl) => {
     );
 
     instance.interceptors.response.use(
-        (response) => {
+        async (response) => {
             if (response && response.data) {
+                if (response?.data?.message) {
+                    console.log(response.data.message);
+                }
                 return response.data;
             } else {
                 return response;

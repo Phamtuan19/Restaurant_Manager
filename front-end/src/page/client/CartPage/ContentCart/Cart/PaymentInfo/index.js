@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
@@ -22,6 +23,8 @@ function PaymentInfo() {
     }, []);
 
     useEffect(() => {
+        console.log(process.env.REACT_APP_BASE_URL_API);
+
         const resultDistricts = async () => {
             const result = await getDistricts();
             setApiDistricts(result);

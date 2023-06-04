@@ -5,15 +5,16 @@ import BaseService from '~/utils/BaseService';
 // const { removeLocalItem } = useLocalStorage();
 
 const authEndpoint = {
-    loginAccount: 'auth/login/account',
-    authGoogle: 'auth/google/url',
-    googleCallback: 'auth/google/callback',
-    logoutAccount: 'auth/logout',
-    singupAccount: 'auth/singup/account',
+    base: 'auth',
+    loginAccount: '/login/account',
+    authGoogle: '/google/url',
+    googleCallback: '/google/callback',
+    logoutAccount: '/logout',
+    singupAccount: '/singup/account',
 };
 
 class AuthService extends BaseService {
-    // BASE_ENDPOINT = authEndpoint.base;
+    BASE_ENDPOINT = authEndpoint.base;
 
     constructor(params) {
         super(params);
@@ -21,51 +22,23 @@ class AuthService extends BaseService {
     }
 
     loginAccount = async (data) => {
-        return this.request.post(authEndpoint.loginAccount, data);
-
-        // const response = await instance.post(pathUrl.loginAccount, postData);
-        // const data = {
-        //     user: {
-        //         ...response.user,
-        //         avatar: response.avatar,
-        //     },
-        //     token: response.token,
-        // };
-        // return data;
+        return this.request.post(this.BASE_ENDPOINT + authEndpoint.loginAccount, data);
     };
 
     SingupAccount = async (data) => {
-        return this.request.post(authEndpoint.singupAccount, data);
-        // const response = await instance.post(process.env.REACT_APP_BASE_URL_API + pathUrl.SingupAccount, postData);
-        // console.log(response);
+        return this.request.post(this.BASE_ENDPOINT + authEndpoint.singupAccount, data);
     };
 
     loginGoogle = async () => {
-        // const response = await instance.get(pathUrl.authGoogle);
-        // return response.url;
+        return this.request.get(this.BASE_ENDPOINT + authEndpoint.authGoogle);
     };
 
-    loginGoogleCallback = async (params) => {
-        // const response = await instance.post(pathUrl.googleCallback + params);
-        // console.log(response);
-        // const data = {
-        //     user: {
-        //         ...response.user,
-        //         avatar: response.avatar,
-        //     },
-        //     token: response.token,
-        // };
-        // return data;
+    loginGoogleCallback = async () => {
+        return this.request.get(this.BASE_ENDPOINT + authEndpoint.googleCallback);
     };
 
     logoutAccount = async () => {
-        // const response = await instance.post(pathUrl.logoutAccount);
-        // if (response?.message) {
-        //     removeLocalItem('token');
-        //     removeLocalItem('user');
-        //     return true;
-        // }
-        // return false;
+        return this.request.post(this.BASE_ENDPOINT + authEndpoint.logoutAccount);
     };
 }
 

@@ -3,7 +3,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 import { TitleViewAll } from '~/component/client/TitleViewAll';
 import ProductItem from './ProductItem';
-import { useCart } from '~/redux/SliceReducer/CartsReducer';
+import { useCart } from '~/redux/SliceReducer/cartsReducer';
 
 function Cart() {
     const { listCart } = useCart();

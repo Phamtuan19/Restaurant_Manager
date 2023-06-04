@@ -37,6 +37,7 @@ const routeClient = [
     {
         path: '/auth/google',
         component: LoginGoogle,
+        gurad: ProtectedRoute,
     },
 ];
 

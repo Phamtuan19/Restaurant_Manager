@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 
-const cartReducer = createSlice({
+const cartsReducer = createSlice({
     name: 'carts',
     initialState: [],
 
@@ -25,7 +25,7 @@ const cartReducer = createSlice({
     },
 });
 
-const { addToCart, setQuantityCartItem, deleteCartItem } = cartReducer.actions;
+const { addToCart, setQuantityCartItem, deleteCartItem } = cartsReducer.actions;
 
 export const useCart = () => {
     const dispatch = useDispatch();
@@ -47,4 +47,4 @@ export const useCart = () => {
     return { listCart, useAddCart, useQuantityCartItem, useDeleteCartItem };
 };
 
-export default cartReducer;
+export default cartsReducer;

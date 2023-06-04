@@ -17,18 +17,28 @@ import {
     TextField,
     styled,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { v4 } from 'uuid';
 import { LoadingButton } from '@mui/lab';
+import { images } from '~/assets/image';
+import categoriesService from '~/services/categories.service';
+import setToastMessage from '~/Helpers/toastMessage';
 
 function ContentCreate() {
-    const rows = [
-        { id: 1, title: 'Đồ Uống', type: 'sản phẩm' },
-        { id: 1, title: 'Đồ Uống', type: 'sản phẩm' },
-        { id: 1, title: 'Đồ Uống', type: 'sản phẩm' },
-        { id: 1, title: 'Đồ Uống', type: 'sản phẩm' },
-    ];
+    const [updateCategoriesList, setUpdateCategoriesList] = useState(false);
+    const [rows, setRows] = useState([]);
+
+    useEffect(() => {
+        const categoriesList = async () => {
+            const response = await categoriesService.adminCategories();
+            setRows(response?.data);
+
+            setUpdateCategoriesList(false);
+        };
+
+        categoriesList();
+    }, [updateCategoriesList]);
 
     return (
         <>
@@ -43,17 +53,17 @@ function ContentCreate() {
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell sx={{ width: 50 }}>Stt</TableCell>
-                                        <TableCell align="center">Name</TableCell>
-                                        <TableCell align="center">Type</TableCell>
+                                        <TableCell sx={{ width: 70 }}>Stt</TableCell>
+                                        <TableCell align="left">Name</TableCell>
+                                        <TableCell align="left">Type</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {rows.map((row) => (
                                         <TableRow key={v4()} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                            <TableCell align="center">{row.id}</TableCell>
-                                            <TableCell align="center">{row.title}</TableCell>
-                                            <TableCell align="center">{row.type}</TableCell>
+                                            <TableCell align="left">{row.id}</TableCell>
+                                            <TableCell align="left">{row.name}</TableCell>
+                                            <TableCell align="left">{row.type}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -62,7 +72,7 @@ function ContentCreate() {
                     </Box>
                 </Grid>
                 <Grid item xs={5}>
-                    <FormCreateCategories />
+                    <FormCreateCategories setUpdateCategoriesList={setUpdateCategoriesList} />
                 </Grid>
             </Grid>
         </>
@@ -83,12 +93,14 @@ const HeaderTitle = styled('h3')({
 });
 
 const validate = yup.object({
-    categoryName: yup.string().required('Tên danh mục không được để trống'),
-    categoryType: yup.string().required('Xếp loại danh mục không được để trống'),
+    name: yup.string().required('Tên danh mục không được để trống'),
+    type: yup.string().required('Xếp loại danh mục không được để trống'),
 });
 
-const FormCreateCategories = () => {
+const FormCreateCategories = ({ setUpdateCategoriesList }) => {
     const [loading, setLoading] = useState(false);
+    const [selectType, setSelectType] = useState('');
+    const [selectParent, setSelectParent] = useState('');
 
     const {
         register,
@@ -96,9 +108,25 @@ const FormCreateCategories = () => {
         formState: { errors },
     } = useForm({ criteriaMode: 'all', resolver: yupResolver(validate) });
 
-    const handleSubmitForm = (data) => {
-        console.log(data);
-        setLoading(!loading);
+    const handleSubmitForm = async (data) => {
+        const response = await categoriesService.adminCategoriesCreate(data);
+        if (response?.status === 200) {
+            // const [data] = response;
+            console.log(response);
+            if (response?.message) {
+                setToastMessage(response.message, 'success');
+                setUpdateCategoriesList(true);
+            }
+
+            setToastMessage(response[0]?.name[0], 'error');
+        }
+    };
+
+    const hanleChangeSlectType = (e) => {
+        setSelectType(e.target.value);
+    };
+    const hanleChangeSlectParent = (e) => {
+        setSelectParent(e.target.value);
     };
 
     return (
@@ -107,7 +135,7 @@ const FormCreateCategories = () => {
                 <Box>
                     <label
                         htmlFor="modal-name"
-                        style={{ ...styleLable, color: errors.categoryName ? '#d32f2f' : 'var(--black)' }}
+                        style={{ ...styleLable, color: errors.name ? '#d32f2f' : 'var(--black)' }}
                     >
                         Tên danh mục
                     </label>
@@ -117,29 +145,62 @@ const FormCreateCategories = () => {
                         variant="outlined"
                         size="small"
                         sx={{ marginBottom: '1rem' }}
-                        {...register('categoryName')}
-                        error={!!errors.categoryName}
-                        helperText={errors.categoryName?.message}
+                        {...register('name')}
+                        error={!!errors.name}
+                        helperText={errors.name?.message}
                     />
                 </Box>
 
                 <Box sx={{ marginBottom: '1rem' }}>
-                    <FormControl fullWidth error={!!errors.categoryType}>
+                    <FormControl fullWidth error={!!errors.type}>
                         <label
-                            htmlFor="modal-name"
-                            style={{ ...styleLable, color: errors.categoryType ? '#d32f2f' : 'var(--black)' }}
+                            htmlFor="modal-type"
+                            style={{ ...styleLable, color: errors.type ? '#d32f2f' : 'var(--black)' }}
                         >
                             Xếp loại
                         </label>
-                        <Select fullWidth id="modal-name" variant="outlined" size="small" {...register('categoryType')}>
-                            <MenuItem value={10}>Sản phẩm</MenuItem>
-                            <MenuItem value={20}>Nguyên liệu</MenuItem>
+                        <Select
+                            fullWidth
+                            id="modal-type"
+                            value={selectType}
+                            variant="outlined"
+                            size="small"
+                            {...register('type')}
+                            onChange={hanleChangeSlectType}
+                        >
+                            <MenuItem value="" defaultChecked></MenuItem>
+                            <MenuItem value="sản phẩm">Sản phẩm</MenuItem>
+                            <MenuItem value="nguyên liệu">Nguyên liệu</MenuItem>
                         </Select>
-                        <FormHelperText>{errors.categoryType?.message}</FormHelperText>
+                        <FormHelperText>{errors.type?.message}</FormHelperText>
                     </FormControl>
                 </Box>
 
-                <LoadingButton type="submit" variant="contained" loading={loading} loadingPosition="end">
+                <Box sx={{ marginBottom: '1rem' }}>
+                    <FormControl fullWidth error={!!errors.parentId}>
+                        <label
+                            htmlFor="modal-parentId"
+                            style={{ ...styleLable, color: errors.parentId ? '#d32f2f' : 'var(--black)' }}
+                        >
+                            Danh mục cha
+                        </label>
+                        <Select
+                            fullWidth
+                            id="modal-parentId"
+                            value={selectParent}
+                            variant="outlined"
+                            size="small"
+                            {...register('parentId')}
+                            onChange={hanleChangeSlectParent}
+                        >
+                            <MenuItem value="" defaultChecked></MenuItem>
+                            <MenuItem value="">danh mục 1</MenuItem>
+                            <MenuItem value="">danh mục 2</MenuItem>
+                        </Select>
+                        <FormHelperText>{errors.parentId?.message}</FormHelperText>
+                    </FormControl>
+                </Box>
+                <LoadingButton type="submit" sx={{ marginTop: '1rem' }} variant="contained" loading={loading}>
                     <Box sx={{ marginRight: loading ? 2.5 : 0 }}>Thêm mới</Box>
                 </LoadingButton>
             </form>

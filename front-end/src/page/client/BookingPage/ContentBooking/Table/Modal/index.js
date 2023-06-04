@@ -2,11 +2,11 @@ import { Box, Button, Modal, styled } from '@mui/material';
 
 import { v4 } from 'uuid';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import ModalProductItem from './ModalProductItem';
 import ModalChild from './ModalChild';
-import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 import ModalBooking from './ModalBooking';
+import fomatMoney from '~/Helpers/fomatMoney';
 
 export const ContextModalBooking = createContext();
 
@@ -21,7 +21,6 @@ function ModalTable({
 }) {
     const [listProductOrder, setListProductOrder] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
-    const { currencyFormatting } = useContext(SkeletonLoading);
     const [transformModal, setTransformModal] = useState(false);
 
     // Tính tổng tiền
@@ -163,7 +162,7 @@ function ModalTable({
                                 }}
                             >
                                 <Box sx={{ fontWeight: 500 }}>Tổng tiền: </Box>
-                                <Box sx={{ fontWeight: 500 }}>{currencyFormatting(totalPrice)}</Box>
+                                <Box sx={{ fontWeight: 500 }}>{fomatMoney(totalPrice)}</Box>
                             </Box>
                         </Box>
                     </Box>

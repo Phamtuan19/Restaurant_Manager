@@ -1,5 +1,6 @@
 import axios from 'axios';
 import withAuthToken from './Middleware';
+import setToastMessage from '~/Helpers/toastMessage';
 
 // const excludeAuthenApi = [];
 
@@ -16,8 +17,6 @@ const createInstance = (baseURL) => {
     instance.interceptors.request.use(
         async (requestConfig) => {
             withAuthToken(requestConfig);
-
-            // console.log(requestConfig);
             return requestConfig;
         },
         async (requestError) => {
@@ -28,16 +27,24 @@ const createInstance = (baseURL) => {
     instance.interceptors.response.use(
         async (response) => {
             if (response && response.data) {
-                if (response?.data?.message) {
-                    console.log(response.data.message);
-                }
-                return response.data;
+                return {
+                    ...response.data,
+                    status: response.status,
+                };
             } else {
-                return response;
+                return {
+                    ...response,
+                    status: response.status,
+                };
             }
         },
-        async (responseError) => {
-            return Promise.reject(responseError);
+        async (err) => {
+            try {
+                if (err.response) setToastMessage(err.response.data.message || 'đã có lỗi xảy ra!', 'error');
+                console.log(err.response);
+            } catch (e) {
+                return Promise.reject(e);
+            }
         },
     );
 

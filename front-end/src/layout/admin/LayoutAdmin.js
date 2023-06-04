@@ -1,30 +1,22 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { useAuthReducer } from '~/redux/SliceReducer/authReducer';
 import routeAdmin from '~/routes/routeAdmin';
 
 function LayoutAdmin() {
-    return (
-        <Routes>
-            {routeAdmin.map((route, index) => {
-                const Component = route.component;
+    const { userInfo } = useAuthReducer();
 
-                if (route?.gurad) {
-                    const ComponentGurad = route.gurad;
+    if (userInfo.role === 'Administration' && userInfo.isAuthenticated) {
+        return (
+            <Routes>
+                {routeAdmin.map((route, index) => {
+                    const Component = route.component;
+                    return <Route key={index} path={route.path} element={<Component />} />;
+                })}
+            </Routes>
+        );
+    }
 
-                    <Route
-                        key={index}
-                        path={route.path}
-                        element={
-                            <ComponentGurad>
-                                <Component />
-                            </ComponentGurad>
-                        }
-                    />;
-                }
-
-                return <Route key={index} path={route.path} element={<Component />} />;
-            })}
-        </Routes>
-    );
+    return <Navigate to="/" replace />;
 }
 
 export default LayoutAdmin;

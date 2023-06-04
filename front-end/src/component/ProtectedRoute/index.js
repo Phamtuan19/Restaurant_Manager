@@ -1,12 +1,15 @@
-import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuthInfo } from '~/redux/SliceReducer/AuthReducer';
+import { useAuthReducer } from '~/redux/SliceReducer/authReducer';
 
 const ProtectedRoute = ({ children }) => {
-    const { userInfo } = useAuthInfo();
+    const { userInfo } = useAuthReducer();
 
     if (userInfo.isAuthenticated) {
-        return <Navigate to="/" replace />;
+        if (userInfo.role === 'Administration') {
+            return <Navigate to="/admin/products/create" replace />;
+        }
+
+        // return <Navigate to="/" replace />;
     }
 
     return children;

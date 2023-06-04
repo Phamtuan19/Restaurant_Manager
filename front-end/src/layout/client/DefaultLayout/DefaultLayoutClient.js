@@ -12,32 +12,10 @@ import store from '~/redux/store';
 
 export const SkeletonLoading = createContext();
 
-const currencyFormatting = (val) => {
-    return val.toLocaleString('vi', { style: 'currency', currency: 'VND' });
-};
-
-const notifyTypes = ['success', 'info', 'warning', 'error'];
 
 function DefaultLayout({ children }) {
     const [sidebarActive, setSidebarActive] = useState(false);
     const [skeleton, setSkeleton] = useState(true);
-    const [carts, setCarts] = useState([]);
-
-    const handleAddToCart = (data, typeToast, messge) => {
-
-        const product = carts.find((item) => item.id === data.id);
-
-        if (product) {
-            return setCarts((prev) => {
-                const listProductCart = prev.filter((item) => item !== product.id);
-
-                const newCarts = [...listProductCart, { ...product, quantity: product.quantity + 1 }];
-
-                return newCarts;
-            });
-        }
-        return setCarts((prev) => [...prev, { ...data, quantity: 1 }]);
-    };
 
     useEffect(() => {
         const timeout = () => {
@@ -54,7 +32,7 @@ function DefaultLayout({ children }) {
     };
 
     return (
-        <SkeletonLoading.Provider value={{ skeleton, notifyTypes, carts, handleAddToCart, currencyFormatting }}>
+        <SkeletonLoading.Provider value={{ skeleton }}>
             <Sidebar sidebarActive={sidebarActive} handleClickSidebar={handleClickSidebar} />
             <Wrap sx={{ marginLeft: { xs: '0', md: 'var(--width-sidebar)' }, position: 'relative', zIndex: 10 }}>
                 <Header handleClickSidebar={handleClickSidebar} />
@@ -68,7 +46,6 @@ function DefaultLayout({ children }) {
                 <Footer />
             </Wrap>
             <LayoutSite />
-            <ToastContainer autoClose={3000} />
         </SkeletonLoading.Provider>
     );
 }

@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useContext } from 'react';
+
 import { Box, Stack, TextField, styled } from '@mui/material';
-import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
+import fomatMoney from '~/Helpers/fomatMoney';
 import { Delete } from '~/component/Icons';
-import { useCart } from '~/redux/SliceReducer/CartsReducer';
+import { useCart } from '~/redux/SliceReducer/cartsReducer';
 
 function ProductItem({ data }) {
-    const { currencyFormatting } = useContext(SkeletonLoading);
     const { useQuantityCartItem, useDeleteCartItem } = useCart();
 
     const handleChangeQuantity = (e, data) => {
@@ -43,10 +42,10 @@ function ProductItem({ data }) {
                         </Box>
                         <Box sx={{ flex: 1, fontSize: '16px', display: 'flex', alignItems: 'center' }}>
                             <span style={{ marginRight: '12px', fontWeight: 500 }}>
-                                {currencyFormatting(data.price)}
+                                {fomatMoney(data.price)}
                             </span>
                             <span style={{ fontSize: '14px', color: 'red', textDecoration: 'line-through' }}>
-                                {currencyFormatting(data.price)}
+                                {fomatMoney(data.price)}
                             </span>
                         </Box>
                     </Box>

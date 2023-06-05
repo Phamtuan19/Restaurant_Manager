@@ -5,8 +5,10 @@ import LayoutAdmin from './layout/admin/LayoutAdmin';
 import './index.css';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
+
     return (
         <BrowserRouter>
             <Provider store={store}>
@@ -14,6 +16,7 @@ function App() {
                     <Route path="/*" element={<LayoutClient />} />
                     <Route path="/admin/*" element={<LayoutAdmin />} />
                 </Routes>
+                <ToastContainer autoClose={3000} />
             </Provider>
         </BrowserRouter>
     );

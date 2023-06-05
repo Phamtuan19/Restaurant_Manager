@@ -1,8 +1,9 @@
-import { Avatar, Box, Stack, styled } from '@mui/material';
+import { Box, Stack, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 import SvgLogo from '~/assets/iconSvg/SvgLogo';
 import { Dashboard, Search, Menu, Table, WarehouseRacks } from '~/component/Icons';
 import InputCustom from '~/component/admin/InputCustom';
+import { Authentication } from '~/layout/client/component/Header/Authentication';
 
 const ListHeaderNavItem = [
     {
@@ -65,9 +66,7 @@ function Header() {
                 })}
             </Box>
 
-            <Authentication>
-                <Avatar sx={{ width: '2.3rem', height: '2.3rem' }} src="" />
-            </Authentication>
+            <Authentication />
         </WrapHeader>
     );
 }
@@ -104,7 +103,5 @@ const HeaderNavItemLink = styled(Link)({
         },
     },
 });
-
-const Authentication = styled('div')({});
 
 export default Header;

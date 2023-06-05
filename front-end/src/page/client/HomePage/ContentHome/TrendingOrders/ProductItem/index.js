@@ -1,11 +1,8 @@
 import { Box, Skeleton, Typography, styled } from '@mui/material';
-import { useContext } from 'react';
+import fomatMoney from '~/Helpers/fomatMoney';
 import { AddNewIcon } from '~/component/Icons';
-import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 
 function ProductItem({ data }) {
-    const { notify, types, currencyFormatting } = useContext(SkeletonLoading);
-
     return (
         <Wrap>
             <Box
@@ -53,11 +50,11 @@ function ProductItem({ data }) {
                                 gap: '0 24px',
                             }}
                         >
-                            <Price>{currencyFormatting(data.price)}</Price>
+                            <Price>{fomatMoney(data.price)}</Price>
                             {/* {data.price_sale && <PriceSale>$ {data.price}</PriceSale>} */}
                         </Box>
 
-                        <Box onClick={() => notify(types[0], 'Thêm thành công!')}>
+                        <Box>
                             <AddNewIcon className={'AddNewIcon'} style={{ color: '#fff' }} />
                         </Box>
                     </Box>

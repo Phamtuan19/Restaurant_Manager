@@ -1,34 +1,41 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable array-callback-return */
 import {
     Box,
-    FormControl,
-    FormHelperText,
     Grid,
-    MenuItem,
+    Pagination,
+    PaginationItem,
     Paper,
-    Select,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
     TableRow,
-    TextField,
     styled,
 } from '@mui/material';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 import { v4 } from 'uuid';
-import { LoadingButton } from '@mui/lab';
+
+import categoriesService from '~/services/categories.service';
+import { Link } from 'react-router-dom';
+import FormCreateCategories from './FormCreateCategories';
 
 function ContentCreate() {
-    const rows = [
-        { id: 1, title: 'Đồ Uống', type: 'sản phẩm' },
-        { id: 1, title: 'Đồ Uống', type: 'sản phẩm' },
-        { id: 1, title: 'Đồ Uống', type: 'sản phẩm' },
-        { id: 1, title: 'Đồ Uống', type: 'sản phẩm' },
-    ];
+    const [updateCategoriesList, setUpdateCategoriesList] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [page, setPage] = useState(1);
+
+    useEffect(() => {
+        const categoriesList = async () => {
+            const response = await categoriesService.adminCategories(page);
+            if (response) {
+                setCategories(response);
+            }
+            setUpdateCategoriesList(false);
+        };
+        categoriesList();
+    }, [updateCategoriesList, page]);
 
     return (
         <>
@@ -43,26 +50,43 @@ function ContentCreate() {
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell sx={{ width: 50 }}>Stt</TableCell>
-                                        <TableCell align="center">Name</TableCell>
-                                        <TableCell align="center">Type</TableCell>
+                                        <TableCell sx={{ width: 70 }}>Stt</TableCell>
+                                        <TableCell align="left" sx={{ width: 70 }}></TableCell>
+                                        <TableCell align="left">Name</TableCell>
+                                        <TableCell align="left">Type</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {rows.map((row) => (
+                                    {(categories?.categories?.data || []).map((row, index) => (
                                         <TableRow key={v4()} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                            <TableCell align="center">{row.id}</TableCell>
-                                            <TableCell align="center">{row.title}</TableCell>
-                                            <TableCell align="center">{row.type}</TableCell>
+                                            <TableCell align="left">{index + 1}</TableCell>
+                                            <TableCell align="left">
+                                                <img src={row.image} alt="" width={70} />
+                                            </TableCell>
+                                            <TableCell align="left">{row.name}</TableCell>
+                                            <TableCell align="left">{row.type}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        <Box sx={{ marginTop: '2rem', display: 'flex', justifyContent: 'center' }}>
+                            <Pagination
+                                page={page}
+                                count={categories?.categories?.last_page || 1}
+                                onChange={(event, value) => setPage(value)}
+                                renderItem={(item) => (
+                                    <PaginationItem component={Link} to={`?page=${item.page}`} {...item} />
+                                )}
+                            />
+                        </Box>
                     </Box>
                 </Grid>
                 <Grid item xs={5}>
-                    <FormCreateCategories />
+                    <FormCreateCategories
+                        categories={categories?.categoriesCreate}
+                        setUpdateCategoriesList={setUpdateCategoriesList}
+                    />
                 </Grid>
             </Grid>
         </>
@@ -81,75 +105,5 @@ const HeaderTitle = styled('h3')({
     fontFamily: '"Roboto Slab",serif',
     color: 'var(--black)',
 });
-
-const validate = yup.object({
-    categoryName: yup.string().required('Tên danh mục không được để trống'),
-    categoryType: yup.string().required('Xếp loại danh mục không được để trống'),
-});
-
-const FormCreateCategories = () => {
-    const [loading, setLoading] = useState(false);
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm({ criteriaMode: 'all', resolver: yupResolver(validate) });
-
-    const handleSubmitForm = (data) => {
-        console.log(data);
-        setLoading(!loading);
-    };
-
-    return (
-        <Box sx={{ backgroundColor: 'var(--white)', padding: '1.5rem', borderRadius: '10px' }}>
-            <form action="" onSubmit={handleSubmit(handleSubmitForm)}>
-                <Box>
-                    <label
-                        htmlFor="modal-name"
-                        style={{ ...styleLable, color: errors.categoryName ? '#d32f2f' : 'var(--black)' }}
-                    >
-                        Tên danh mục
-                    </label>
-                    <TextField
-                        fullWidth
-                        id="modal-name"
-                        variant="outlined"
-                        size="small"
-                        sx={{ marginBottom: '1rem' }}
-                        {...register('categoryName')}
-                        error={!!errors.categoryName}
-                        helperText={errors.categoryName?.message}
-                    />
-                </Box>
-
-                <Box sx={{ marginBottom: '1rem' }}>
-                    <FormControl fullWidth error={!!errors.categoryType}>
-                        <label
-                            htmlFor="modal-name"
-                            style={{ ...styleLable, color: errors.categoryType ? '#d32f2f' : 'var(--black)' }}
-                        >
-                            Xếp loại
-                        </label>
-                        <Select fullWidth id="modal-name" variant="outlined" size="small" {...register('categoryType')}>
-                            <MenuItem value={10}>Sản phẩm</MenuItem>
-                            <MenuItem value={20}>Nguyên liệu</MenuItem>
-                        </Select>
-                        <FormHelperText>{errors.categoryType?.message}</FormHelperText>
-                    </FormControl>
-                </Box>
-
-                <LoadingButton type="submit" variant="contained" loading={loading} loadingPosition="end">
-                    <Box sx={{ marginRight: loading ? 2.5 : 0 }}>Thêm mới</Box>
-                </LoadingButton>
-            </form>
-        </Box>
-    );
-};
-
-const styleLable = {
-    marginBottom: '6px',
-    display: 'inline-block',
-};
 
 export default ContentCreate;

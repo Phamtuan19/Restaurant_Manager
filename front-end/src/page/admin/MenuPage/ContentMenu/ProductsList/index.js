@@ -14,30 +14,28 @@ import {
 import { AddNew, ViewGrid, ViewTable } from '~/component/Icons';
 import { Button } from '~/component/client/Button';
 import ProductItem from './ProductItem';
-import { useState } from 'react';
-
-const productCategoriesList = [
-    {
-        title: 'Mushroom',
-        img: 'https://templates.iqonic.design/aprycot/react/build/static/media/16.2717f609.png',
-        alt: 'profileimage',
-        price: 7.65,
-    },
-    {
-        title: 'Mushroom',
-        img: 'https://templates.iqonic.design/aprycot/react/build/static/media/16.2717f609.png',
-        alt: 'profileimage',
-        price: 7.65,
-        price_sale: 10.21,
-    },
-];
+import { useEffect, useState } from 'react';
+import productSeviver from '~/services/product.service';
 
 function ProductsList() {
     const [viewProduct, setViewProduct] = useState(true);
+    const [productList, setProductList] = useState([]);
 
     const handleClickView = () => {
         setViewProduct(!viewProduct);
     };
+
+    useEffect(() => {
+        const productsList = async () => {
+            const res = await productSeviver.adminProducts();
+            if (res) {
+                console.log(res);
+                setProductList(res.products);
+            }
+        };
+
+        productsList();
+    }, []);
 
     return (
         <>
@@ -72,7 +70,11 @@ function ProductsList() {
                 </Stack>
             </Header>
 
-            {viewProduct ? <ViewListProductGrid /> : <ViewListProductTable />}
+            {viewProduct ? (
+                <ViewListProductGrid productList={productList} />
+            ) : (
+                <ViewListProductTable productList={productList} />
+            )}
         </>
     );
 }
@@ -84,7 +86,7 @@ const Header = styled('header')({
     alignItems: 'center',
 });
 
-const ViewListProductTable = () => {
+const ViewListProductTable = ({ productList }) => {
     return (
         <TableContainer component={Paper} sx={{ width: '100%', overflow: 'hidden' }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -107,7 +109,7 @@ const ViewListProductTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {productCategoriesList.map((item, index) => (
+                    {productList.map((item, index) => (
                         <TableRow
                             key={index}
                             sx={{
@@ -137,11 +139,11 @@ const ViewListProductTable = () => {
     );
 };
 
-const ViewListProductGrid = () => {
+const ViewListProductGrid = ({ productList }) => {
     return (
         <Box>
             <Grid container spacing={2}>
-                {productCategoriesList.map((item, index) => {
+                {productList.map((item, index) => {
                     return (
                         <Grid item xs={2} key={index}>
                             <ProductItem data={item} />

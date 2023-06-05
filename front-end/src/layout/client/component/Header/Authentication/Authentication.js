@@ -3,11 +3,11 @@ import { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import { CartHeader, LoginIcon, Notification } from '~/component/Icons';
-import { useAuthInfo } from '~/redux/SliceReducer/AuthReducer';
-import useAuth from '~/services/auth.service';
+import { useAuthReducer } from '~/redux/SliceReducer/authReducer';
+import authService from '~/services/auth.service';
 
 function Authentication() {
-    const { userInfo, setIsAuthenticated } = useAuthInfo();
+    const { userInfo, setlogoutAccount } = useAuthReducer();
 
     return (
         <Stack justifyContent="flex-end" flexDirection="row" alignItems="center">
@@ -19,7 +19,7 @@ function Authentication() {
             </WrapIcon>
             <Box>
                 {userInfo.isAuthenticated ? (
-                    <UserInfo userInfo={userInfo} setIsAuthenticated={setIsAuthenticated} />
+                    <UserDetail userInfo={userInfo} setlogoutAccount={setlogoutAccount} />
                 ) : (
                     <UserLogin />
                 )}
@@ -74,9 +74,8 @@ const CustomButtom = styled(Link)({
     },
 });
 
-const UserInfo = ({ userInfo, setIsAuthenticated }) => {
+const UserDetail = ({ userInfo, setlogoutAccount }) => {
     const [anchorEl, setAnchorEl] = useState(null);
-    const { logoutAccount } = useAuth();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -87,12 +86,10 @@ const UserInfo = ({ userInfo, setIsAuthenticated }) => {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-    const handleLogout = () => {
-        const response = logoutAccount();
-
-        if (response) {
-            setIsAuthenticated({ isAuthenticated: false });
-        }
+    const handleLogout = async () => {
+        const response = await authService.logoutAccount();
+        console.log(response);
+        setlogoutAccount(response);
     };
 
     return (
@@ -101,7 +98,7 @@ const UserInfo = ({ userInfo, setIsAuthenticated }) => {
                 aria-describedby={id}
                 sx={{ cursor: 'pointer', width: '32px', height: '32px' }}
                 sizes="small"
-                src={userInfo?.user?.avatar || userInfo?.user?.image}
+                src={userInfo?.user?.image}
                 onClick={handleClick}
             />
 
@@ -118,10 +115,7 @@ const UserInfo = ({ userInfo, setIsAuthenticated }) => {
             >
                 <Box sx={{ padding: '12px 24px' }}>
                     <Box sx={{ display: 'flex', margin: '10px 0' }}>
-                        <Avatar
-                            sx={{ width: '50px', height: '50px' }}
-                            src={userInfo?.user?.avatar || userInfo?.user?.image}
-                        />
+                        <Avatar sx={{ width: '50px', height: '50px' }} src={userInfo?.user?.image} />
                         <Box sx={{ flex: 1, marginLeft: '12px' }}>
                             <Box sx={{ fontSize: '1rem', fontWeight: 600, color: '#292929' }}>
                                 {userInfo?.user?.name}

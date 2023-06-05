@@ -9,8 +9,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import SvgLogo from '~/assets/iconSvg/SvgLogo';
 import { Facebook, Google } from '~/component/Icons';
-import { Button } from '~/component/client/Button';
-import useAuth from '~/services/auth.service';
+import authService from '~/services/auth.service';
+import { LoadingButton } from '@mui/lab';
+import { useAuthReducer } from '~/redux/SliceReducer/authReducer';
 
 const validate = yup.object({
     email: yup.string().required('Email không được để trống').email('Email không hợp lệ'),
@@ -27,20 +28,23 @@ function LoginPage() {
         resolver: yupResolver(validate),
     });
 
-    const [resultGoogleApi, setResultGoogleApi] = useState('');
+    const [btnLoading, setBtnLoaidng] = useState(false);
 
-    const { loginGoogle, loginAccount } = useAuth();
+    const [resultGoogleApi, setResultGoogleApi] = useState('');
+    const { setUserInfoLogin } = useAuthReducer();
 
     useEffect(() => {
         const resultGoogleApi = async () => {
-            const response = await loginGoogle();
-            setResultGoogleApi(response);
+            const response = await authService.loginGoogle();
+            setResultGoogleApi(response.url);
         };
         resultGoogleApi();
     }, []);
 
-    const handleSubmitForm = (data) => {
-        loginAccount(data);
+    const handleSubmitForm = async (data) => {
+        const response = await authService.loginAccount(data);
+        // console.log(response);
+        setUserInfoLogin(response);
     };
 
     return (
@@ -107,7 +111,15 @@ function LoginPage() {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    <Button sx={{ borderRadius: '4px', padding: '8px 32px' }}>Sing In</Button>
+                                    <LoadingButton
+                                        loading={btnLoading}
+                                        loadingIndicator="Loading…"
+                                        variant="contained"
+                                        size="large"
+                                        type="submit"
+                                    >
+                                        Sing In
+                                    </LoadingButton>
                                 </Box>
                             </form>
                             <p style={{ margin: '1rem 0', textAlign: 'center', color: '#959895' }}>

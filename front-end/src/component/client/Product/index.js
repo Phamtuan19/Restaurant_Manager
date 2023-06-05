@@ -1,18 +1,21 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Box, Rating, Skeleton, Stack, Typography, styled } from '@mui/material';
 import { useContext } from 'react';
+import fomatMoney from '~/Helpers/fomatMoney';
+import setToastMessage from '~/Helpers/toastMessage';
 import { AddNewIcon } from '~/component/Icons';
 import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
-import { useCart } from '~/redux/SliceReducer/CartsReducer';
+import { useCart } from '~/redux/SliceReducer/cartsReducer';
 
 function Product(props) {
     const { data } = props;
-    const { skeleton, currencyFormatting } = useContext(SkeletonLoading);
+    const { skeleton } = useContext(SkeletonLoading);
 
     const { useAddCart } = useCart();
 
     const handleClickAddCart = (dataProduct) => {
         useAddCart(dataProduct);
+        setToastMessage('thêm thành công', 'success');
     };
 
     return (
@@ -69,8 +72,8 @@ function Product(props) {
                             ) : (
                                 <Price>
                                     {data.price_sale !== undefined
-                                        ? currencyFormatting(data.price_sale)
-                                        : currencyFormatting(data.price)}
+                                        ? fomatMoney(data.price_sale)
+                                        : fomatMoney(data.price)}
                                 </Price>
                                 // {data.price_sale !== undefined ? <PriceSale>$ {data.price}</PriceSale> : ''}
                             )}

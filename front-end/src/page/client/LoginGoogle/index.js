@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuthInfo } from '~/redux/SliceReducer/AuthReducer';
 
-import useAuth from '~/services/auth.service';
+import { useAuthReducer } from '~/redux/SliceReducer/authReducer';
+import authService from '~/services/auth.service';
 
 function LoginGoogle() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { loginGoogleCallback } = useAuth();
-    const { setUserInfoLogin } = useAuthInfo();
+    const { setUserInfoLogin } = useAuthReducer();
 
     useEffect(() => {
         const resultGoogleCallbackApi = async () => {
-            const response = await loginGoogleCallback(location.search);
+            console.log(location.search);
+            const response = await authService.loginGoogleCallback(location.search);
             setUserInfoLogin(response);
             navigate('/login');
         };

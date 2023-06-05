@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useDispatch, useSelector } from 'react-redux';
+import setToastMessage from '~/Helpers/toastMessage';
 import useLocalStorage from '~/hook/useLocalStorage';
 
 const { createSlice } = require('@reduxjs/toolkit');
@@ -14,6 +15,7 @@ const checkTimeOut = () => {
         const isCheck = targetTime > currentTime ? true : false;
         if (!isCheck) {
             removeLocalItem('token');
+            removeLocalItem('user');
         }
     }
     return false;
@@ -21,8 +23,9 @@ const checkTimeOut = () => {
 
 const initialState = {
     isAuthenticated: getLocalItem('token') ? true : false,
-    user: getLocalItem('user'),
+    user: getLocalItem('user') || null,
     isExpiresToken: checkTimeOut(),
+    role: getLocalItem('user')?.role || 'Member',
 };
 
 const authReducer = createSlice({
@@ -32,10 +35,11 @@ const authReducer = createSlice({
         loginAcountGoogle: (state, action) => {
             state.user = action.payload.user;
             state.isAuthenticated = true;
+            console.log(action.payload.user);
+            state.role = action?.payload?.user?.role;
         },
         logoutAccount: (state, action) => {
-            console.log(action);
-            state.isAuthenticated = action.payload.isAuthenticated;
+            state.isAuthenticated = action?.payload?.isAuthenticated || null;
             state.user = null;
         },
     },
@@ -43,22 +47,43 @@ const authReducer = createSlice({
 
 const { loginAcountGoogle, logoutAccount } = authReducer.actions;
 
-export const useAuthInfo = () => {
+export const useAuthReducer = () => {
     const dispatch = useDispatch();
 
     const userInfo = useSelector((state) => state.auth);
 
     const setUserInfoLogin = (payload) => {
-        dispatch(loginAcountGoogle(payload));
-        payload.token ? setLocalItem('token', payload.token) : console.error('----- Token không tồn tại');
-        payload.user ? setLocalItem('user', payload.user) : console.error('----- User không tồn tại');
+        if (payload?.status === 200) {
+            try {
+                if (payload.token && payload.user) {
+                    setLocalItem('token', payload.token);
+                    setLocalItem('user', payload.user);
+                    setToastMessage('Đăng nhập thành công', 'success');
+
+                    dispatch(loginAcountGoogle(payload));
+                } else {
+                    setToastMessage('Đẵ có lỗi xảy ra!', 'error');
+                }
+            } catch (error) {
+                setToastMessage('Đẵ có lỗi xảy ra vui lòng kiểm tra lại!', 'error');
+            }
+        }
     };
 
-    const setIsAuthenticated = (payload) => {
-        dispatch(logoutAccount(payload));
+    const setlogoutAccount = (payload) => {
+        if (payload?.status === 200) {
+            try {
+                dispatch(logoutAccount(payload));
+                removeLocalItem('token');
+                removeLocalItem('user');
+                setToastMessage('Đăng xuất thành công', 'success');
+            } catch (error) {
+                setToastMessage('Đẵ có lỗi xảy ra vui lòng kiểm tra lại!', 'error');
+            }
+        }
     };
 
-    return { userInfo, setUserInfoLogin, setIsAuthenticated };
+    return { userInfo, setUserInfoLogin, setlogoutAccount };
 };
 
 export default authReducer;

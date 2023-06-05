@@ -1,17 +1,26 @@
 import { Box, Collapse, Skeleton, styled } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DownArrow, Search } from '~/component/Icons';
 import { Card } from '~/component/client/Card';
 import ProductCategory from './ProductCategory';
-import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 import { Button } from '~/component/client/Button';
+import productSeviver from '~/services/product.service';
 
 function Categories() {
     const [openCategories, setOpenCategories] = useState(true);
     const [categoriesValue, setCategoriesValue] = useState([]);
     const [openFilterSize, setOpenFilterSize] = useState(true);
+    const [filter, setFilter] = useState([]);
 
-    const { skeleton } = useContext(SkeletonLoading);
+    useEffect(() => {
+        const menuFilter = async () => {
+            const res = await productSeviver.getMenuFilter();
+            if (res) {
+                setFilter(res);
+            }
+        };
+        menuFilter();
+    }, []);
 
     const handleClickCategories = () => {
         setOpenCategories(!openCategories);
@@ -31,71 +40,35 @@ function Categories() {
             }}
         >
             <Box sx={{ position: 'relative' }}>
-                {skeleton ? (
-                    <Skeleton variant="text" width={280} height={60} />
-                ) : (
-                    <>
-                        <Search
-                            width="18px"
-                            sx={{
-                                position: 'absolute',
-                                top: '50%',
-                                left: '15px',
-                                transform: 'translateY(-50%)',
-                            }}
-                        />
-                        <InputCategories placeholder="Nhập sản phẩm tìm kiếm ... " />
-                    </>
-                )}
+                <Search
+                    width="18px"
+                    sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '15px',
+                        transform: 'translateY(-50%)',
+                    }}
+                />
+                <InputCategories placeholder="Nhập sản phẩm tìm kiếm ... " />
             </Box>
-
             <Box>
                 <Box>
                     <WrapTitle onClick={handleClickCategories}>
-                        {skeleton ? (
-                            <Skeleton variant="text" width={280} height={60} />
-                        ) : (
-                            <>
-                                <h3
-                                    style={{
-                                        fontSize: '24px',
-                                        padding: '0',
-                                        margin: '1rem 0 0.5rem 0',
-                                        fontFamily: '"Roboto Slab", serif',
-                                    }}
-                                >
-                                    Categories
-                                </h3>
-                                <DownArrow />
-                            </>
-                        )}
+                        <h3 style={styleTileFilter}>Categories</h3>
+                        <DownArrow />
                     </WrapTitle>
 
                     <ProductCategory
                         open={openCategories}
                         categoriesValue={categoriesValue}
                         setCategoriesValue={setCategoriesValue}
+                        categoryList={filter.categories}
                     />
                 </Box>
                 <Box>
                     <WrapTitle onClick={handleClickFilterSize} sx={{ marginBottom: '12px' }}>
-                        {skeleton ? (
-                            <Skeleton variant="text" width={280} height={60} />
-                        ) : (
-                            <>
-                                <h3
-                                    style={{
-                                        fontSize: '24px',
-                                        padding: '0',
-                                        margin: '1rem 0 0.5rem 0',
-                                        fontFamily: '"Roboto Slab", serif',
-                                    }}
-                                >
-                                    Filter by price
-                                </h3>
-                                <DownArrow />
-                            </>
-                        )}
+                        <h3 style={styleTileFilter}>Filter by price</h3>
+                        <DownArrow />
                     </WrapTitle>
 
                     <Collapse in={openFilterSize} timeout="auto" unmountOnExit>
@@ -111,6 +84,13 @@ function Categories() {
         </Card>
     );
 }
+
+const styleTileFilter = {
+    fontSize: '18px',
+    padding: '0',
+    margin: '1rem 0 0.5rem 0',
+    fontFamily: '"Roboto Slab", serif',
+};
 
 const styleButtonCustom = {
     position: 'relative',

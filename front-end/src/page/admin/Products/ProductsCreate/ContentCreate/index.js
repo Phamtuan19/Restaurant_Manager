@@ -3,6 +3,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import {
     Box,
     Button,
+    CircularProgress,
     FormControl,
     FormHelperText,
     Grid,
@@ -43,6 +44,7 @@ function ContentCreate() {
     } = useForm({
         resolver: yupResolver(validate),
     });
+    const [loadingUploadImage, setLoadingUploadImage] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
     const [categories, setCategories] = useState([]);
     const [category, setCategory] = useState('');
@@ -59,8 +61,10 @@ function ContentCreate() {
 
     const handleImageChange = async (event) => {
         if (event.target.files[0]) {
+            setLoadingUploadImage((prev) => !prev);
             const res = await firebaseUploadImage(event, setImageUrl);
             setImageUrl(res);
+            setLoadingUploadImage((prev) => !prev);
         } else {
             setImageUrl(null);
         }
@@ -176,27 +180,47 @@ function ContentCreate() {
                     </Grid>
                     <Grid item lg={4}>
                         <Grid item lg={12}>
-                            <LabelCustom
-                                htmlFor="product_images"
-                                sx={{
-                                    width: '100%',
-                                    height: '400px',
-                                    cursor: 'pointer',
-                                    background: 'center center/cover no-repeat',
-                                    backgroundImage: `url('${imageUrl || images.noImage}')`,
-                                }}
-                            >
-                                <TextFieldCustom
-                                    fullWidth
-                                    type="file"
-                                    id="product_images"
-                                    variant="outlined"
-                                    size="small"
-                                    sx={{ opacity: 0 }}
-                                    {...register('image')}
-                                    onChange={handleImageChange}
-                                />
-                            </LabelCustom>
+                            <Box sx={{ position: 'relative', zIndex: 1 }}>
+                                <LabelCustom
+                                    loading={true}
+                                    htmlFor="product_images"
+                                    sx={{
+                                        zIndex: 2,
+                                        cursor: 'pointer',
+                                        width: '100%',
+                                        height: '400px',
+                                        background: 'center center/cover no-repeat',
+                                        backgroundImage: `url('${imageUrl || images.noImage}')`,
+                                    }}
+                                >
+                                    <TextFieldCustom
+                                        fullWidth
+                                        type="file"
+                                        id="product_images"
+                                        variant="outlined"
+                                        size="small"
+                                        sx={{ opacity: 0 }}
+                                        {...register('image')}
+                                        onChange={handleImageChange}
+                                    />
+                                </LabelCustom>
+                                <Box
+                                    sx={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        width: '100%',
+                                        height: '100%',
+                                        display: loadingUploadImage ? 'flex' : 'none',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        zIndex: 10,
+                                    }}
+                                >
+                                    <CircularProgress />
+                                </Box>
+                            </Box>
+
                             <Box sx={{ fontSize: '0.75rem', color: '#d32f2f' }}>{errors.image?.message}</Box>
                         </Grid>
                     </Grid>
@@ -218,7 +242,7 @@ const FormCustom = styled('form')({
     borderRadius: '10px',
 });
 
-const LabelCustom = styled('label')({
+export const LabelCustom = styled('label')({
     marginBottom: '.5rem',
     display: 'inline-block',
     fontSize: '1rem',
@@ -229,7 +253,7 @@ const LabelCustom = styled('label')({
     fontFamily: '"Roboto Slab",serif',
 });
 
-const TextFieldCustom = styled(TextField)({
+export const TextFieldCustom = styled(TextField)({
     borderRadius: '.25rem',
     fontFamily: '"Roboto Slab",serif !important',
 });

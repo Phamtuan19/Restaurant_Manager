@@ -17,9 +17,7 @@ function DrawerItem({ showDrawer, handleClick, title }) {
             setTimeOut(newTimeOut);
         }, 1000);
 
-        return () => {
-            clearInterval(interval);
-        };
+        interval();
     }, []);
 
     return (

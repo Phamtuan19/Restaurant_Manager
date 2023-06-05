@@ -84,7 +84,7 @@ const WrapHeader = styled('div')({
     gap: '0 24px',
     backgroundColor: 'var(--white)',
     boxShadow: 'var(--box-shadow-fa)',
-    zIndex: '9999',
+    zIndex: '50',
 });
 
 const HeaderNavItemLink = styled(Link)({

@@ -66,7 +66,7 @@ body {
 }
 
 body::-webkit-scrollbar {
-	width: 0 !important;	
+	width: 0 !important;
 }
 
 @keyframes LayoutSite_rotation {
@@ -234,7 +234,7 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: 'Poppins', sans-serif;
+	font-family: "Roboto Slab", serif;
 	margin-top: 0;
 	margin-bottom: 0;
 	font-weight: 700;

@@ -13,8 +13,8 @@ import {
 } from '@mui/material';
 import { AddNew, ViewGrid, ViewTable } from '~/component/Icons';
 import { Button } from '~/component/client/Button';
-import ProductItem from './ProductItem';
-import { useEffect, useState } from 'react';
+
+import { Suspense, lazy, useEffect, useState } from 'react';
 import productSeviver from '~/services/product.service';
 
 function ProductsList() {
@@ -139,17 +139,21 @@ const ViewListProductTable = ({ productList }) => {
     );
 };
 
+const LazyProductItem = lazy(() => import('./ProductItem'));
+
 const ViewListProductGrid = ({ productList }) => {
     return (
         <Box>
             <Grid container spacing={2}>
-                {productList.map((item, index) => {
-                    return (
-                        <Grid item xs={2} key={index}>
-                            <ProductItem data={item} />
-                        </Grid>
-                    );
-                })}
+                <Suspense fallback={<p>Loading...</p>}>
+                    {productList.map((item, index) => {
+                        return (
+                            <Grid item xs={3} key={index}>
+                                <LazyProductItem data={item} />
+                            </Grid>
+                        );
+                    })}
+                </Suspense>
             </Grid>
         </Box>
     );

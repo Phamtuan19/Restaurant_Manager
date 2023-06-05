@@ -1,66 +1,31 @@
-import { Box, Grid, MenuItem, Pagination, Select, Skeleton, Stack, styled } from '@mui/material';
-import { useContext, useState } from 'react';
+import { Box, Grid, MenuItem, Pagination, PaginationItem, Select, Skeleton, Stack, styled } from '@mui/material';
+import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { v4 } from 'uuid';
 import Product from '~/component/client/Product';
 import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
-
-const productList = [
-    {
-        id: v4(),
-        top: 'Top of the day',
-        img: 'https://templates.iqonic.design/aprycot/react/build/static/media/17.938b20db.png',
-        title: 'Tôm Hùm',
-        persons: '4 persons',
-        price: 120000,
-    },
-    {
-        id: v4(),
-        top: 'Top of the week',
-        img: 'https://templates.iqonic.design/aprycot/react/build/static/media/14.e20083c2.png',
-        title: 'Tôm Hùm',
-        persons: '4 persons',
-        price: 120000,
-    },
-    {
-        id: v4(),
-        top: 'Top of the month',
-        img: 'https://templates.iqonic.design/aprycot/react/build/static/media/18.2bcce14e.png',
-        title: 'Tôm Hùm',
-        persons: '4 persons',
-        price: 120000,
-    },
-    {
-        id: v4(),
-        top: 'Top of the week',
-        img: 'https://templates.iqonic.design/aprycot/react/build/static/media/19.5ab77ed3.png',
-        title: 'Tôm Hùm',
-        persons: '4 persons',
-        price: 120000,
-    },
-    {
-        id: v4(),
-        top: 'Top of the week',
-        img: 'https://templates.iqonic.design/aprycot/react/build/static/media/20.d3d93362.png',
-        title: 'Tôm Hùm',
-        persons: '4 persons',
-        price: 120000,
-    },
-    {
-        id: v4(),
-        top: 'Top of the week',
-        img: 'https://templates.iqonic.design/aprycot/react/build/static/media/21.8b39acdf.png',
-        title: 'Tôm Hùm',
-        persons: '4 persons',
-        price: 120000,
-    },
-];
+import productSeviver from '~/services/product.service';
 
 // const loads = [1, 2, 3, 4, 5, 6, 7, 8];
 
 function Content() {
     const [valueSelect, setValueSelect] = useState('Ten');
     const { skeleton } = useContext(SkeletonLoading);
+    const [productList, setProductList] = useState([]);
+    
+    const [page, setPage] = useState(1);
+    useEffect(() => {
+        const getProductList = async (page) => {
+            const res = await productSeviver.getMenuProducts(page);
+            if (res) {
+                setProductList(res.products);
+            }
+        };
 
+        getProductList(page);
+    }, [page]);
+
+    
     const handleChange = (event) => {
         setValueSelect(event.target.value);
     };
@@ -75,7 +40,7 @@ function Content() {
                     </>
                 ) : (
                     <>
-                        <HeaderContentTitle>Có {productList.length} sản phẩm</HeaderContentTitle>
+                        {/* <HeaderContentTitle>Có {(productList?.data).length} sản phẩm</HeaderContentTitle> */}
 
                         <Box sx={{ minWidth: 120 }}>
                             <Select
@@ -95,9 +60,9 @@ function Content() {
             </HeaderContent>
 
             <Grid container spacing={2} gap="12px 0" sx={{ marginTop: '12px', marginBottom: '2rem' }}>
-                {productList.map((data) => {
+                {(productList?.data || []).map((data) => {
                     return (
-                        <Grid key={v4()} item xs={12} sm={6} md={4} lg={3}>
+                        <Grid key={v4()} item xs={12} sm={6} md={4} lg={4}>
                             <Product data={data} />
                         </Grid>
                     );
@@ -105,7 +70,12 @@ function Content() {
             </Grid>
 
             <Stack spacing={2} sx={{ alignItems: 'center' }}>
-                <Pagination count={10} />
+                <Pagination
+                    page={page}
+                    count={productList?.last_page || 1}
+                    onChange={(event, value) => setPage(value)}
+                    renderItem={(item) => <PaginationItem component={Link} to={`?page=${item.page}`} {...item} />}
+                />
             </Stack>
         </Box>
     );

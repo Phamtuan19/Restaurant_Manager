@@ -1,21 +1,33 @@
 import { Box, Stack, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
+import fomatMoney from '~/Helpers/fomatMoney';
 
 function ProductItem(props) {
     const { data } = props;
+
     return (
         <LinkCustom to="/admin/product/12">
             <WrapImage className="Menu_Product_Img">
-                <Box sx={{ width: '120px', height: '120px', borderRadius: '50%', overflow: 'hidden' }}>
+                <Box sx={{ width: '140px', height: '140px', borderRadius: '50%', overflow: 'hidden' }}>
                     <Image src={`${data.image}`} alt={data.name} />
                 </Box>
             </WrapImage>
-            <Box sx={{ backgroundColor: 'var(--white)', borderRadius: '1.5rem', padding: '1rem' }}>
+            <Box
+                className="Menu_Product_Content"
+                sx={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                    border: '1px solid #fff',
+                    borderRadius: '1.5rem',
+                    padding: '1rem',
+                }}
+            >
                 <Box sx={{ marginTop: '60px', paddingTop: '24px' }}>
                     <ProductTitle>{data.name}</ProductTitle>
                     <Stack sx={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                        <Price>{data.price}</Price>
-                        <PriceSale>{data.price}</PriceSale>
+                        <Price>{fomatMoney(data.price)}</Price>
+                        <PriceSale sx={{ display: data.price_sale ? 'flex' : 'none' }}>
+                            {data.price_sale ? fomatMoney(data.price_sale) : null}
+                        </PriceSale>
                     </Stack>
                 </Box>
             </Box>
@@ -24,15 +36,12 @@ function ProductItem(props) {
 }
 
 const LinkCustom = styled(Link)({
-    marginTop: '50px',
-    borderRadius: '1.25rem',
+    marginTop: '5rem',
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     textAlign: 'center',
-    gap: '16px 0',
     cursor: 'pointer',
-    border: '0 solid rgba(0,0,0,.125)',
 
     '&:hover': {
         '.Menu_Product_Img': {
@@ -44,14 +53,18 @@ const LinkCustom = styled(Link)({
         h3: {
             color: '#065fd4',
         },
+
+        '.Menu_Product_Content': {
+            backgroundColor: 'rgba(255, 255, 255, 1)',
+        },
     },
 });
 
 const WrapImage = styled('div')({
     position: 'absolute',
-    top: '0%',
-    left: '0%',
-    transform: 'translateY(-50px) translateX(40px)',
+    top: 0,
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     alignItems: 'center',
 });
 

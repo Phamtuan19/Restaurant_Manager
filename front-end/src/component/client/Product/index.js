@@ -26,7 +26,9 @@ function Product(props) {
                 </WrapImage>
             ) : (
                 <WrapImage>
-                    <Image className="Product_Item_Img" src={data.img} alt={data.alt} />
+                    <Box sx={{ width: '150px', height: '150px', borderRadius: '50%', overflow: 'hidden' }}>
+                        <Image className="Product_Item_Img" src={data.image} alt={data.name} />
+                    </Box>
                 </WrapImage>
             )}
             <CardBody>
@@ -71,9 +73,7 @@ function Product(props) {
                                 <Skeleton variant="text" width={50} height={32} />
                             ) : (
                                 <Price>
-                                    {data.price_sale !== undefined
-                                        ? fomatMoney(data.price_sale)
-                                        : fomatMoney(data.price)}
+                                    {data?.price_sale !== null ? fomatMoney(data?.price_sale) : fomatMoney(data?.price)}
                                 </Price>
                                 // {data.price_sale !== undefined ? <PriceSale>$ {data.price}</PriceSale> : ''}
                             )}
@@ -115,19 +115,16 @@ const Wrap = styled(Box)({
 
 const WrapImage = styled('div')({
     position: 'absolute',
-    left: 0,
-    right: 0,
-    textAlign: 'center',
-    transform: 'translateY(-85px)',
-    zIndex: 1,
+    top: 0,
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    alignItems: 'center',
 });
 
 const Image = styled('img')({
-    maxHeight: '170px',
-    maxWidth: '170px',
-    minWidth: '170px',
+    width: '100%',
+    height: '100%',
     objectFit: 'cover',
-    borderRadius: '32rem',
 });
 
 const CardBody = styled('div')({

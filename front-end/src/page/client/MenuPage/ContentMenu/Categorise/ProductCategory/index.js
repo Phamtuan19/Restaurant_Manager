@@ -9,9 +9,8 @@ import {
     Stack,
     styled,
 } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { v4 } from 'uuid';
-import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 
 const listProductCategories = [
     {
@@ -44,10 +43,8 @@ const listProductCategories = [
     },
 ];
 
-function ProductCategory({ open, categoriesValue, setCategoriesValue }) {
+function ProductCategory({ open, categoriesValue, setCategoriesValue, categoryList }) {
     const [checked, setChecked] = useState([]);
-
-    const { skeleton } = useContext(SkeletonLoading);
 
     const handleClick = (id, title) => {
         const currenIndex = checked.includes(id);
@@ -63,42 +60,27 @@ function ProductCategory({ open, categoriesValue, setCategoriesValue }) {
 
     return (
         <Collapse in={open} timeout="auto" unmountOnExit>
-            {listProductCategories.map((item) => {
+            {(categoryList || []).map((item) => {
                 const labelId = `${item.title}-${item.id}`;
 
                 return (
                     <ListItem
                         key={v4()}
-                        secondaryAction={
-                            skeleton ? (
-                                <Skeleton variant="text" width={50} height={30} />
-                            ) : (
-                                <TotalCategoryItem>11</TotalCategoryItem>
-                            )
-                        }
+                        secondaryAction={<TotalCategoryItem>{item.products_count}</TotalCategoryItem>}
                         disablePadding
                     >
-                        {skeleton ? (
-                            <Stack sx={{ flexDirection: 'row', gap: '0 12px' }}>
-                                <Skeleton variant="text" width={30} height={30} />
-                                <Skeleton variant="text" width={150} height={30} />
-                            </Stack>
-                        ) : (
-                            <>
-                                <ListItemButton role={undefined} onClick={() => handleClick(item.id, item.title)} dense>
-                                    <ListItemIcon>
-                                        <Checkbox
-                                            edge="start"
-                                            checked={checked.indexOf(item.id) !== -1}
-                                            tabIndex={-1}
-                                            disableRipple
-                                            inputProps={{ 'aria-labelledby': labelId }}
-                                        />
-                                    </ListItemIcon>
-                                    <ListItemText id={labelId} primary={`${item.title}`} />
-                                </ListItemButton>
-                            </>
-                        )}
+                        <ListItemButton role={undefined} onClick={() => handleClick(item.id, item.name)} dense>
+                            <ListItemIcon>
+                                <Checkbox
+                                    edge="start"
+                                    checked={checked.indexOf(item.id) !== -1}
+                                    tabIndex={-1}
+                                    disableRipple
+                                    inputProps={{ 'aria-labelledby': labelId }}
+                                />
+                            </ListItemIcon>
+                            <ListItemText id={labelId} primary={`${item.name}`} />
+                        </ListItemButton>
                     </ListItem>
                 );
             })}

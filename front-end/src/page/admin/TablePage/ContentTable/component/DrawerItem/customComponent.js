@@ -19,12 +19,6 @@ export const SpanTime = styled('span')({
     fontSize: '14px',
 });
 
-// export const ProductItem = styled('div')({
-//     padding: '1rem',
-//     display: 'flex',
-//     justifyContent: 'space-between',
-// });
-
 export const TableCustom = styled('table')({
     width: '100%',
     fontSize: '14px',

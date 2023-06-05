@@ -1,18 +1,18 @@
-import { Stack, styled } from '@mui/material';
-import { BlurNotes, RedNotes, YellowNotes } from '~/page/admin/TablePage/ContentTable/ViewTable/customComponent';
+import { Box, Stack, styled } from '@mui/material';
+import { v4 } from 'uuid';
 
 const listNote = [
     {
-        component: BlurNotes,
         title: 'Bàn trống',
+        color: 'var(--color-blur)',
     },
     {
-        component: YellowNotes,
         title: 'Bàn đã đặt',
+        color: '#FFBF00',
     },
     {
-        component: RedNotes,
         title: 'Bàn đang sử dụng',
+        color: 'var(--color-red)',
     },
 ];
 
@@ -34,20 +34,17 @@ function ContentHeader() {
             <HeaderTitle>Danh sách bàn</HeaderTitle>
             <Stack sx={{ gap: '12px 32px', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
                 {listNote.map((item, index) => {
-                    const Component = item.component;
-
                     return (
                         <Stack
-                            key={index}
+                            key={v4()}
                             sx={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
-                                color: '#959895',
                                 textTransform: 'capitalize',
                                 fontSize: '14px',
                             }}
                         >
-                            <Component />
+                            <Box sx={{ ...styleStatusTable, backgroundColor: item.color }}></Box>
                             {item.title}
                         </Stack>
                     );
@@ -62,5 +59,12 @@ const HeaderTitle = styled('h3')({
     fontFamily: '"Roboto Slab",serif',
     color: 'var(--black)',
 });
+
+const styleStatusTable = {
+    width: '20px',
+    height: '20px',
+    borderRadius: '4px',
+    marginRight: '12px',
+};
 
 export default ContentHeader;

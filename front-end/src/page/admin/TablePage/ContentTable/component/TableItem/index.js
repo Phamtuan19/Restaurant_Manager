@@ -1,31 +1,31 @@
-import { styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import { useState } from 'react';
 import { RestaurantTable } from '~/component/Icons';
-import DrawerItem from './DrawerItem';
 
-function TableItem({ title }) {
+const colorStatsTable = ['var(--color-blur)', '#FFBF00', 'var(--color-red)'];
+
+function TableItem({ item }) {
     const [showDrawer, setShowDrawer] = useState(false);
-    
 
     const handleClick = () => {
         setShowDrawer(!showDrawer);
     };
 
     return (
-        <>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <BoxRestaurantTable
                 sx={{
-                    '&::before': { border: '6px solid var(--color-blur)' },
-                    '&::after': { border: '6px solid var(--color-blur)' },
+                    '&::before': { border: `6px solid ${colorStatsTable[item.status - 1]}` },
+                    '&::after': { border: `6px solid ${colorStatsTable[item.status - 1]}` },
                 }}
                 onClick={handleClick}
             >
                 <RestaurantTable />
-                <TableItemName sx={{ backgroundColor: 'var(--color-blur)' }}>{title}</TableItemName>
+                <TableItemName sx={{ backgroundColor: 'var(--color-blur)' }}>
+                    {item.index_table + ' - T' + item.floor}
+                </TableItemName>
             </BoxRestaurantTable>
-
-            <DrawerItem showDrawer={showDrawer} handleClick={handleClick} title={title} />
-        </>
+        </Box>
     );
 }
 

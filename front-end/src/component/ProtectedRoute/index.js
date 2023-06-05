@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }) => {
             return <Navigate to="/admin/products/create" replace />;
         }
 
-        // return <Navigate to="/" replace />;
+        return <Navigate to="/" replace />;
     }
 
     return children;

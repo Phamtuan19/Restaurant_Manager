@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import setToastMessage from '~/Helpers/toastMessage';
 import useLocalStorage from '~/hook/useLocalStorage';
 
@@ -49,7 +48,6 @@ const authReducer = createSlice({
 const { loginAcountGoogle, logoutAccount } = authReducer.actions;
 
 export const useAuthReducer = () => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const userInfo = useSelector((state) => state.auth);

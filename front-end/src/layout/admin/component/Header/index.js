@@ -1,4 +1,4 @@
-import { Avatar, Box, Stack, styled } from '@mui/material';
+import { Box, Stack, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 import SvgLogo from '~/assets/iconSvg/SvgLogo';
 import { Dashboard, Search, Menu, Table, WarehouseRacks } from '~/component/Icons';

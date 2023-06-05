@@ -1,17 +1,13 @@
 import { createContext, useEffect, useState } from 'react';
 import { styled } from '@mui/material';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Sidebar } from '../component/Sidebar';
 import { Header } from '../component/Header';
 import Footer from '../component/Footer';
 import LayoutSite from '../component/LayoutSite';
-import { Provider } from 'react-redux';
-import store from '~/redux/store';
 
 export const SkeletonLoading = createContext();
-
 
 function DefaultLayout({ children }) {
     const [sidebarActive, setSidebarActive] = useState(false);

@@ -1,17 +1,31 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Button, Grid, Stack, TextField, styled } from '@mui/material';
+import {
+    Box,
+    Button,
+    FormControl,
+    FormHelperText,
+    Grid,
+    MenuItem,
+    Select,
+    Stack,
+    TextField,
+    styled,
+} from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { images } from '~/assets/image';
+import firebaseUploadImage from '~/services/firebase.service';
+import productSeviver from '~/services/product.service';
+import setToastMessage from '~/Helpers/toastMessage';
+import { v4 } from 'uuid';
 
 const validate = yup.object({
-    productName: yup.string().required('Tên sản phẩm không được để trống'),
-    category: yup.string().required('Danh mục sản phẩm không được để trống'),
+    name: yup.string().required('Tên sản phẩm không được để trống'),
+    categories: yup.string().required('Danh mục sản phẩm không được để trống'),
     price: yup.number().typeError('Vui lòng nhập đúng giá tiền').min(0, 'Giá trị không được âm'),
-    priceSale: yup.number().typeError('Vui lòng nhập đúng giá tiền').min(0, 'Giá trị không được âm'),
     image: yup.mixed().test('required', 'Hình ảnh không được để trống', (value) => {
         if (value.length > 0) {
             return true;
@@ -25,29 +39,47 @@ function ContentCreate() {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm({
-        criteriaMode: 'all',
         resolver: yupResolver(validate),
     });
-    const [previewImage, setPreviewImage] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [imageUrl, setImageUrl] = useState(null);
+    const [categories, setCategories] = useState([]);
+    const [category, setCategory] = useState('');
 
-    const handleImageChange = (event) => {
-        console.log(event.target.files[0]);
+    useEffect(() => {
+        const getCategories = async () => {
+            const res = await productSeviver.adminProductsCategories();
+            if (res.status === 200) {
+                setCategories(res.categories);
+            }
+        };
+        getCategories();
+    }, []);
 
+    const handleImageChange = async (event) => {
         if (event.target.files[0]) {
-            const file = event.target.files[0];
-            setPreviewImage(URL.createObjectURL(file));
+            const res = await firebaseUploadImage(event, setImageUrl);
+            setImageUrl(res);
         } else {
-            setPreviewImage(null);
+            setImageUrl(null);
         }
     };
 
-    const handleSubmitForm = (data) => {
-        console.log(data);
-        setLoading(!loading);
+    const handleSubmitForm = async (data) => {
+        console.log({ ...data, image: imageUrl });
+        const response = await productSeviver.adminProductsCreate({ ...data, image: imageUrl });
+        if (response?.status === 200) {
+            reset();
+            setImageUrl(null);
+            console.log(response);
+            if (response?.message) {
+                setToastMessage(response.message, 'success');
+            } else {
+                setToastMessage('Đã có lỗi xảy ra!', 'error');
+            }
+        }
     };
-
 
     return (
         <Box>
@@ -74,23 +106,32 @@ function ContentCreate() {
                                     placeholder="Tên món ăn"
                                     variant="outlined"
                                     size="small"
-                                    {...register('productName')}
-                                    error={!!errors.productName}
-                                    helperText={errors.productName?.message}
+                                    {...register('name')}
+                                    error={!!errors.name}
+                                    helperText={errors.name?.message}
                                 />
                             </Grid>
                             <Grid item lg={6}>
-                                <LabelCustom htmlFor="product_category">Danh mục</LabelCustom>
-                                <TextFieldCustom
-                                    fullWidth
-                                    id="product_category"
-                                    placeholder="Danh mục sản phẩm"
-                                    variant="outlined"
-                                    size="small"
-                                    {...register('category')}
-                                    error={!!errors.category}
-                                    helperText={errors.category?.message}
-                                />
+                                <FormControl fullWidth error={!!errors.categories}>
+                                    <LabelCustom htmlFor="product_category">Danh mục</LabelCustom>
+                                    <Select
+                                        id="product_category"
+                                        size="small"
+                                        value={category}
+                                        {...register('categories')}
+                                        onChange={(e) => setCategory(e.target.value)}
+                                    >
+                                        <MenuItem value="" defaultChecked></MenuItem>
+                                        {categories.map((category) => {
+                                            return (
+                                                <MenuItem key={v4()} value={category.id}>
+                                                    {category.name}
+                                                </MenuItem>
+                                            );
+                                        })}
+                                    </Select>
+                                    <FormHelperText>{errors.categories?.message}</FormHelperText>
+                                </FormControl>
                             </Grid>
                             <Grid item lg={6}>
                                 <LabelCustom htmlFor="product_category">Giá bán</LabelCustom>
@@ -142,7 +183,7 @@ function ContentCreate() {
                                     height: '400px',
                                     cursor: 'pointer',
                                     background: 'center center/cover no-repeat',
-                                    backgroundImage: `url(${previewImage || images.noImage})`,
+                                    backgroundImage: `url('${imageUrl || images.noImage}')`,
                                 }}
                             >
                                 <TextFieldCustom
@@ -161,13 +202,7 @@ function ContentCreate() {
                     </Grid>
                 </Grid>
 
-                <LoadingButton
-                    type="submit"
-                    variant="contained"
-                    loading={loading}
-                    loadingPosition="end"
-                    endIcon={<SaveIcon />}
-                >
+                <LoadingButton type="submit" variant="contained" loadingPosition="end" endIcon={<SaveIcon />}>
                     <span>Thêm mới</span>
                 </LoadingButton>
             </FormCustom>

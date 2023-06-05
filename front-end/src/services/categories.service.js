@@ -1,4 +1,3 @@
-import setToastMessage from '~/Helpers/toastMessage';
 import BaseService from '~/utils/BaseService';
 
 const authEndpoint = {
@@ -16,8 +15,8 @@ class CategoriesService extends BaseService {
         return this.request.post(authEndpoint.create, data);
     };
 
-    adminCategories = async (data) => {
-        return this.request.post(authEndpoint.list, data);
+    adminCategories = async (page) => {
+        return this.request.post(authEndpoint.list + `?page=${page}`);
     };
 }
 

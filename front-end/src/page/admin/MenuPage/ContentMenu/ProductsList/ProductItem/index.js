@@ -6,14 +6,16 @@ function ProductItem(props) {
     return (
         <LinkCustom to="/admin/product/12">
             <WrapImage className="Menu_Product_Img">
-                <Image src={`${data.img}`} alt={data.alt} />
+                <Box sx={{ width: '120px', height: '120px', borderRadius: '50%', overflow: 'hidden' }}>
+                    <Image src={`${data.image}`} alt={data.name} />
+                </Box>
             </WrapImage>
             <Box sx={{ backgroundColor: 'var(--white)', borderRadius: '1.5rem', padding: '1rem' }}>
                 <Box sx={{ marginTop: '60px', paddingTop: '24px' }}>
-                    <ProductTitle>{data.title}</ProductTitle>
+                    <ProductTitle>{data.name}</ProductTitle>
                     <Stack sx={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                        <Price>$ {data.price}</Price>
-                        <PriceSale>$ {data.price}</PriceSale>
+                        <Price>{data.price}</Price>
+                        <PriceSale>{data.price}</PriceSale>
                     </Stack>
                 </Box>
             </Box>
@@ -49,15 +51,14 @@ const WrapImage = styled('div')({
     position: 'absolute',
     top: '0%',
     left: '0%',
-    transform: 'translateY(-50px)',
+    transform: 'translateY(-50px) translateX(40px)',
     alignItems: 'center',
 });
 
 const Image = styled('img')({
-    minWidth: '124px',
-    minHeight: '123px',
-    width: '60%',
-    borderRadius: '50%',
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
 });
 
 const ProductTitle = styled('h3')({

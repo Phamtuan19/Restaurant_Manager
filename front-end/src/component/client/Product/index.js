@@ -3,6 +3,7 @@ import { Box, Rating, Skeleton, Stack, Typography, styled } from '@mui/material'
 import { useContext } from 'react';
 import fomatMoney from '~/Helpers/fomatMoney';
 import setToastMessage from '~/Helpers/toastMessage';
+import { images } from '~/assets/image';
 import { AddNewIcon } from '~/component/Icons';
 import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 import { useCart } from '~/redux/SliceReducer/cartsReducer';
@@ -20,17 +21,11 @@ function Product(props) {
 
     return (
         <Wrap sx={{ marginTop: { md: '85px', xs: '100px' } }}>
-            {skeleton ? (
-                <WrapImage sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Skeleton variant="circular" width={170} height={170} />
-                </WrapImage>
-            ) : (
-                <WrapImage>
-                    <Box sx={{ width: '150px', height: '150px', borderRadius: '50%', overflow: 'hidden' }}>
-                        <Image className="Product_Item_Img" src={data.image} alt={data.name} />
-                    </Box>
-                </WrapImage>
-            )}
+            <WrapImage>
+                <Box sx={{ width: '150px', height: '150px', borderRadius: '50%', overflow: 'hidden' }}>
+                    <Image className="Product_Item_Img" src={data?.image || images.noImage} alt={data.name} />
+                </Box>
+            </WrapImage>
             <CardBody>
                 <Box sx={{ marginTop: '.5rem' }}>
                     <Typography
@@ -44,15 +39,11 @@ function Product(props) {
                             },
                         }}
                     >
-                        {skeleton ? <Skeleton variant="text" width="100%" height={32} /> : 'Mushroom'}
+                        name
                     </Typography>
 
                     <Stack spacing={1} sx={{ padding: '12px 0' }}>
-                        {skeleton ? (
-                            <Skeleton variant="text" width="100%" height={32} />
-                        ) : (
-                            <Rating name="half-rating-read" defaultValue={3.5} precision={0.5} readOnly />
-                        )}
+                        <Rating name="half-rating-read" defaultValue={3.5} precision={0.5} readOnly />
                     </Stack>
 
                     <Box
@@ -69,25 +60,18 @@ function Product(props) {
                                 gap: '0 24px',
                             }}
                         >
-                            {skeleton ? (
-                                <Skeleton variant="text" width={50} height={32} />
-                            ) : (
-                                <Price>
-                                    {data?.price_sale !== null ? fomatMoney(data?.price_sale) : fomatMoney(data?.price)}
-                                </Price>
-                                // {data.price_sale !== undefined ? <PriceSale>$ {data.price}</PriceSale> : ''}
-                            )}
+                            <Price>
+                                {/* {data?.price_sale !== null ? fomatMoney(data?.price_sale) : fomatMoney(data?.price)} */}
+                                20.000đ
+                            </Price>
+                            {/* {data.price_sale !== undefined ? <PriceSale>$ {data.price}</PriceSale> : ''} */}
                         </Box>
-                        {skeleton ? (
-                            <Skeleton variant="circular" width={32} height={32} />
-                        ) : (
-                            <Box
-                                onClick={() => handleClickAddCart(data)}
-                                // onClick={() => handleAddToCart(data, notifyTypes[0], 'Thêm thành công!')}
-                            >
-                                <AddNewIcon style={{ color: '#fff' }} />
-                            </Box>
-                        )}
+                        <Box
+                            onClick={() => handleClickAddCart(data)}
+                            // onClick={() => handleAddToCart(data, notifyTypes[0], 'Thêm thành công!')}
+                        >
+                            <AddNewIcon style={{ color: '#fff' }} />
+                        </Box>
                     </Box>
                 </Box>
             </CardBody>

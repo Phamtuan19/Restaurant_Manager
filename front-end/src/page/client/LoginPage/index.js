@@ -33,13 +33,13 @@ function LoginPage() {
     const [resultGoogleApi, setResultGoogleApi] = useState('');
     const { setUserInfoLogin } = useAuthReducer();
 
-    useEffect(() => {
-        const resultGoogleApi = async () => {
-            const response = await authService.loginGoogle();
-            setResultGoogleApi(response.url);
-        };
-        resultGoogleApi();
-    }, []);
+    // useEffect(() => {
+    //     const resultGoogleApi = async () => {
+    //         const response = await authService.loginGoogle();
+    //         setResultGoogleApi(response.url);
+    //     };
+    //     resultGoogleApi();
+    // }, []);
 
     const handleSubmitForm = async (data) => {
         const response = await authService.loginAccount(data);

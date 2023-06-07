@@ -4,6 +4,8 @@ const authEndpoint = {
     base: 'admin/',
     createTable: 'tables/create',
     adminTables: 'tables',
+    tableStatus: 'tables/empty',
+    modalMenuProducts: 'tables/menu/products',
 };
 
 class TableService extends BaseService {
@@ -18,6 +20,15 @@ class TableService extends BaseService {
 
     getAdminTables = async () => {
         return await this.request.get(authEndpoint.base + authEndpoint.adminTables);
+    };
+
+    getAdminTableStatus = async (status = 1) => {
+        return await this.request.get(authEndpoint.base + authEndpoint.tableStatus + `?status=${status}`);
+    };
+
+    // Modal table Menu
+    getTableModalMenuProducts = async () => {
+        return await this.request.get(authEndpoint.base + authEndpoint.modalMenuProducts);
     };
 }
 

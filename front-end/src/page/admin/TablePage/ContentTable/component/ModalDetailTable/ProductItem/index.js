@@ -1,25 +1,89 @@
-import { Box, Stack, styled } from '@mui/material';
-import { AddNewIcon } from '~/component/Icons';
+import { Box, Stack, TextField, styled } from '@mui/material';
+import { memo, useContext } from 'react';
+import fomatMoney from '~/Helpers/fomatMoney';
+import { AddNewIcon, Delete } from '~/component/Icons';
+import { ContentModal } from '..';
 
-function ProductItem({ data }) {
+function ProductItem({ data, type = null }) {
+    const { setOrders } = useContext(ContentModal);
+
+    const handleAddToCart = (data) => {
+        setOrders((prev) => {
+            const product = prev.find((item) => item.id === data.id);
+            if (product) {
+                return prev.map((item) => {
+                    if (item.id === data.id) {
+                        return { ...item, quantity: item.quantity + 1 };
+                    }
+
+                    return item;
+                });
+            }
+
+            return [...prev, { ...data, quantity: 1 }];
+        });
+    };
+
+    const handleDelete = (data) => {
+        setOrders((prev) => {
+            return prev.filter((item) => item.id !== data.id);
+        });
+    };
+
+    const handleSetQuantity = (data, number) => {
+        setOrders((prev) => {
+            const orders = prev.map((item) => {
+                if (item.id === data.id) {
+                    if (number < 1) {
+                        return { ...item, quantity: 1 };
+                    }
+                    return { ...item, quantity: number };
+                }
+                return item;
+            });
+
+            return orders;
+        });
+    };
+
     return (
         <ProductItemModal>
-            <Box sx={{ width: '70px', overflow: 'hidden' }}>
-                <Image
-                    src="https://firebasestorage.googleapis.com/v0/b/restaurant-manager-387216.appspot.com/o/files%2Fshopping%20(1).webp71d97b1c-4ce4-4b97-a6f6-646f810ff6ca?alt=media&token=8b71f879-c035-4011-8959-9af168e3bae8"
-                    alt="title"
-                />
+            <Box sx={{ width: '70px', height: '70px', overflow: 'hidden' }}>
+                <Image src={data?.image} alt={data?.name} />
             </Box>
             <ProductItemModalDetail>
-                <h3>product name</h3>
-                <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <h3>{data?.name}</h3>
+                <Stack sx={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Box>
-                        <span style={{ color: 'var(--color-red)', marginRight: '12px' }}>15.000đ</span>
-                        <span style={{ textDecoration: 'line-through', fontSize: '.9rem' }}>15.000đ</span>
+                        <span style={{ color: 'var(--color-red)', marginRight: '12px' }}>
+                            {fomatMoney(data?.price_sale || data?.price)}
+                        </span>
+                        <span style={{ textDecoration: 'line-through', fontSize: '.9rem' }}>
+                            {fomatMoney(data?.price || data?.price_sale)}
+                        </span>
                     </Box>
+                    {type ? (
+                        <TextField
+                            type="number"
+                            sx={{ width: '70px ', bottom: '10px', height: '20px' }}
+                            value={data.quantity}
+                            size="small"
+                            onChange={(e) => handleSetQuantity(data, e.target.value)}
+                        />
+                    ) : (
+                        ''
+                    )}
 
                     <Box>
-                        <AddNewIcon style={{ color: '#fff' }} />
+                        {type ? (
+                            <Box onClick={() => handleDelete(data)}>
+                                <Delete style={{ color: '#fff' }} />
+                            </Box>
+                        ) : (
+                            <Box onClick={() => handleAddToCart(data)}>
+                                <AddNewIcon style={{ color: '#fff' }} />
+                            </Box>
+                        )}
                     </Box>
                 </Stack>
             </ProductItemModalDetail>
@@ -50,4 +114,4 @@ const ProductItemModalDetail = styled('div')({
     },
 });
 
-export default ProductItem;
+export default memo(ProductItem);

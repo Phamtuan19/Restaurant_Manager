@@ -1,4 +1,4 @@
-const fomatMoney = (val) => {
+const fomatMoney = (val = 0) => {
     return val.toLocaleString('vi', { style: 'currency', currency: 'VND' });
 };
 

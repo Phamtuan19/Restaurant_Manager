@@ -4,7 +4,7 @@ import { RestaurantTable } from '~/component/Icons';
 
 const colorStatsTable = ['var(--color-blur)', '#FFBF00', 'var(--color-red)'];
 
-function TableItem({ item }) {
+function TableItem({ data }) {
     const [showDrawer, setShowDrawer] = useState(false);
 
     const handleClick = () => {
@@ -15,14 +15,14 @@ function TableItem({ item }) {
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <BoxRestaurantTable
                 sx={{
-                    '&::before': { border: `6px solid ${colorStatsTable[item.status - 1]}` },
-                    '&::after': { border: `6px solid ${colorStatsTable[item.status - 1]}` },
+                    '&::before': { border: `6px solid ${colorStatsTable[data.status_id - 1]}` },
+                    '&::after': { border: `6px solid ${colorStatsTable[data.status_id - 1]}` },
                 }}
                 onClick={handleClick}
             >
                 <RestaurantTable />
-                <TableItemName sx={{ backgroundColor: 'var(--color-blur)' }}>
-                    {item.index_table + ' - T' + item.floor}
+                <TableItemName sx={{ backgroundColor: colorStatsTable[data.status_id - 1] }}>
+                    {data.index_table + ' - T' + data.floor}
                 </TableItemName>
             </BoxRestaurantTable>
         </Box>

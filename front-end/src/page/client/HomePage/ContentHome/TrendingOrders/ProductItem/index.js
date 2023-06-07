@@ -50,7 +50,7 @@ function ProductItem({ data }) {
                                 gap: '0 24px',
                             }}
                         >
-                            <Price>{fomatMoney(data.price)}</Price>
+                            {/* <Price>{fomatMoney(data.price)}</Price> */}
                             {/* {data.price_sale && <PriceSale>$ {data.price}</PriceSale>} */}
                         </Box>
 

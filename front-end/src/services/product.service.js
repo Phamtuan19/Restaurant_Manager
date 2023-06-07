@@ -24,7 +24,7 @@ class ProductSeviver extends BaseService {
     };
 
     adminProductsCategories = async () => {
-        return this.request.post(authEndpoint.categories);
+        return this.request.get(authEndpoint.categories);
     };
 
     // Client

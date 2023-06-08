@@ -6,8 +6,8 @@ const authEndpoint = {
     adminTables: 'tables',
     tableStatus: 'tables/empty',
     modalMenuProducts: 'tables/menu/products',
-    tableOrder: 'orders/apply',
-    productsOrder: 'orders/products',
+
+    getInvoiceTable: 'orders/invoice/',
 };
 
 class TableService extends BaseService {
@@ -24,12 +24,14 @@ class TableService extends BaseService {
         return await this.request.get(authEndpoint.base + authEndpoint.adminTables);
     };
 
-    getAdminTableStatus = async (status = 1) => {
-        return await this.request.get(authEndpoint.base + authEndpoint.tableStatus + `?status=${status}`);
+    getAdminTableStatus = async (status = 1, tableId) => {
+        return await this.request.get(
+            authEndpoint.base + authEndpoint.tableStatus + `?status=${status}&tableId=${tableId}`,
+        );
     };
 
-    getTableInvoice = async () => {
-        console.log('call api order');
+    getInvoiceTable = async (tableId) => {
+        return await this.request.get(authEndpoint.base + authEndpoint.getInvoiceTable + tableId);
     };
 
     // Modal table Menu

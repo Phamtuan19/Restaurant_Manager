@@ -5,31 +5,34 @@ import ComponentMenu from './ComponentMenu';
 import ComponentMerge from './ComponentMerge';
 import ComponentMove from './ComponentMove';
 
-function ModalChild({ openChild, setOpenChild }) {
+
+function ModalChild({ openChild, setOpenChild, tableId }) {
     return (
-        <BoxChildModal
-            sx={{
-                ...style,
-                width: openChild.isOpen ? 500 : 0,
-                opacity: openChild.isOpen ? 1 : 0,
-                transform: openChild.isOpen ? 'translate(101%, 0%)' : 'translate(0%, 0%)',
-            }}
-        >
-            <Header component={openChild.component} setOpenMenu={setOpenChild} />
-            <Box
+        <>
+            <BoxChildModal
                 sx={{
-                    display: 'block',
-                    padding: '12px',
-                    maxHeight: '92%',
-                    overflow: openChild.component === 'menu' ? 'hidden' : 'scroll',
-                    '::-webkit-scrollbar': {
-                        width: '0',
-                    },
+                    ...style,
+                    width: openChild.isOpen ? 500 : 0,
+                    opacity: openChild.isOpen ? 1 : 0,
+                    transform: openChild.isOpen ? 'translate(101%, 0%)' : 'translate(0%, 0%)',
                 }}
             >
-                <Content component={openChild.component} />
-            </Box>
-        </BoxChildModal>
+                <Header component={openChild.component} setOpenMenu={setOpenChild} />
+                <Box
+                    sx={{
+                        display: 'block',
+                        padding: '12px',
+                        maxHeight: '92%',
+                        overflow: openChild.component === 'menu' ? 'hidden' : 'scroll',
+                        '::-webkit-scrollbar': {
+                            width: '0',
+                        },
+                    }}
+                >
+                    <Content component={openChild.component} />
+                </Box>
+            </BoxChildModal>
+        </>
     );
 }
 

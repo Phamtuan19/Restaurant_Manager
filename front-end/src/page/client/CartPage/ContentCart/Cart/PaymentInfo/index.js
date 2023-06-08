@@ -18,9 +18,9 @@ function PaymentInfo() {
 
     const { getDistricts, getWards } = province();
 
-    useEffect(() => {
-        setTimeout(() => setSkeleton(false), 3000);
-    }, []);
+    // useEffect(() => {
+    //     setTimeout(() => setSkeleton(false), 3000);
+    // }, []);
 
     useEffect(() => {
         console.log(process.env.REACT_APP_BASE_URL_API);

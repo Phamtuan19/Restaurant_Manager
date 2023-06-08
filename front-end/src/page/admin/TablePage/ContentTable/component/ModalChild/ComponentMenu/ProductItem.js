@@ -1,9 +1,30 @@
 import { Box, Stack, styled } from '@mui/material';
-import { memo } from 'react';
+import { memo, useContext } from 'react';
 import fomatMoney from '~/Helpers/fomatMoney';
 import { AddNewIcon } from '~/component/Icons';
+import ordersService from '~/services/orders.service';
+import { contextModal } from '../../..';
 
 function ProductItem({ data }) {
+    const { tableId, setRenderComponent } = useContext(contextModal);
+
+    const handleAddProduct = async (dataProduct) => {
+        const data = {
+            tableId,
+            price: dataProduct.price_sale || dataProduct.price,
+            productId: dataProduct.id,
+        };
+
+        const api = async () => {
+            const res = await ordersService.postOrderAdmin(tableId, data);
+            if (res.status === 200) {
+                setRenderComponent((prev) => !prev);
+            }
+        };
+
+        api();
+    };
+
     return (
         <ProductItemModal>
             <Box sx={{ width: '70px', height: '70px', overflow: 'hidden' }}>
@@ -20,10 +41,8 @@ function ProductItem({ data }) {
                             {fomatMoney(data?.price || data?.price_sale)}
                         </span>
                     </Box>
-                    <Box>
-                        <Box>
-                            <AddNewIcon style={{ color: '#fff' }} />
-                        </Box>
+                    <Box onClick={() => handleAddProduct(data)}>
+                        <AddNewIcon style={{ color: '#fff' }} />
                     </Box>
                 </Stack>
             </ProductItemModalDetail>

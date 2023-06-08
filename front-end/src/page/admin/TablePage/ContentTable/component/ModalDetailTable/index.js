@@ -1,25 +1,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Modal } from '@mui/material';
-import { createContext, memo, useCallback, useEffect, useState } from 'react';
+import { Box, CircularProgress, Modal } from '@mui/material';
+import { memo, useCallback, useContext, useEffect, useState } from 'react';
 import ModalChild from '../ModalChild';
 import FooterModal from './FooterModal';
 import { v4 } from 'uuid';
-import totalPrice from '~/Helpers/totalprice';
-import tableService from '~/services/tables.service';
-import setToastMessage from '~/Helpers/toastMessage';
-import { useCartAdmin } from '~/redux/SliceReducer/cartsTableAdmin';
 import ProductItem from './ProductItem';
+import tableService from '~/services/tables.service';
+import fomatMoney from '~/Helpers/fomatMoney';
+import { contextModal } from '../..';
 
 function ModalDetailTable({ openModal, setOpenModal, dataTable }) {
     const [openChild, setOpenChild] = useState({ isOpen: false, component: '' }); // set content component modal child
+    const [invoiceTable, setInvoiceTable] = useState([]);
+    const [loading, setLoading] = useState(false);
 
+    const { renderComponent } = useContext(contextModal);
     useEffect(() => {
         if (openModal && dataTable.status_id === 3) {
-            console.log(dataTable.id);
-            console.log(openModal);
-            console.log('call api order');
+            const tableId = dataTable.id;
+            const getInvoiceTable = async () => {
+                setLoading(true);
+                const res = await tableService.getInvoiceTable(tableId);
+                setInvoiceTable({ data: res.invoiceDetails, totalPrice: res.totalPrice });
+                setLoading(false);
+            };
+            getInvoiceTable();
         }
-    }, [openModal]);
+
+        if (!openModal) {
+            setInvoiceTable([]);
+        }
+    }, [openModal, renderComponent]);
 
     const handleClickOpenMenu = useCallback((component) => {
         setOpenChild((prev) => {
@@ -59,34 +70,53 @@ function ModalDetailTable({ openModal, setOpenModal, dataTable }) {
 
                 {/* Nội dung modal */}
                 <Box sx={{ height: 450, position: 'relative' }}>
-                    {/* {cartOrder.length > 0 ? (
-                                <>
-                                    <Box
-                                        height="95%"
-                                        overflow="scroll"
-                                        sx={{ '&::-webkit-scrollbar': { width: '0 !important' } }}
-                                    >
-                                        {(cartOrder || []).map((item) => (
-                                            <ProductItem key={v4()} data={item} />
-                                        ))}
-                                    </Box>
-                                    <Box
-                                        position="absolute"
-                                        bottom="0"
-                                        left="0"
-                                        right="0"
-                                        display="flex"
-                                        justifyContent="space-between"
-                                    >
-                                        <span>Tổng tiền: </span>
-                                        <span style={{ textAlign: 'end' }}>{totalPrice(cartOrder)}</span>
-                                    </Box>
-                                </>
-                            ) : (
-                                <Box py={3}>
-                                    <h3>Bàn chưa có người ngồi</h3>
-                                </Box>
-                            )} */}
+                    {loading ? (
+                        <Box
+                            sx={{
+                                position: 'absolute',
+                                top: 0,
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <CircularProgress />
+                        </Box>
+                    ) : (
+                        ''
+                    )}
+
+                    {(invoiceTable?.data || []).length > 0 ? (
+                        <>
+                            <Box
+                                height="95%"
+                                overflow="scroll"
+                                sx={{ '&::-webkit-scrollbar': { width: '0 !important' } }}
+                            >
+                                {(invoiceTable?.data || []).map((item) => {
+                                    return <ProductItem key={v4()} data={item} />;
+                                })}
+                            </Box>
+                            <Box
+                                position="absolute"
+                                bottom="0"
+                                left="0"
+                                right="0"
+                                display="flex"
+                                justifyContent="space-between"
+                            >
+                                <span>Tổng tiền: </span>
+                                <span style={{ textAlign: 'end' }}>{fomatMoney(invoiceTable.totalPrice)}</span>
+                            </Box>
+                        </>
+                    ) : (
+                        <Box py={3}>
+                            <h3>Bàn chưa có người ngồi</h3>
+                        </Box>
+                    )}
                 </Box>
 
                 {/* All buttom action */}
@@ -95,7 +125,7 @@ function ModalDetailTable({ openModal, setOpenModal, dataTable }) {
                 </Box>
 
                 {/* Modal child */}
-                <ModalChild openChild={openChild} setOpenChild={setOpenChild} />
+                <ModalChild openChild={openChild} setOpenChild={setOpenChild} tableId={dataTable.id} />
             </Box>
         </Modal>
     );
@@ -117,4 +147,4 @@ const style = {
     outline: 'none',
 };
 
-export default memo(ModalDetailTable);
+export default ModalDetailTable;

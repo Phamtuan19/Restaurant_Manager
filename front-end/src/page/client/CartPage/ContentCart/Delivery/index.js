@@ -10,9 +10,9 @@ import { TitleViewAll } from '~/component/client/TitleViewAll';
 function Delivery() {
     const [skeleton, setSkeleton] = useState(true);
 
-    useEffect(() => {
-        setTimeout(() => setSkeleton(false), 5000);
-    }, []);
+    // useEffect(() => {
+    //     setTimeout(() => setSkeleton(false), 5000);
+    // }, []);
 
     return (
         <Card className={{ padding: '0 1.5rem 2rem ' }}>

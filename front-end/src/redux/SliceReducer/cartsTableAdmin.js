@@ -6,7 +6,6 @@ import tableService from '~/services/tables.service';
 
 export const fetchTables = createAsyncThunk('tableAdmin/fetchTables', async (params, thunkAPI) => {
     const getAdminTables = await tableService.getAdminTables();
-    console.log(getAdminTables);
     const getMenu = await tableService.getTableModalMenuProducts();
     const getcategories = await productSeviver.adminProductsCategories();
 
@@ -22,6 +21,7 @@ const cartsTableAdmin = createSlice({
     initialState: {
         tables: null,
         menu: null,
+        loading: true,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -30,8 +30,10 @@ const cartsTableAdmin = createSlice({
                 state.tables = action.payload.tables;
                 state.menu = action.payload.menu;
                 state.categories = action.payload.categories;
+                state.loading = false;
             })
             .addCase(fetchTables.rejected, (state, action) => {
+                state.loading = false;
                 console.error(action.error.message);
             });
     },

@@ -13,15 +13,15 @@ function DefaultLayout({ children }) {
     const [sidebarActive, setSidebarActive] = useState(false);
     const [skeleton, setSkeleton] = useState(true);
 
-    useEffect(() => {
-        const timeout = () => {
-            setTimeout(() => {
-                setSkeleton(false);
-            }, 1000);
-        };
+    // useEffect(() => {
+    //     const timeout = () => {
+    //         setTimeout(() => {
+    //             setSkeleton(false);
+    //         }, 1000);
+    //     };
 
-        timeout();
-    }, []);
+    //     timeout();
+    // }, []);
 
     const handleClickSidebar = () => {
         setSidebarActive(!sidebarActive);

@@ -1,14 +1,16 @@
 import { Button } from '@mui/material';
 import { memo, useContext } from 'react';
+import { contextModal } from '../../..';
 
-function FooterModal({ handleClickOpenMenu, statusId }) {
+function FooterModal({ handleClickOpenMenu }) {
+    const { tableStatus } = useContext(contextModal);
     return (
         <>
-            <Button disabled={statusId === 3 ? true : false} sx={{ width: '100%' }} variant="contained">
+            <Button disabled={tableStatus === 1 ? true : false} sx={{ width: '100%' }} variant="contained">
                 Thanh toán
             </Button>
             <Button
-                disabled={statusId === 3 ? true : false}
+                disabled={tableStatus === 1 ? true : false}
                 variant="contained"
                 color="error"
                 onClick={() => handleClickOpenMenu('merge')}
@@ -16,7 +18,7 @@ function FooterModal({ handleClickOpenMenu, statusId }) {
                 Gộp hóa đơn
             </Button>
             <Button
-                disabled={statusId === 3 ? true : false}
+                disabled={tableStatus === 1 ? true : false}
                 variant="contained"
                 color="secondary"
                 onClick={() => handleClickOpenMenu('move')}

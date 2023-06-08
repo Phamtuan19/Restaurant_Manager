@@ -3,7 +3,7 @@ import { RestaurantTable } from '~/component/Icons';
 
 const colorStatsTable = ['var(--color-blur)', '#FFBF00', 'var(--color-red)'];
 
-function TableItem({ data, handleOpen }) {
+function TableItem({ data }) {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <BoxRestaurantTable
@@ -11,7 +11,6 @@ function TableItem({ data, handleOpen }) {
                     '&::before': { border: `6px solid ${colorStatsTable[data.status_id - 1]}` },
                     '&::after': { border: `6px solid ${colorStatsTable[data.status_id - 1]}` },
                 }}
-                onClick={() => handleOpen(data)}
             >
                 <RestaurantTable />
 

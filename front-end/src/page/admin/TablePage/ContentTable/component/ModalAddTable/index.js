@@ -32,7 +32,6 @@ function ModalAddTable({ open, handleClose }) {
     });
 
     const handleSubmitForm = async (data) => {
-        console.log(data);
         const response = await tableService.postTableCreate({ ...data, image: imageUrl });
 
         if (response?.status === 200) {

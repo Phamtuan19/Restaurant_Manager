@@ -2,11 +2,10 @@
 import { Box } from '@mui/material';
 import { v4 } from 'uuid';
 
-import ProductItem from '../../ModalDetailTable/ProductItem';
-import Categories from '../Categories';
-import { useEffect, useState } from 'react';
-import tableService from '~/services/tables.service';
+import { useState } from 'react';
 import { useCartAdmin } from '~/redux/SliceReducer/cartsTableAdmin';
+import ProductItem from './ProductItem';
+import Categories from '../Categories';
 
 function ComponentMenu({ component }) {
     const [query, setQuery] = useState('');

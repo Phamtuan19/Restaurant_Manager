@@ -1,16 +1,9 @@
 import { Box, styled } from '@mui/material';
-import { useState } from 'react';
 import { RestaurantTable } from '~/component/Icons';
 
 const colorStatsTable = ['var(--color-blur)', '#FFBF00', 'var(--color-red)'];
 
-function TableItem({ data }) {
-    const [showDrawer, setShowDrawer] = useState(false);
-
-    const handleClick = () => {
-        setShowDrawer(!showDrawer);
-    };
-
+function TableItem({ data, handleOpen }) {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <BoxRestaurantTable
@@ -18,9 +11,10 @@ function TableItem({ data }) {
                     '&::before': { border: `6px solid ${colorStatsTable[data.status_id - 1]}` },
                     '&::after': { border: `6px solid ${colorStatsTable[data.status_id - 1]}` },
                 }}
-                onClick={handleClick}
+                onClick={() => handleOpen(data)}
             >
                 <RestaurantTable />
+
                 <TableItemName sx={{ backgroundColor: colorStatsTable[data.status_id - 1] }}>
                     {data.index_table + ' - T' + data.floor}
                 </TableItemName>

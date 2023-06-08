@@ -1,7 +1,7 @@
-import { Box, Stack, TextField, styled } from '@mui/material';
+import { Box, Stack, styled } from '@mui/material';
 import { memo } from 'react';
 import fomatMoney from '~/Helpers/fomatMoney';
-import { Delete } from '~/component/Icons';
+import { AddNewIcon } from '~/component/Icons';
 
 function ProductItem({ data }) {
     return (
@@ -20,16 +20,9 @@ function ProductItem({ data }) {
                             {fomatMoney(data?.price || data?.price_sale)}
                         </span>
                     </Box>
-                    <TextField
-                        type="number"
-                        sx={{ width: '70px ', bottom: '10px', height: '20px' }}
-                        value={data.quantity}
-                        size="small"
-                    />
-
                     <Box>
                         <Box>
-                            <Delete style={{ color: '#fff' }} />
+                            <AddNewIcon style={{ color: '#fff' }} />
                         </Box>
                     </Box>
                 </Stack>

@@ -6,8 +6,10 @@ import tableService from '~/services/tables.service';
 
 export const fetchTables = createAsyncThunk('tableAdmin/fetchTables', async (params, thunkAPI) => {
     const getAdminTables = await tableService.getAdminTables();
+    console.log(getAdminTables);
     const getMenu = await tableService.getTableModalMenuProducts();
     const getcategories = await productSeviver.adminProductsCategories();
+
     return {
         tables: getAdminTables.tables,
         menu: getMenu.products,

@@ -1,11 +1,13 @@
 import { Navigate } from 'react-router-dom';
-import { useAuthReducer } from '~/redux/SliceReducer/authReducer';
+import useAuth from '~/hook/useAuth';
 
 const ProtectedRoute = ({ children }) => {
-    const { userInfo } = useAuthReducer();
+    const { user, isAuthenticated } = useAuth();
 
-    if (userInfo.isAuthenticated) {
-        if (userInfo.role === 'Administration') {
+    console.log(isAuthenticated);
+
+    if (isAuthenticated) {
+        if (user.role === 'Administration') {
             return <Navigate to="/admin/products/create" replace />;
         }
 

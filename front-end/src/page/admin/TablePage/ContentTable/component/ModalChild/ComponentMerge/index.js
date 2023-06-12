@@ -23,6 +23,7 @@ function ComponentMerge() {
     }, [tableId]);
 
     const handleClick = (data) => {
+        console.log(tableId)
         console.log(data);
     };
 

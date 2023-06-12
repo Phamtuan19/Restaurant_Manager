@@ -7,9 +7,6 @@ import setToastMessage from '~/Helpers/toastMessage';
 const createInstance = (baseURL) => {
     const options = {
         baseURL: baseURL,
-        // headers: {
-        //     accept: 'application/json',
-        // },
     };
 
     const instance = axios.create(options);
@@ -38,10 +35,9 @@ const createInstance = (baseURL) => {
                 };
             }
         },
-        async (err) => {
+        async (error) => {
             try {
-                if (err.response) setToastMessage(err.response.data.message || 'đã có lỗi xảy ra!', 'error');
-                console.log(err.response);
+                if (error.response) setToastMessage(error.response.data.message || 'đã có lỗi xảy ra!', 'error');
             } catch (e) {
                 return Promise.reject(e);
             }

@@ -10,7 +10,7 @@ const withAuthToken = async (requestConfig) => {
 
     if (!excludeAuthenApi.some((api) => url.includes(api))) {
         const authToken = getLocalItem('token');
-        if (authToken?.access_token) {
+        if (authToken) {
             // console.log(authToken.access_token);
             requestConfig.headers = {
                 'X-Requested-With': 'XMLHttpRequest',

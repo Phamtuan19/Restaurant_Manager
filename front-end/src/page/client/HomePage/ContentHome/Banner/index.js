@@ -9,33 +9,20 @@ function Banner({ imageUrl }) {
 
     return (
         <Wrap>
-            {skeleton ? (
-                <Skeleton variant="rounded" width="100%" height="100%" sx={{ borderRadius: '1.5rem' }} />
-            ) : (
-                <BannerImage
-                    sx={{
-                        backgroundImage: `url(${imageUrl || images.noImage})`,
-                    }}
-                />
-            )}
+            <BannerImage
+                sx={{
+                    backgroundImage: `url(${imageUrl || images.noImage})`,
+                }}
+            />
             <BannerTitle>
-                {skeleton ? (
-                    <>
-                        <Skeleton variant="text" width={152} height={24} />
-                        <Skeleton variant="text" width={400} height={50} />
-                        <Skeleton variant="text" width={280} height={24} />
-                        <Skeleton variant="text" width={70} height={50} />
-                    </>
-                ) : (
-                    <span>
-                        <small>Deal of the weekend</small>
-                        <h1>Hello, Austine Robertson</h1>
-                        <p>
-                            Get <span>FREE delivery </span>on every weekend.
-                        </p>
-                        <Button>Check Menu</Button>
-                    </span>
-                )}
+                <span>
+                    <small>Deal of the weekend</small>
+                    <h1>Hello, Austine Robertson</h1>
+                    <p>
+                        Get <span>FREE delivery </span>on every weekend.
+                    </p>
+                    <Button>Check Menu</Button>
+                </span>
             </BannerTitle>
         </Wrap>
     );

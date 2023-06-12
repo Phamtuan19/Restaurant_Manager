@@ -39,25 +39,14 @@ function Categories() {
 
     return (
         <Card className={{ backgroundColor: 'rgba(255, 255, 255,0.5)', border: '1px solid #fff' }}>
-            {skeleton ? (
-                <Stack
-                    sx={{ padding: '1.5rem 1.5rem 0 1.5rem', flexDirection: 'row', justifyContent: 'space-between' }}
-                >
-                    <Skeleton variant="text" width={200} height={50} sx={{ padding: '1.5rem' }} />
-                    <Skeleton variant="text" width={100} height={50} sx={{ padding: '1.5rem' }} />
-                </Stack>
-            ) : (
-                <TitleViewAll
-                    title="Categories"
-                    sx={{ padding: '1.5rem 0', borderBottom: '1px solid #e3e1e1', margin: '0 1.5rem' }}
-                />
-            )}
+            <TitleViewAll
+                title="Categories"
+                sx={{ padding: '1.5rem 0', borderBottom: '1px solid #e3e1e1', margin: '0 1.5rem' }}
+            />
 
             <WrapContent sx={{ justifyContent: skeleton ? 'space-between' : 'flex-start' }}>
                 {listCategories.map((item, index) => {
-                    return skeleton ? (
-                        <Skeleton key={index} variant="rounded" width={120} height={50} />
-                    ) : (
+                    return (
                         <Button key={index} sx={{ ...styleButton }}>
                             {item}
                         </Button>

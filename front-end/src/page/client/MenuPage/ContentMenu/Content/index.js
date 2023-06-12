@@ -12,7 +12,7 @@ function Content() {
     const [valueSelect, setValueSelect] = useState('Ten');
     const { skeleton } = useContext(SkeletonLoading);
     const [productList, setProductList] = useState([]);
-    
+
     const [page, setPage] = useState(1);
     useEffect(() => {
         const getProductList = async (page) => {
@@ -25,7 +25,6 @@ function Content() {
         getProductList(page);
     }, [page]);
 
-    
     const handleChange = (event) => {
         setValueSelect(event.target.value);
     };
@@ -33,30 +32,21 @@ function Content() {
     return (
         <Box className={{ backgroundColor: 'transparent' }}>
             <HeaderContent sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                {skeleton ? (
-                    <>
-                        <Skeleton variant="text" width={150} height={50} />
-                        <Skeleton variant="text" width={150} height={50} />
-                    </>
-                ) : (
-                    <>
-                        {/* <HeaderContentTitle>Có {(productList?.data).length} sản phẩm</HeaderContentTitle> */}
+                <HeaderContentTitle>Có {productList?.data} sản phẩm</HeaderContentTitle>
 
-                        <Box sx={{ minWidth: 120 }}>
-                            <Select
-                                value={valueSelect}
-                                onChange={handleChange}
-                                sx={{ backgroundColor: 'var(--white)' }}
-                                fullWidth
-                                size="small"
-                            >
-                                <MenuItem value="Ten">Ten</MenuItem>
-                                <MenuItem value="Twenty">Twenty</MenuItem>
-                                <MenuItem value="Thirty">Thirty</MenuItem>
-                            </Select>
-                        </Box>
-                    </>
-                )}
+                <Box sx={{ minWidth: 120 }}>
+                    <Select
+                        value={valueSelect}
+                        onChange={handleChange}
+                        sx={{ backgroundColor: 'var(--white)' }}
+                        fullWidth
+                        size="small"
+                    >
+                        <MenuItem value="Ten">Ten</MenuItem>
+                        <MenuItem value="Twenty">Twenty</MenuItem>
+                        <MenuItem value="Thirty">Thirty</MenuItem>
+                    </Select>
+                </Box>
             </HeaderContent>
 
             <Grid container spacing={2} gap="12px 0" sx={{ marginTop: '12px', marginBottom: '2rem' }}>

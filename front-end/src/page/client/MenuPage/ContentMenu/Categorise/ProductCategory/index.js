@@ -1,47 +1,6 @@
-import {
-    Checkbox,
-    Collapse,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    Skeleton,
-    Stack,
-    styled,
-} from '@mui/material';
+import { Checkbox, Collapse, ListItem, ListItemButton, ListItemIcon, ListItemText, styled } from '@mui/material';
 import { useState } from 'react';
 import { v4 } from 'uuid';
-
-const listProductCategories = [
-    {
-        id: 1,
-        title: 'Starters',
-    },
-    {
-        id: 2,
-        title: 'Main Course',
-    },
-    {
-        id: 3,
-        title: 'Soups',
-    },
-    {
-        id: 4,
-        title: 'Juices',
-    },
-    {
-        id: 5,
-        title: 'Chinese',
-    },
-    {
-        id: 6,
-        title: 'Pizza',
-    },
-    {
-        id: 7,
-        title: 'Deserts',
-    },
-];
 
 function ProductCategory({ open, categoriesValue, setCategoriesValue, categoryList }) {
     const [checked, setChecked] = useState([]);

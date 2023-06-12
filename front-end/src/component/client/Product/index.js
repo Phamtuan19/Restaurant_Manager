@@ -1,17 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Box, Rating, Skeleton, Stack, Typography, styled } from '@mui/material';
-import { useContext } from 'react';
-import fomatMoney from '~/Helpers/fomatMoney';
 import setToastMessage from '~/Helpers/toastMessage';
 import { images } from '~/assets/image';
 import { AddNewIcon } from '~/component/Icons';
-import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 import { useCart } from '~/redux/SliceReducer/cartsReducer';
 
-function Product(props) {
-    const { data } = props;
-    const { skeleton } = useContext(SkeletonLoading);
-
+function Product({ data, turn = false }) {
     const { useAddCart } = useCart();
 
     const handleClickAddCart = (dataProduct) => {
@@ -20,10 +14,23 @@ function Product(props) {
     };
 
     return (
-        <Wrap sx={{ marginTop: { md: '85px', xs: '100px' } }}>
+        <Wrap
+            sx={{
+                marginTop: { md: '85px', xs: '100px' },
+                '&:hover': {
+                    '.Product_Item_Img': {
+                        animation: turn ? 'rotate-smooth 14s cubic-bezier(.26,.26,1,1) infinite' : '',
+                    },
+                },
+            }}
+        >
             <WrapImage>
                 <Box sx={{ width: '150px', height: '150px', borderRadius: '50%', overflow: 'hidden' }}>
-                    <Image className="Product_Item_Img" src={data?.image || images.noImage} alt={data.name} />
+                    <Image
+                        className="Product_Item_Img"
+                        src={data?.img || data?.image || images.noImage}
+                        alt={data.name}
+                    />
                 </Box>
             </WrapImage>
             <CardBody>
@@ -89,12 +96,6 @@ const Wrap = styled(Box)({
     transition: 'all .4s ease',
     border: '0 solid rgba(0,0,0,.125)',
     color: '#07143b',
-
-    '&:hover': {
-        '.Product_Item_Img': {
-            animation: 'rotate-smooth 14s cubic-bezier(.26,.26,1,1) infinite',
-        },
-    },
 });
 
 const WrapImage = styled('div')({

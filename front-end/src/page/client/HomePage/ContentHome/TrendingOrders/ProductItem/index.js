@@ -1,5 +1,4 @@
 import { Box, Skeleton, Typography, styled } from '@mui/material';
-import fomatMoney from '~/Helpers/fomatMoney';
 import { AddNewIcon } from '~/component/Icons';
 
 function ProductItem({ data }) {

@@ -4,9 +4,11 @@ import fomatMoney from '~/Helpers/fomatMoney';
 import { AddNewIcon } from '~/component/Icons';
 import ordersService from '~/services/orders.service';
 import { contextModal } from '../../..';
+import { ContextModalChild } from '../../ModalDetailTable';
 
 function ProductItem({ data }) {
-    const { tableId, setRenderComponent } = useContext(contextModal);
+    const { tableId, setRenderTables } = useContext(contextModal);
+    const { setLoadingEffect } = useContext(ContextModalChild);
 
     const handleAddProduct = async (dataProduct) => {
         const data = {
@@ -15,14 +17,9 @@ function ProductItem({ data }) {
             productId: dataProduct.id,
         };
 
-        const api = async () => {
-            const res = await ordersService.postOrderAdmin(tableId, data);
-            if (res.status === 200) {
-                setRenderComponent((prev) => !prev);
-            }
-        };
-
-        api();
+        await ordersService.postOrderAdmin(tableId, data);
+        setRenderTables((prev) => !prev);
+        setLoadingEffect((prev) => !prev);
     };
 
     return (

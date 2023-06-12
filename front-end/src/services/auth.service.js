@@ -11,6 +11,7 @@ const authEndpoint = {
     googleCallback: '/google/callback',
     logoutAccount: '/logout',
     singupAccount: '/singup/account',
+    getUser: '/user',
 };
 
 class AuthService extends BaseService {
@@ -25,7 +26,7 @@ class AuthService extends BaseService {
         return this.request.post(this.BASE_ENDPOINT + authEndpoint.loginAccount, data);
     };
 
-    SingupAccount = async (data) => {
+    singupAccount = async (data) => {
         return this.request.post(this.BASE_ENDPOINT + authEndpoint.singupAccount, data);
     };
 
@@ -39,6 +40,10 @@ class AuthService extends BaseService {
 
     logoutAccount = async () => {
         return this.request.post(this.BASE_ENDPOINT + authEndpoint.logoutAccount);
+    };
+
+    getUser = async () => {
+        return this.request.get(this.BASE_ENDPOINT + authEndpoint.getUser);
     };
 }
 

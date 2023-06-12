@@ -6,6 +6,7 @@ const authEndpoint = {
     categories: 'admin/products/categories',
     menuProducts: 'client/menu/products',
     menuFilter: 'client/menu/filter',
+
 };
 
 class ProductSeviver extends BaseService {

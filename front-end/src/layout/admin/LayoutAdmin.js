@@ -1,11 +1,11 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { useAuthReducer } from '~/redux/SliceReducer/authReducer';
-import routeAdmin from '~/routes/routeAdmin';
+import useAuth from '~/hook/useAuth';
+import routeAdmin from '~/routes/admin.route';
 
 function LayoutAdmin() {
-    const { userInfo } = useAuthReducer();
+    const { user, isAuthenticated } = useAuth();
 
-    if (userInfo.role === 'Administration' && userInfo.isAuthenticated) {
+    if (user.role === 'Administration' && isAuthenticated) {
         return (
             <Routes>
                 {routeAdmin.map((route, index) => {

@@ -6,7 +6,7 @@ import { Authentication } from './Authentication';
 
 function Header({ handleClickSidebar }) {
     return (
-        <Wrap left={{ md: 'calc(var(--width-sidebar) + 1px)', xs: '0' }}>
+        <Stack sx={style} left={{ md: 'calc(var(--width-sidebar) + 1px)', xs: '0' }}>
             <Grid container alignItems="center">
                 <Grid item xs={9} sm={4} sx={{ display: { xs: 'flex', md: 'none' } }}>
                     <Stack alignItems="flex-start" flexDirection="row" sx={{ alignItems: 'center' }}>
@@ -26,11 +26,11 @@ function Header({ handleClickSidebar }) {
                     <Authentication />
                 </Grid>
             </Grid>
-        </Wrap>
+        </Stack>
     );
 }
 
-const Wrap = styled(Stack)({
+const style = {
     position: 'fixed',
     top: 0,
     right: 0,
@@ -43,8 +43,7 @@ const Wrap = styled(Stack)({
     zIndex: 10,
     alignItems: 'center',
     padding: { xs: '8px 12px' },
-    // boxShadow: 'var(--box-shadow-fa)',
     boxShadow: '0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06)',
-});
+};
 
 export default Header;

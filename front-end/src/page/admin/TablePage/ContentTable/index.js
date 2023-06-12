@@ -1,27 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, CircularProgress, Grid, Stack } from '@mui/material';
 import { v4 } from 'uuid';
-import { memo, useEffect, useState, createContext } from 'react';
+import { useEffect, useState, createContext } from 'react';
 
 import Header from './component/Header';
 import TableItem from './component/TableItem';
 import ModalDetailTable from './component/ModalDetailTable';
-import { useCartAdmin } from '~/redux/SliceReducer/cartsTableAdmin';
+import tableService from '~/services/tables.service';
 
 export const contextModal = createContext();
 
 function ContentTable() {
-    const [renderComponent, setRenderComponent] = useState(false);
+    const [renderTables, setRenderTables] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [dataTable, setDataTable] = useState({});
 
-    const { tables, dispatchFetchTables } = useCartAdmin();
+    const [listTable, setListTable] = useState([]);
 
     useEffect(() => {
-        dispatchFetchTables();
-    }, [renderComponent]);
+        const apiGetTables = async () => {
+            const res = await tableService.getAdminTables();
+            setListTable(res.tables);
+            setRenderTables(false);
+        };
 
-    const handleTableOpenModal = (data) => {
+        apiGetTables();
+    }, [renderTables]);
+
+    const handleClickTable = (data) => {
         setOpenModal(true);
         setDataTable(data);
     };
@@ -30,9 +36,11 @@ function ContentTable() {
             value={{
                 tableId: dataTable.id,
                 tableStatus: dataTable.status_id,
+                dataTable,
+                openModal,
                 setOpenModal,
-                renderComponent,
-                setRenderComponent,
+                renderTables,
+                setRenderTables,
             }}
         >
             <Box>
@@ -44,7 +52,7 @@ function ContentTable() {
                         marginTop: '1.5rem',
                     }}
                 >
-                    {tables === null ? (
+                    {listTable === null ? (
                         <Box
                             sx={{
                                 position: 'fixed',
@@ -61,12 +69,10 @@ function ContentTable() {
                         </Box>
                     ) : (
                         <Grid container spacing={2}>
-                            {(tables || []).map((item) => {
+                            {(listTable || []).map((item) => {
                                 return (
-                                    <Grid item xs={2} key={v4()}>
-                                        <Box onClick={() => handleTableOpenModal(item)}>
-                                            <TableItem data={item} />
-                                        </Box>
+                                    <Grid item xs={2} key={v4()} onClick={() => handleClickTable(item)}>
+                                        <TableItem data={item} />
                                     </Grid>
                                 );
                             })}
@@ -74,7 +80,7 @@ function ContentTable() {
                     )}
                 </Stack>
             </Box>
-            <ModalDetailTable openModal={openModal} setOpenModal={setOpenModal} dataTable={dataTable} />
+            <ModalDetailTable />
         </contextModal.Provider>
     );
 }

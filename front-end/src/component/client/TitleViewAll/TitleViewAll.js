@@ -16,24 +16,22 @@ function TitleViewAll({
     sxIcon,
 }) {
     return (
-        <>
-            <WrapCategory sx={{ ...sx }}>
-                <Typography
-                    component={component || 'h3'}
-                    sx={{
-                        ...sxTypo,
-                        fontSize: sizeTitle || 'calc(1.2978rem + .5736vw)',
-                        fontFamily: '"Playfair Display", serif',
-                    }}
-                >
-                    {title}
-                </Typography>
-                <NavLinkRoute to={path} style={{ ...sxLink }}>
-                    {titleRoute}
-                    <CategoryIcon width="16px" {...sxIcon} />
-                </NavLinkRoute>
-            </WrapCategory>
-        </>
+        <WrapCategory sx={{ ...sx }}>
+            <Typography
+                component={component || 'h3'}
+                sx={{
+                    ...sxTypo,
+                    fontSize: sizeTitle || 'calc(1.2978rem + .5736vw)',
+                    fontFamily: '"Playfair Display", serif',
+                }}
+            >
+                {title}
+            </Typography>
+            <NavLinkRoute to={path} style={{ ...sxLink }}>
+                {titleRoute}
+                <CategoryIcon width="16px" {...sxIcon} />
+            </NavLinkRoute>
+        </WrapCategory>
     );
 }
 

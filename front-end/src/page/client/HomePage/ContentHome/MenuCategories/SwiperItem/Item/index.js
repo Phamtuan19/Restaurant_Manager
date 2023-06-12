@@ -1,45 +1,32 @@
 import { Box, Skeleton, Typography, styled } from '@mui/material';
-import { useContext } from 'react';
 import { CategoryIcon } from '~/component/Icons';
-import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 
 function Item({ data }) {
-    const { skeleton } = useContext(SkeletonLoading);
 
     return (
         <Wrap>
             <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-                {skeleton ? (
-                    <Skeleton variant="circular" width="100px" height="100px" />
-                ) : (
-                    <img width="50%" src={data.img} alt={data.title} />
-                )}
+                <img width="50%" src={data.img} alt={data.title} />
             </Box>
 
-            {skeleton ? (
-                <Box sx={{ padding: '0 12px' }}>
-                    <Skeleton variant="text" width="100%" height={32} />
-                </Box>
-            ) : (
-                <CategoryItemTitle className="Category_Item_Title">
-                    <Typography
-                        variant="h1"
-                        sx={{
-                            textTransform: 'capitalize',
-                            transition: 'all .4s ease',
-                            fontWeight: 'bolder',
-                            fontSize: '1.5rem',
-                            paddingBottom: '1.5rem',
-                            display: 'block',
-                            fontFamily: '"Poppins", sans-serif',
-                        }}
-                    >
-                        {data.title}
-                    </Typography>
-                </CategoryItemTitle>
-            )}
+            <CategoryItemTitle className="Category_Item_Title">
+                <Typography
+                    variant="h1"
+                    sx={{
+                        textTransform: 'capitalize',
+                        transition: 'all .4s ease',
+                        fontWeight: 'bolder',
+                        fontSize: '1.5rem',
+                        paddingBottom: '1.5rem',
+                        display: 'block',
+                        fontFamily: '"Poppins", sans-serif',
+                    }}
+                >
+                    {data.title}
+                </Typography>
+            </CategoryItemTitle>
             <CategoryItemIcon>
-                {skeleton ? <Skeleton variant="circular" width={32} height={32} /> : <CategoryIcon />}
+                <CategoryIcon />
             </CategoryItemIcon>
         </Wrap>
     );

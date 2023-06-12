@@ -3,11 +3,11 @@ import { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import { CartHeader, LoginIcon, Notification } from '~/component/Icons';
-import { useAuthReducer } from '~/redux/SliceReducer/authReducer';
+import useAuth from '~/hook/useAuth';
 import authService from '~/services/auth.service';
 
 function Authentication() {
-    const { userInfo, setlogoutAccount } = useAuthReducer();
+    const { userInfo, isAuthenticated } = useAuth();
 
     return (
         <Stack justifyContent="flex-end" flexDirection="row" alignItems="center">
@@ -17,13 +17,7 @@ function Authentication() {
             <WrapIcon sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <CartHeader width="2rem" height="2rem" className="HeaderUser_Icon" sx={{ cursor: 'pointer' }} />
             </WrapIcon>
-            <Box>
-                {userInfo.isAuthenticated ? (
-                    <UserDetail userInfo={userInfo} setlogoutAccount={setlogoutAccount} />
-                ) : (
-                    <UserLogin />
-                )}
-            </Box>
+            <Box>{isAuthenticated ? <UserDetail userInfo={userInfo} /> : <UserLogin />}</Box>
         </Stack>
     );
 }
@@ -88,7 +82,6 @@ const UserDetail = ({ userInfo, setlogoutAccount }) => {
 
     const handleLogout = async () => {
         const response = await authService.logoutAccount();
-        console.log(response);
         setlogoutAccount(response);
     };
 

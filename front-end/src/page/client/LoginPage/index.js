@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-expressions */
 import { Box, Checkbox, FormControlLabel, Grid, Stack, TextField, styled } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -11,7 +11,7 @@ import SvgLogo from '~/assets/iconSvg/SvgLogo';
 import { Facebook, Google } from '~/component/Icons';
 import authService from '~/services/auth.service';
 import { LoadingButton } from '@mui/lab';
-import { useAuthReducer } from '~/redux/SliceReducer/authReducer';
+import useAuth from '~/hook/useAuth';
 
 const validate = yup.object({
     email: yup.string().required('Email không được để trống').email('Email không hợp lệ'),
@@ -31,7 +31,8 @@ function LoginPage() {
     const [btnLoading, setBtnLoaidng] = useState(false);
 
     const [resultGoogleApi, setResultGoogleApi] = useState('');
-    const { setUserInfoLogin } = useAuthReducer();
+
+    const { loginAccount } = useAuth();
 
     // useEffect(() => {
     //     const resultGoogleApi = async () => {
@@ -42,9 +43,9 @@ function LoginPage() {
     // }, []);
 
     const handleSubmitForm = async (data) => {
-        const response = await authService.loginAccount(data);
-        // console.log(response);
-        setUserInfoLogin(response);
+        setBtnLoaidng(true);
+        loginAccount(data);
+        setBtnLoaidng(false);
     };
 
     return (

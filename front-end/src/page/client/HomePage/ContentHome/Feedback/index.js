@@ -24,19 +24,10 @@ function Feedback() {
 
     return (
         <Card className={{ backgroundColor: 'rgba(255, 255, 255,0.5)', border: '1px solid #fff' }}>
-            {skeleton ? (
-                <Stack
-                    sx={{ padding: '1.5rem 1.5rem 0 1.5rem', flexDirection: 'row', justifyContent: 'space-between' }}
-                >
-                    <Skeleton variant="text" width={200} height={50} sx={{ padding: '1.5rem' }} />
-                    <Skeleton variant="text" width={100} height={50} sx={{ padding: '1.5rem' }} />
-                </Stack>
-            ) : (
-                <TitleViewAll
-                    title="Feedback"
-                    sx={{ padding: '1.5rem 0', borderBottom: '1px solid #e3e1e1', margin: '0 1.5rem' }}
-                />
-            )}
+            <TitleViewAll
+                title="Feedback"
+                sx={{ padding: '1.5rem 0', borderBottom: '1px solid #e3e1e1', margin: '0 1.5rem' }}
+            />
 
             <WrapContent>
                 <Swiper
@@ -50,10 +41,7 @@ function Feedback() {
                     className="mySwiper"
                 >
                     {listFeedback.map((item) => (
-                        <SwiperSlideCustom
-                            key={item}
-                            sx={{ backgroundColor: 'transparent !important' }}
-                        >
+                        <SwiperSlideCustom key={item} sx={{ backgroundColor: 'transparent !important' }}>
                             <Box
                                 sx={{
                                     border: '1px solid #eee',
@@ -61,19 +49,10 @@ function Feedback() {
                                     borderRadius: '1.5rem',
                                 }}
                             >
-                                {skeleton ? (
-                                    <FeedbackContent>
-                                        <Skeleton variant="text" width={336.4} height={24} />
-                                        <Skeleton variant="text" width={336.4} height={24} />
-                                        <Skeleton variant="text" width={336.4} height={24} />
-                                        <Skeleton variant="text" width={336.4} height={24} />
-                                    </FeedbackContent>
-                                ) : (
-                                    <FeedbackContent>
-                                        If you are going to use a passage of Lorem Ipsum, you need to be sure there
-                                        isn't anything passage need to be sure embarrass.
-                                    </FeedbackContent>
-                                )}
+                                <FeedbackContent>
+                                    If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
+                                    anything passage need to be sure embarrass.
+                                </FeedbackContent>
                                 <Box
                                     sx={{
                                         display: 'flex',
@@ -83,32 +62,16 @@ function Feedback() {
                                         gap: '12px',
                                     }}
                                 >
-                                    {skeleton ? (
-                                        <>
-                                            <Skeleton variant="circular" width={56} height={56} />
-                                            <Stack spacing={1} sx={{ padding: '12px 0' }}>
-                                                <Skeleton variant="text" width={336.4} height={24} />
-                                            </Stack>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Avatar
-                                                sx={{ width: '56px', height: '56px' }}
-                                                alt="Remy Sharp"
-                                                src="https://mui.com/static/images/avatar/3.jpg"
-                                            >
-                                                R
-                                            </Avatar>
-                                            <Stack spacing={1} sx={{ padding: '12px 0' }}>
-                                                <Rating
-                                                    name="half-rating-read"
-                                                    defaultValue={3.5}
-                                                    precision={0.5}
-                                                    readOnly
-                                                />
-                                            </Stack>
-                                        </>
-                                    )}
+                                    <Avatar
+                                        sx={{ width: '56px', height: '56px' }}
+                                        alt="Remy Sharp"
+                                        src="https://mui.com/static/images/avatar/3.jpg"
+                                    >
+                                        R
+                                    </Avatar>
+                                    <Stack spacing={1} sx={{ padding: '12px 0' }}>
+                                        <Rating name="half-rating-read" defaultValue={3.5} precision={0.5} readOnly />
+                                    </Stack>
                                 </Box>
                             </Box>
                         </SwiperSlideCustom>

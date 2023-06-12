@@ -2,24 +2,37 @@
 import { Box } from '@mui/material';
 import { v4 } from 'uuid';
 
-import { useState } from 'react';
-import { useCartAdmin } from '~/redux/SliceReducer/cartsTableAdmin';
+import { useEffect, useState } from 'react';
 import ProductItem from './ProductItem';
 import Categories from '../Categories';
+import ordersService from '~/services/orders.service';
 
 function ComponentMenu({ component }) {
+    const [listProducts, setListProducts] = useState([]);
     const [query, setQuery] = useState('');
 
-    const { menu } = useCartAdmin();
+    useEffect(() => {
+        const apiGetMenu = async (query) => {
+            console.log(query);
+            const res = await ordersService.getMenuOrderProducts(query);
+            setListProducts(res.products);
+        };
+
+        apiGetMenu(query);
+    }, [query]);
 
     return (
         <>
             <Categories component={component} setQuery={setQuery} />
 
             <Box sx={{ ...styleModalChild }}>
-                {(menu || []).map((item) => {
-                    return <ProductItem key={v4()} data={item} />;
-                })}
+                {listProducts.length > 0 ? (
+                    listProducts.map((item) => {
+                        return <ProductItem key={v4()} data={item} />;
+                    })
+                ) : (
+                    <h3>Chưa có sản phẩm</h3>
+                )}
             </Box>
         </>
     );

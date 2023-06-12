@@ -6,15 +6,21 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import { v4 } from 'uuid';
 import { Box } from '@mui/material';
-import { memo } from 'react';
-import { useCartAdmin } from '~/redux/SliceReducer/cartsTableAdmin';
+import { memo, useEffect, useState } from 'react';
+
+import ordersService from '~/services/orders.service';
 
 function Categories({ setQuery }) {
-    const { categories } = useCartAdmin();
+    const [listCategories, setListCategories] = useState([]);
 
-    const handleClick = (val) => {
-        setQuery(val);
-    };
+    useEffect(() => {
+        const apiGetMenu = async () => {
+            const res = await ordersService.getMenuOrderCategories();
+            setListCategories(res.categories);
+        };
+
+        apiGetMenu();
+    }, []);
 
     return (
         <ContentCategories>
@@ -25,10 +31,10 @@ function Categories({ setQuery }) {
                 modules={[FreeMode, Pagination]}
                 className="mySwiper"
             >
-                {(categories || []).map((item) => {
+                {(listCategories || []).map((item) => {
                     const id = item.id;
                     return (
-                        <SwiperSlideCustom key={v4()} onClick={() => handleClick(id)}>
+                        <SwiperSlideCustom key={v4()} onClick={() => setQuery(id)}>
                             <Box>
                                 <Box width="70px" height="50px">
                                     <img src={item.image} alt={item.name} />

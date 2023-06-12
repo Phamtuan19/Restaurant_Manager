@@ -2,7 +2,7 @@ const useLocalStorage = () => {
     let LocalItem;
 
     const getLocalItem = (key) => {
-        LocalItem = localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : null;
+        LocalItem = localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : false;
         return LocalItem;
     };
 

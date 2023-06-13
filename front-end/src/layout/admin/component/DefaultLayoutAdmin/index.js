@@ -32,7 +32,9 @@ function DefaultLayoutAdmin({ children }) {
 const WrapContent = styled('div')({
     marginTop: 'var(--height-header-admin)',
     marginLeft: 'var(--width-sidebar-admin)',
-    padding: '1rem',
+    padding: '2.5rem',
+    backgroundColor: '#F8F8F8',
+    minHeight: '100vh',
 });
 
 export default DefaultLayoutAdmin;

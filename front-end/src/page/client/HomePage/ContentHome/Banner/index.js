@@ -1,12 +1,8 @@
-import { Skeleton, styled } from '@mui/material';
-import { useContext } from 'react';
+import { styled } from '@mui/material';
 import { images } from '~/assets/image';
 import { Button } from '~/component/client/Button';
-import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 
 function Banner({ imageUrl }) {
-    const { skeleton } = useContext(SkeletonLoading);
-
     return (
         <Wrap>
             <BannerImage

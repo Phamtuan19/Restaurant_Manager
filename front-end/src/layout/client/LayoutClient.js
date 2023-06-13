@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Route, Routes } from 'react-router-dom';
 import routeClient from '../../routes/client.route';
-import useAuth from '~/hook/useAuth';
-import { useEffect } from 'react';
 
 function LayoutClient() {
     return (

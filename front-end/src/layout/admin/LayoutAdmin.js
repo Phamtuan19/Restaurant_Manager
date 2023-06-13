@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import routeAdmin from '~/routes/admin.route';
 import PrivateRouter from '~/routes/component/PrivateRouter';
+import DefaultLayoutAdmin from './component/DefaultLayoutAdmin';
 
 function LayoutAdmin() {
     return (
@@ -14,7 +15,9 @@ function LayoutAdmin() {
                         path={route.path}
                         element={
                             <PrivateRouter>
-                                <Component />
+                                <DefaultLayoutAdmin>
+                                    <Component />
+                                </DefaultLayoutAdmin>
                             </PrivateRouter>
                         }
                     />

@@ -8,10 +8,7 @@ const listSidebar = [
     {
         icon: Categories,
         title: 'Danh mục',
-        subCategories: [
-            { path: '/admin/categories/create', title: 'Thêm danh mục' },
-            { path: '/admin/categories', title: 'danh sách danh mục' },
-        ],
+        subCategories: [{ path: '/admin/categories', title: 'danh sách danh mục' }],
     },
     {
         icon: Categories,

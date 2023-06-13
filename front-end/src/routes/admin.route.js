@@ -1,8 +1,7 @@
-import CategoriesList from '~/page/admin/Categories/CategoriesList';
-import CategoriesCreate from '~/page/admin/Categories/CategoriesCreate';
+import CategoriesPage from '~/page/admin/Categories';
 import DashboardPage from '~/page/admin/DashboardPage';
 import MenuPage from '~/page/admin/MenuPage';
-import ProductCreate from '~/page/admin/Products/ProductsCreate';
+import ProductCreate from '~/page/admin/ProductCreate';
 import TablePage from '~/page/admin/TablePage';
 
 const routeAdmin = [
@@ -24,11 +23,7 @@ const routeAdmin = [
     },
     {
         path: '/categories',
-        component: CategoriesList,
-    },
-    {
-        path: '/categories/create',
-        component: CategoriesCreate,
+        component: CategoriesPage,
     },
 ];
 

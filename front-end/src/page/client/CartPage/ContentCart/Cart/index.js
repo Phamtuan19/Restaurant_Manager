@@ -1,16 +1,16 @@
 import { Box, Grid } from '@mui/material';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-import { TitleViewAll } from '~/component/client/TitleViewAll';
 import ProductItem from './ProductItem';
 import { useCart } from '~/redux/SliceReducer/cartsReducer';
+import TitleComponent from '~/page/client/HomePage/ContentHome/TitleComponent';
 
 function Cart() {
     const { listCart } = useCart();
 
     return (
         <Box sx={{ padding: '0 1.5rem 1.5rem', marginBottom: '2rem' }}>
-            <TitleViewAll
+            <TitleComponent
                 title="Cart"
                 sx={{
                     padding: '1rem 1.5rem',
@@ -19,7 +19,6 @@ function Cart() {
                     borderRadius: '1.5rem',
                     marginBottom: '1rem',
                 }}
-                sxLink={{ display: 'none' }}
             />
 
             <Grid container spacing={2}>

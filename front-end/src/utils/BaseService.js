@@ -1,4 +1,4 @@
-const { default: createInstance } = require('./Axios');
+import createInstance from './Axios';
 
 class BaseService {
     BASE_URL = process.env.REACT_APP_BASE_URL_API;

@@ -1,12 +1,12 @@
 import DefaultLayout from '~/layout/client/DefaultLayout';
-import ContentBooking from './ContentBooking';
+import ContentCart from './ContentCart';
 
-function BookingPage() {
+function CartPage() {
     return (
         <DefaultLayout>
-            <ContentBooking />
+            <ContentCart />
         </DefaultLayout>
     );
 }
 
-export default BookingPage;
+export default CartPage;

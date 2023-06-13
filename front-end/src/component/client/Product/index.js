@@ -1,18 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Box, Rating, Skeleton, Stack, Typography, styled } from '@mui/material';
-import setToastMessage from '~/Helpers/toastMessage';
+import { Box, Rating, Stack, Typography, styled } from '@mui/material';
 import { images } from '~/assets/image';
 import { AddNewIcon } from '~/component/Icons';
-import { useCart } from '~/redux/SliceReducer/cartsReducer';
 
 function Product({ data, turn = false }) {
-    const { useAddCart } = useCart();
-
-    const handleClickAddCart = (dataProduct) => {
-        useAddCart(dataProduct);
-        setToastMessage('thêm thành công', 'success');
-    };
-
     return (
         <Wrap
             sx={{
@@ -69,12 +60,10 @@ function Product({ data, turn = false }) {
                         >
                             <Price>
                                 {/* {data?.price_sale !== null ? fomatMoney(data?.price_sale) : fomatMoney(data?.price)} */}
-                                20.000đ
                             </Price>
                             {/* {data.price_sale !== undefined ? <PriceSale>$ {data.price}</PriceSale> : ''} */}
                         </Box>
                         <Box
-                            onClick={() => handleClickAddCart(data)}
                             // onClick={() => handleAddToCart(data, notifyTypes[0], 'Thêm thành công!')}
                         >
                             <AddNewIcon style={{ color: '#fff' }} />
@@ -135,63 +124,5 @@ const Price = styled('span')({
 //     fontWeight: 'bold',
 //     textDecoration: 'line-through',
 // });
-
-const Loading = () => {
-    return (
-        <Wrap sx={{ marginTop: { md: '85px', xs: '100px' } }}>
-            <WrapImage>
-                <Skeleton variant="circular" width={170} height={170} />
-            </WrapImage>
-            <CardBody>
-                <Box sx={{ marginTop: '1.5rem' }}>
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            fontWeight: 'bolder',
-                            marginTop: '1.5rem',
-                            fontSize: '1rem',
-                            fontFamily: "'Roboto Slab', serif !important",
-                            '&:hover': {
-                                color: '#065fd4',
-                            },
-                        }}
-                    >
-                        <Skeleton variant="text" width="100%" height={32} />
-                    </Typography>
-
-                    <Stack spacing={1} sx={{ padding: '12px 0' }}>
-                        <Skeleton variant="text" width="100%" height={32} />
-                        {/* <Rating name="half-rating-read" defaultValue={3.5} precision={0.5} readOnly /> */}
-                    </Stack>
-
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            marginTop: '1rem',
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '0 24px',
-                            }}
-                        >
-                            <Skeleton variant="text" width={50} height={32} />
-                            {/* <Price>{data.price_sale !== undefined ? data.price_sale : data.price} </Price>
-                            {data.price_sale !== undefined ? <PriceSale>$ {data.price}</PriceSale> : ''} */}
-                        </Box>
-
-                        <Skeleton variant="circular" width={32} height={32} />
-                    </Box>
-                </Box>
-            </CardBody>
-        </Wrap>
-    );
-};
-
-Product.Loading = Loading;
 
 export default Product;

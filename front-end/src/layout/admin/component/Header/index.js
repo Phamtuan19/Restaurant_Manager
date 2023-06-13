@@ -1,9 +1,9 @@
 import { Box, Stack, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 import SvgLogo from '~/assets/iconSvg/SvgLogo';
+import AvatarHeader from '~/component/AvatartHeader';
 import { Dashboard, Search, Menu, Table, WarehouseRacks } from '~/component/Icons';
 import InputCustom from '~/component/admin/InputCustom';
-import { Authentication } from '~/layout/client/component/Header/Authentication';
 
 const ListHeaderNavItem = [
     {
@@ -66,7 +66,7 @@ function Header() {
                 })}
             </Box>
 
-            <Authentication />
+            <AvatarHeader />
         </WrapHeader>
     );
 }

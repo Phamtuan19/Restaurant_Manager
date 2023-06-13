@@ -1,11 +1,7 @@
-import { Box, Skeleton, Stack, Typography, styled } from '@mui/material';
-import { useContext } from 'react';
+import { Box, Typography, styled } from '@mui/material';
 import { Card } from '~/component/client/Card';
-import { SkeletonLoading } from '~/layout/client/DefaultLayout/DefaultLayoutClient';
 
 function BannerDiscount() {
-    const { skeleton } = useContext(SkeletonLoading);
-
     return (
         <Card className={{ backgroundColor: 'transparent', width: '100%' }}>
             <WrapSaleOf>

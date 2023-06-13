@@ -4,7 +4,7 @@ import setToastMessage from '~/Helpers/toastMessage';
 import useLocalStorage from '~/hook/useLocalStorage';
 import authService from '~/services/auth.service';
 
-const { setLocalItem } = useLocalStorage();
+const { setLocalItem, removeLocalItem } = useLocalStorage();
 
 export const actionGetCurrentUser = createAsyncThunk('auth/actionGetCurrentUser', async (action, payload) => {
     const { getLocalItem } = useLocalStorage();
@@ -19,22 +19,27 @@ export const actionGetCurrentUser = createAsyncThunk('auth/actionGetCurrentUser'
 
 export const actionLogout = createAsyncThunk('auth/actionLogout', async (action, payload) => {
     try {
-        const res = await authService.getUser();
-        setToastMessage({ message: 'Đăng xuất thành công', status: 'success' });
-        return res;
+        await authService.logoutAccount();
+        setToastMessage('Đăng xuất thành công', 'success');
+        removeLocalItem('token');
     } catch (error) {
         console.log(error);
-        setToastMessage({ message: 'Có lỗi sảy ra vui lòng thử lại!', status: 'error' });
+        setToastMessage('Có lỗi sảy ra vui lòng thử lại!', 'error');
         throw new Error();
     }
 });
 
 export const actionLogin = createAsyncThunk('auth/actionLogin', async (data, thunkAPI) => {
-    const res = await authService.singupAccount(data);
-    setToastMessage({ message: 'Đăng nhập thành công', status: 'success' });
-    setLocalItem('token');
-    console.log(res);
-    return res;
+    try {
+        const res = await authService.loginAccount(data);
+        setToastMessage('Đăng nhập thành công', 'success');
+        setLocalItem('token', res?.token?.access_token);
+        return res;
+    } catch (error) {
+        console.log(error);
+        setToastMessage('Có lỗi sảy ra vui lòng thử lại!', 'error');
+        throw new Error();
+    }
 });
 
 const authReducer = createSlice({
@@ -43,29 +48,34 @@ const authReducer = createSlice({
         user: null,
         isAuthenticated: false,
         userPermission: null,
-        loading: false,
+        isInitialized: false,
     },
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(actionGetCurrentUser.fulfilled, (state, payload) => {
-                state.user = payload.user;
+            .addCase(actionGetCurrentUser.fulfilled, (state, action) => {
+                state.user = action.payload.data;
+                state.userPermission = action.payload.data.roles.name;
                 state.isAuthenticated = true;
-                state.loading = false;
+                state.isInitialized = true;
             })
-            .addCase(actionGetCurrentUser.rejected, (state, payload) => {
+            .addCase(actionGetCurrentUser.rejected, (state, action) => {
                 state.user = null;
                 state.isAuthenticated = false;
-                state.loading = false;
+                state.userPermission = null;
+                state.isInitialized = true;
             })
             .addCase(actionLogout.fulfilled, (state, action) => {
                 state.user = null;
                 state.isAuthenticated = false;
+                state.userPermission = null;
             })
-            .addCase(actionLogin.fulfilled, (state, payload) => {
-                state.user = payload.user;
+            .addCase(actionLogin.fulfilled, (state, action) => {
+                console.log(action);
+                state.user = action.payload.user;
+                state.userPermission = action.payload.user.roles.name;
                 state.isAuthenticated = true;
-                state.loading = false;
+                state.isInitialized = true;
             });
     },
 });

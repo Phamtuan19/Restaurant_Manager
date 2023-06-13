@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-expressions */
 import { Box, Checkbox, FormControlLabel, Grid, Stack, TextField, styled } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -9,7 +9,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import SvgLogo from '~/assets/iconSvg/SvgLogo';
 import { Facebook, Google } from '~/component/Icons';
-import authService from '~/services/auth.service';
 import { LoadingButton } from '@mui/lab';
 import useAuth from '~/hook/useAuth';
 
@@ -29,23 +28,14 @@ function LoginPage() {
     });
 
     const [btnLoading, setBtnLoaidng] = useState(false);
+    const { getUser, loginAccount } = useAuth();
 
-    const [resultGoogleApi, setResultGoogleApi] = useState('');
-
-    const { loginAccount } = useAuth();
-
-    // useEffect(() => {
-    //     const resultGoogleApi = async () => {
-    //         const response = await authService.loginGoogle();
-    //         setResultGoogleApi(response.url);
-    //     };
-    //     resultGoogleApi();
-    // }, []);
+    useEffect(() => {
+        getUser();
+    }, []);
 
     const handleSubmitForm = async (data) => {
-        setBtnLoaidng(true);
         loginAccount(data);
-        setBtnLoaidng(false);
     };
 
     return (
@@ -131,14 +121,14 @@ function LoginPage() {
                                 <Link to="/">
                                     <Facebook width="2rem" height="2rem" sx={{ cursor: 'pointer' }} />
                                 </Link>
-                                <Link to={resultGoogleApi}>
+                                <Link>
                                     <Google width="2rem" height="2rem" sx={{ cursor: 'pointer' }} />
                                 </Link>
                             </Stack>
 
                             <Box>
                                 <p style={{ margin: '1rem 0', textAlign: 'center', color: '#959895' }}>
-                                    Don’t have an account? <LinkForgot to="/sing-up">Click here to sign up.</LinkForgot>
+                                    Don’t have an account? <LinkForgot to="/sign-up">Click here to sign up.</LinkForgot>
                                 </p>
                             </Box>
                         </Box>
@@ -152,7 +142,6 @@ function LoginPage() {
 const Wrap = styled('div')({
     height: '100vh',
     width: '100%',
-    // backgroundColor: 'rgba(234,106,18,.2)',
     position: 'relative',
     overflow: 'hidden',
 

@@ -1,5 +1,6 @@
-import { Stack, Avatar, Popover, Box, styled, Divider } from '@mui/material';
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Stack, Avatar, Popover, Box, styled, Divider, Menu, MenuItem } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import { CartHeader, LoginIcon, Notification } from '~/component/Icons';
@@ -7,7 +8,13 @@ import useAuth from '~/hook/useAuth';
 import authService from '~/services/auth.service';
 
 function Authentication() {
-    const { userInfo, isAuthenticated } = useAuth();
+    const { userPermission, getUser, isAuthenticated } = useAuth();
+
+    useEffect(() => {
+        if (userPermission === null) {
+            getUser();
+        }
+    }, [userPermission]);
 
     return (
         <Stack justifyContent="flex-end" flexDirection="row" alignItems="center">
@@ -17,7 +24,7 @@ function Authentication() {
             <WrapIcon sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <CartHeader width="2rem" height="2rem" className="HeaderUser_Icon" sx={{ cursor: 'pointer' }} />
             </WrapIcon>
-            <Box>{isAuthenticated ? <UserDetail userInfo={userInfo} /> : <UserLogin />}</Box>
+            <Box>{isAuthenticated ? <UserDetail /> : <UserLogin />}</Box>
         </Stack>
     );
 }
@@ -68,7 +75,8 @@ const CustomButtom = styled(Link)({
     },
 });
 
-const UserDetail = ({ userInfo, setlogoutAccount }) => {
+const UserDetail = () => {
+    const { user, logoutAccount } = useAuth();
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
@@ -81,8 +89,7 @@ const UserDetail = ({ userInfo, setlogoutAccount }) => {
     const id = open ? 'simple-popover' : undefined;
 
     const handleLogout = async () => {
-        const response = await authService.logoutAccount();
-        setlogoutAccount(response);
+        logoutAccount();
     };
 
     return (
@@ -91,46 +98,30 @@ const UserDetail = ({ userInfo, setlogoutAccount }) => {
                 aria-describedby={id}
                 sx={{ cursor: 'pointer', width: '32px', height: '32px' }}
                 sizes="small"
-                src={userInfo?.user?.image}
+                src={user?.image}
                 onClick={handleClick}
             />
-
-            <Popover
-                sx={{ top: 40 }}
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-            >
-                <Box sx={{ padding: '12px 24px' }}>
-                    <Box sx={{ display: 'flex', margin: '10px 0' }}>
-                        <Avatar sx={{ width: '50px', height: '50px' }} src={userInfo?.user?.image} />
-                        <Box sx={{ flex: 1, marginLeft: '12px' }}>
-                            <Box sx={{ fontSize: '1rem', fontWeight: 600, color: '#292929' }}>
-                                {userInfo?.user?.name}
-                            </Box>
-                            <Box sx={userEmail}>{userInfo?.user?.email}</Box>
-                        </Box>
+            <Menu anchorEl={anchorEl} id={id} open={open} onClose={handleClose}>
+                <MenuItem sx={{ display: 'flex', margin: '10px 0' }}>
+                    <Avatar sx={{ width: '50px', height: '50px' }} src={user?.image} />
+                    <Box sx={{ flex: 1, marginLeft: '12px' }}>
+                        <Box sx={{ fontSize: '1rem', fontWeight: 600, color: '#292929' }}>{user?.name}</Box>
+                        <Box sx={email}>{user?.email}</Box>
                     </Box>
-                    <Divider sx={hrStyle} />
-                    <Box>
-                        <LinkDom to="/">Trang cá nhân</LinkDom>
-                    </Box>
-                    <Divider sx={hrStyle} />
-                    <Box onClick={handleLogout}>
-                        <LinkDom>Đăng xuất</LinkDom>
-                    </Box>
-                </Box>
-            </Popover>
+                </MenuItem>
+                <Divider sx={hrStyle} />
+                <MenuItem>
+                    <LinkDom to="/">Trang cá nhân</LinkDom>
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>
+                    <LinkDom>Đăng xuất</LinkDom>
+                </MenuItem>
+            </Menu>
         </Box>
     );
 };
 
-const userEmail = {
+const email = {
     color: '#757575',
     fontSize: '.9rem',
     textTransform: 'capitalize',

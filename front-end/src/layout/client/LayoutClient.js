@@ -5,28 +5,22 @@ import useAuth from '~/hook/useAuth';
 import { useEffect } from 'react';
 
 function LayoutClient() {
-    const { getUser } = useAuth();
-
-    useEffect(() => {
-        getUser();
-    }, []);
-
     return (
         <Routes>
             {routeClient.map((route, index) => {
                 const Component = route.component;
 
                 if (route?.gurad) {
-                    const ComponentGurad = route.gurad;
+                    const PublicRouter = route.gurad;
 
                     return (
                         <Route
                             key={index}
                             path={route.path}
                             element={
-                                <ComponentGurad>
+                                <PublicRouter>
                                     <Component />
-                                </ComponentGurad>
+                                </PublicRouter>
                             }
                         />
                     );

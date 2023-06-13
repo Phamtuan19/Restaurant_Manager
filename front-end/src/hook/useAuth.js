@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { actionGetCurrentUser, actionLogin } from '~/redux/SliceReducer/authReducer';
+import { actionGetCurrentUser, actionLogin, actionLogout } from '~/redux/SliceReducer/authReducer';
 
 export default function useAuth() {
     const dispatch = useDispatch();
@@ -13,5 +13,9 @@ export default function useAuth() {
         dispatch(actionLogin(data));
     };
 
-    return { ...state, getUser, loginAccount };
+    const logoutAccount = () => {
+        dispatch(actionLogout());
+    };
+
+    return { ...state, getUser, loginAccount, logoutAccount };
 }

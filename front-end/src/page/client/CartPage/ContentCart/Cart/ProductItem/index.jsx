@@ -1,8 +1,21 @@
-import { Box, Typography, styled } from '@mui/material';
-import fomatMoney from '~/Helpers/fomatMoney';
-import { AddNewIcon } from '~/component/Icons';
+/* eslint-disable react-hooks/rules-of-hooks */
 
-export default function Product({ data }) {
+import { Box, TextField, styled } from '@mui/material';
+import fomatMoney from '~/Helpers/fomatMoney';
+import { Delete } from '~/component/Icons';
+import { useCart } from '~/redux/SliceReducer/carts.reducer';
+
+function ProductItem({ data }) {
+    const { useQuantityCartItem, useDeleteCartItem } = useCart();
+
+    const handleChangeQuantity = (e, data) => {
+        useQuantityCartItem({ ...data, quantityVal: e.target.value });
+    };
+
+    const handleClickDelete = (data) => {
+        useDeleteCartItem(data);
+    };
+
     return (
         <Wrap>
             <Box sx={{ position: 'relative', display: 'flex' }}>
@@ -16,7 +29,7 @@ export default function Product({ data }) {
                     </Box>
                 </Box>
 
-                <Box width="70%">
+                <Box minWidth="252px" overflow="hidden">
                     <Box mb="1rem" sx={styleName}>
                         {data.name}
                     </Box>
@@ -32,8 +45,22 @@ export default function Product({ data }) {
                         }}
                     >
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '0 24px' }}>
-                            <Box sx={{ fontSize: '1rem', fontWeight: 'bold' }}>{fomatMoney(data.price)}</Box>
-                            <Box sx={{ fontSize: '.8rem', fontWeight: 'bold' }}>{fomatMoney(data.price)}</Box>
+                            <Box sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
+                                {data.price_sale ? fomatMoney(data.price_sale) : fomatMoney(data.price)}
+                            </Box>
+                            <Box display="flex" alignItems="center">
+                                x
+                                <TextField
+                                    type="number"
+                                    variant="standard"
+                                    value={data.quantity}
+                                    sx={styleQuanity}
+                                    onChange={(e) => handleChangeQuantity(e, data)}
+                                />
+                            </Box>
+                            <Box onClick={() => handleClickDelete(data)}>
+                                <Delete />
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
@@ -88,3 +115,15 @@ const styleCalories = {
         transition: 'all .4s ease',
     },
 };
+
+const styleQuanity = {
+    width: 60,
+    p: '6px 0 2px 12px',
+    '& .MuiInputBase-root': {
+        '&:before, &:after': {
+            borderBottom: 'none !important',
+        },
+    },
+};
+
+export default ProductItem;

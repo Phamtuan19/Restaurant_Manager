@@ -1,3 +1,4 @@
+import Bartender from '~/page/admin/Bartender';
 import CategoriesPage from '~/page/admin/Categories';
 import DashboardPage from '~/page/admin/DashboardPage';
 import MenuPage from '~/page/admin/MenuPage';
@@ -24,6 +25,10 @@ const routeAdmin = [
     {
         path: '/categories',
         component: CategoriesPage,
+    },
+    {
+        path: '/bartender',
+        component: Bartender,
     },
 ];
 

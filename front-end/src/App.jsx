@@ -15,7 +15,6 @@ function App() {
     if (!isInitialized) return <LazyLoadingFullScreen />;
     return (
         <BrowserRouter>
-        
             <Routes>
                 <Route path="/*" element={<LayoutClient />} />
                 <Route path="/admin/*" element={<LayoutAdmin />} />

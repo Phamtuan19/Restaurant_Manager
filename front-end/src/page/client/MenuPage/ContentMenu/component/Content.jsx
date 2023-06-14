@@ -1,5 +1,5 @@
 import { Box, Grid, MenuItem, Pagination, PaginationItem, Select, Stack, styled } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { v4 } from 'uuid';
 import productSeviver from '~/services/product.service';
@@ -15,7 +15,6 @@ function Content() {
             const res = await productSeviver.getMenuProducts(page);
             setProductList(res.products);
         };
-
         getProductList(page);
     }, [page]);
 
@@ -25,7 +24,7 @@ function Content() {
 
     return (
         <Box className={{ backgroundColor: 'transparent' }}>
-            <HeaderContent sx={{ display: { xs: 'none', sm: 'flex' } }}>
+            <Box sx={{ ...styleHeader, display: { xs: 'none', sm: 'flex' } }}>
                 <Box>Có {productList?.data?.length || 0} sản phẩm</Box>
 
                 <Box sx={{ minWidth: 120 }}>
@@ -41,7 +40,7 @@ function Content() {
                         <MenuItem value="Thirty">Thirty</MenuItem>
                     </Select>
                 </Box>
-            </HeaderContent>
+            </Box>
 
             <Grid container spacing={2} gap="12px 0" sx={{ marginTop: '12px', marginBottom: '2rem' }}>
                 {(productList?.data || []).map((data) => {
@@ -65,11 +64,11 @@ function Content() {
     );
 }
 
-const HeaderContent = styled('div')({
+const styleHeader = {
     paddingBottom: '.5rem',
     borderBottom: '2px solid rgb(255, 255, 255)',
     justifyContent: 'space-between',
     alignItems: 'center',
-});
+};
 
-export default Content;
+export default memo(Content);

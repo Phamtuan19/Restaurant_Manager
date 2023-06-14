@@ -7,23 +7,22 @@ import { useState } from 'react';
 function DefaultLayoutAdmin({ children }) {
     const [activeSidebar, setActiveSidebar] = useState(false);
 
-    const handleMouseEnter = () => {
-        setActiveSidebar(true);
+    const handleSetActioveSidebar = () => {
+        setActiveSidebar((prev) => !prev);
     };
 
-    const handleMouseLeave = () => {
-        setActiveSidebar(false);
-    };
     return (
         <>
-            <Sidebar
-                activeSidebar={activeSidebar}
-                handleMouseEnter={handleMouseEnter}
-                handleMouseLeave={handleMouseLeave}
-            />
+            <Sidebar activeSidebar={activeSidebar} />
             <Box>
-                <Header />
-                <WrapContent>{children}</WrapContent>
+                <Header handleSetActioveSidebar={handleSetActioveSidebar} />
+                <WrapContent
+                    sx={{
+                        marginLeft: activeSidebar ? 'var(--width-sidebar-admin-active)' : 'var(--width-sidebar-admin)',
+                    }}
+                >
+                    {children}
+                </WrapContent>
             </Box>
         </>
     );
@@ -31,10 +30,10 @@ function DefaultLayoutAdmin({ children }) {
 
 const WrapContent = styled('div')({
     marginTop: 'var(--height-header-admin)',
-    marginLeft: 'var(--width-sidebar-admin)',
     padding: '2.5rem',
     backgroundColor: '#F8F8F8',
     minHeight: '100vh',
+    transition: 'all 0.5s ease'
 });
 
 export default DefaultLayoutAdmin;

@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
-import Categories from './Categorise';
-import Content from './Content';
+import Categories from './component/Menu';
+import Content from './component/Content';
 
 function ContentMenu() {
     return (

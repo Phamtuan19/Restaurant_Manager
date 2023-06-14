@@ -2,7 +2,7 @@ import { Checkbox, Collapse, ListItem, ListItemButton, ListItemIcon, ListItemTex
 import { useState } from 'react';
 import { v4 } from 'uuid';
 
-function ProductCategory({ open, categoriesValue, setCategoriesValue, categoryList }) {
+function CategoryItem({ open, categoriesValue, setCategoriesValue, categoryList }) {
     const [checked, setChecked] = useState([]);
 
     const handleClick = (id, title) => {
@@ -59,4 +59,4 @@ const TotalCategoryItem = styled('span')({
     verticalAlign: 'baseline',
     cursor: 'pointer',
 });
-export default ProductCategory;
+export default CategoryItem;

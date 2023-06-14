@@ -3,8 +3,16 @@ import { Box, Rating, Stack, styled } from '@mui/material';
 import fomatMoney from '~/Helpers/fomatMoney';
 import { images } from '~/assets/image';
 import { AddNewIcon } from '~/component/Icons';
+import { useCart } from '~/redux/SliceReducer/carts.reducer';
 
 function Product({ data }) {
+    const { useAddCart } = useCart();
+
+    const handleAddCart = (data) => {
+        console.log(data);
+        useAddCart(data);
+    };
+
     return (
         <Box sx={{ position: 'relative', cursor: 'pointer', marginTop: { md: '85px', xs: '100px' } }}>
             <Box sx={{ position: 'absolute', left: '50%', transform: 'translate(-50%, -50%)' }}>
@@ -58,14 +66,10 @@ function Product({ data }) {
                         }}
                     >
                         <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: '0 24px' }}>
-                            <Price>
-                                {data?.price_sale !== null ? fomatMoney(data?.price_sale) : fomatMoney(data?.price)}
-                            </Price>
-                            {data.price_sale !== undefined ? <PriceSale>{fomatMoney(data.price)}</PriceSale> : ''}
+                            <Price>{data?.price_sale ? fomatMoney(data?.price_sale) : fomatMoney(data?.price)}</Price>
+                            {data.price_sale && <PriceSale>{fomatMoney(data.price)}</PriceSale>}
                         </Box>
-                        <Box
-                        // onClick={() => handleAddToCart(data, notifyTypes[0], 'Thêm thành công!')}
-                        >
+                        <Box onClick={() => handleAddCart(data)}>
                             <AddNewIcon style={{ color: '#fff' }} />
                         </Box>
                     </Box>

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { v4 } from 'uuid';
 import fomatMoney from '~/Helpers/fomatMoney';
 import { AddNewIcon, Delete } from '~/component/Icons';
-import Categories from '~/page/admin/TablePage/component/ModalChild/Categories';
+// import Categories from '~/page/admin/TablePage/component/ModalChild/Categories';
 import ordersService from '~/services/orders.service';
 
 function ChildMenu({ openModalMenu, setOpenModelMenu }) {
@@ -50,7 +50,7 @@ function ChildMenu({ openModalMenu, setOpenModelMenu }) {
                     <Box sx={{ fontSize: '1.3rem', fontFamily: '"Roboto Slab",serif' }}>Danh sách sản phẩm</Box>
                 </Box>
                 <Box sx={{ height: 540, px: '1rem' }}>
-                    <Categories setQuery={setQuery} />
+                    {/* <Categories setQuery={setQuery} /> */}
 
                     <Box sx={{ ...styleModalChild }}>
                         {listProducts.length > 0 ? (

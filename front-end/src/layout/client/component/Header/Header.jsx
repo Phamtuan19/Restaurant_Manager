@@ -1,4 +1,4 @@
-import { Grid, Stack } from '@mui/material';
+import { Box, Grid, Stack } from '@mui/material';
 import SvgBar from '~/assets/iconSvg/SvgBar';
 import SvgLogo from '~/assets/iconSvg/SvgLogo';
 import { HeaderSearch } from './HeaderSearch';
@@ -11,9 +11,9 @@ function Header({ handleClickSidebar }) {
                 <Grid item xs={9} sm={4} sx={{ display: { xs: 'flex', md: 'none' } }}>
                     <Stack alignItems="flex-start" flexDirection="row" sx={{ alignItems: 'center' }}>
                         <SvgLogo sx={{ width: '100px', height: '100%' }} />
-                        <div onClick={handleClickSidebar}>
+                        <Box onClick={handleClickSidebar}>
                             <SvgBar width="1.5rem" />
-                        </div>
+                        </Box>
                     </Stack>
                 </Grid>
                 <Grid item sm={1} md={2} lg={2} sx={{ display: { xs: 'none', md: 'inline-block' } }}>

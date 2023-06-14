@@ -1,5 +1,6 @@
 import { Box, Stack, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
+import SvgBar from '~/assets/iconSvg/SvgBar';
 import SvgLogo from '~/assets/iconSvg/SvgLogo';
 import AvatarHeader from '~/component/AvatartHeader';
 import { Dashboard, Search, Menu, Table, WarehouseRacks } from '~/component/Icons';
@@ -28,7 +29,7 @@ const ListHeaderNavItem = [
     },
 ];
 
-function Header() {
+function Header({ handleSetActioveSidebar }) {
     return (
         <WrapHeader>
             <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', gap: '0 32px', alignItems: 'center' }}>
@@ -36,6 +37,9 @@ function Header() {
                     <Link to="/admin">
                         <SvgLogo sx={{ width: '120px', cursor: 'pointer' }} />
                     </Link>
+                    <Box onClick={handleSetActioveSidebar}>
+                        <SvgBar width="1.5rem" />
+                    </Box>
                 </Box>
 
                 <Box sx={{ position: 'relative' }}>

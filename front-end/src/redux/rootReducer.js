@@ -1,10 +1,12 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import cartsReducer from './SliceReducer/cartsReducer';
-import authReducer from './SliceReducer/authReducer';
+import authReducer from './SliceReducer/auth.reducer';
+import cartsReducer from './SliceReducer/carts.reducer';
+import modalMenuReducer from './SliceReducer/menuModal.reducer';
 
 const rootReducer = combineReducers({
-    [cartsReducer.name]: cartsReducer.reducer,
     [authReducer.name]: authReducer.reducer,
+    [cartsReducer.name]: cartsReducer.reducer,
+    [modalMenuReducer.name]: modalMenuReducer.reducer,
 });
 
 export default rootReducer;

@@ -1,7 +1,7 @@
 import { Box, styled, Grid, Stack, Button, FormControl, Select, MenuItem } from '@mui/material';
 import { AddNew } from '~/component/Icons';
 
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import productSeviver from '~/services/product.service';
 import Product from './component/Product';
 

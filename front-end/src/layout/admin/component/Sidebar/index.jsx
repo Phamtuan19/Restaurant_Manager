@@ -23,16 +23,19 @@ const listSidebar = [
         title: 'Kho Hàng',
         subCategories: [{ path: '/admin/warehouse', title: 'danh sách kho hàng' }],
     },
+    {
+        icon: Categories,
+        title: 'Nhân viên',
+        subCategories: [{ path: '/admin/bartender', title: 'pha chế' }],
+    },
 ];
 
-function Sidebar({ activeSidebar, handleMouseEnter, handleMouseLeave }) {
+function Sidebar({ activeSidebar }) {
     return (
         <WrapSidebar
             sx={{
                 width: activeSidebar ? 'var(--width-sidebar-admin-active)' : 'var(--width-sidebar-admin)',
             }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
         >
             <Stack sx={{ padding: '1.5rem 12px' }}>
                 {listSidebar.map((item, index) => (
@@ -49,7 +52,7 @@ const SidebarItem = ({ activeSidebar, data }) => {
     const IconComponent = data.icon;
 
     const handleClick = () => {
-        setOpen(!open);
+        if (activeSidebar) setOpen(!open);
     };
 
     useEffect(() => {

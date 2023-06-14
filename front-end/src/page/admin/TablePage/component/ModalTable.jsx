@@ -1,142 +1,156 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createContext, useContext, useEffect, useState } from 'react';
-import { contextModal } from '..';
-import tableService from '~/services/tables.service';
-import { Box, Button, Dialog, DialogActions, DialogContent, Modal } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, Button } from '@mui/material';
+import Modal from '@mui/material/Modal';
 import ProductModal from './ProductModal';
 import { v4 } from 'uuid';
 import fomatMoney from '~/Helpers/fomatMoney';
-import ModalChild from './ModalChild';
-import ComponentMerge from './ModalChild/ComponentMerge';
-import ComponentMove from './ModalChild/ComponentMove';
-import ComponentMenu from './ModalChild/ComponentMenu';
+import { Delete } from '~/component/Icons';
+import ContentMenu from './ContentMenu';
+import ContentMove from './ContentMove';
+import ContentMerge from './ContentMerge';
+import tableService from '~/services/tables.service';
 
-export const ContextModalChild = createContext();
-
-const buttomList = [
+const buttomAction = [
     {
-        color: 'error',
-        contentModalChild: ComponentMerge,
         title: 'Gộp hóa đơn',
+        color: 'error',
+        componentName: 'ContentMerge',
     },
     {
-        color: 'secondary',
-        contentModalChild: ComponentMove,
         title: 'Chuyển bàn',
+        color: 'secondary',
+        componentName: 'ContentMove',
     },
     {
-        color: 'info',
-        contentModalChild: ComponentMenu,
         title: 'Thêm móm',
+        color: 'info',
+        componentName: 'ContentMenu',
     },
 ];
 
-function ModalDetail() {
-    const [openChild, setOpenChild] = useState({ isOpen: false, componentName: '' }); // set content component modal child
+const conponentChild = [
+    {
+        name: 'ContentMenu',
+        component: ContentMenu,
+        title: 'Danh sách sản phẩm',
+    },
+    {
+        name: 'ContentMerge',
+        title: 'Gộp hóa đơn',
+        component: ContentMerge,
+    },
+    {
+        name: 'ContentMove',
+        title: 'Chuyển bàn',
+        component: ContentMove,
+    },
+];
+
+function ModalTable({ dataTable, openModal, setOpenModal }) {
     const [invoiceTable, setInvoiceTable] = useState([]);
-    const [loadingEffect, setLoadingEffect] = useState(true);
+    const [componentName, setComponentName] = useState('');
+    const [openModalChild, setOpenModalChild] = useState(false);
 
-    console.log(openChild);
+    // useEffect(() => {
+    //     setInvoiceTable([]);
+    //     const getInvoiceTable = async () => {
+    //         const res = await tableService.getInvoiceTable(dataTable.id);
+    //         setInvoiceTable({ data: res.invoiceDetails, totalPrice: res.totalPrice });
+    //     };
+    //     getInvoiceTable();
+    // }, []);
 
-    const { openModal, setOpenModal, dataTable } = useContext(contextModal);
+    const handleOpenMdoalChild = (componentName) => {
+        setOpenModalChild(true);
+        setComponentName(componentName);
+    };
 
-    useEffect(() => {
-        if (openModal) {
-            setInvoiceTable([]);
-
-            const tableId = dataTable.id;
-            const getInvoiceTable = async () => {
-                const res = await tableService.getInvoiceTable(tableId);
-                setInvoiceTable({ data: res.invoiceDetails, totalPrice: res.totalPrice });
-            };
-            getInvoiceTable();
-        }
-    }, [openModal, loadingEffect]);
-
-    const handleClickOpenMenu = (componentName) => {
-        setOpenChild((prev) => {
-            return {
-                isOpen: true,
-                componentName,
-            };
-        });
+    const handleCloseModal = () => {
+        setOpenModal(false);
+        setOpenModalChild(false);
     };
 
     return (
-        <ContextModalChild.Provider value={{ openChild, setOpenChild, setLoadingEffect }}>
-            <Modal
-                open={openModal}
-                onClose={() => setOpenModal(false)}
-                aria-labelledby="parent-modal-title"
-                aria-describedby="parent-modal-description"
-            >
-                <Box
-                    sx={{
-                        ...style,
-                        transition: 'all 0.5s',
-                        transform: openChild.isOpen ? 'translate(-100%, -50%)' : 'translate(-50%, -50%)',
-                    }}
-                >
-                    <Box pt={2} pb={2} borderBottom="1px solid">
-                        <h2 id="child-modal-title">
-                            Thông tin Bàn {dataTable?.index_table} - T{dataTable?.floor}
-                        </h2>
-                    </Box>
+        <Modal
+            open={openModal}
+            onClose={handleCloseModal}
+            aria-labelledby="parent-modal-title"
+            aria-describedby="parent-modal-description"
+        >
+            <Box sx={{ ...style, transform: openModalChild ? 'translate(-101%, -50%)' : 'translate(-50%, -50%)' }}>
+                <Box py={2} borderBottom="1px solid rgb(224, 227, 231)">
+                    Thông tin Bàn {dataTable?.index_table} - T{dataTable?.floor}
+                </Box>
 
-                    {/* Nội dung modal */}
-                    <Box sx={{ height: 450, position: 'relative' }}>
-                        {(invoiceTable?.data || []).length > 0 ? (
-                            <>
-                                <Box
-                                    height="95%"
-                                    overflow="scroll"
-                                    sx={{ '&::-webkit-scrollbar': { width: '0 !important' } }}
-                                >
-                                    {(invoiceTable?.data || []).map((item) => {
-                                        return <ProductModal key={v4()} data={item} />;
-                                    })}
-                                </Box>
-                                <Box
-                                    position="absolute"
-                                    bottom="0"
-                                    left="0"
-                                    right="0"
-                                    display="flex"
-                                    justifyContent="space-between"
-                                >
-                                    <span>Tổng tiền: </span>
-                                    <span style={{ textAlign: 'end' }}>{fomatMoney(invoiceTable.totalPrice)}</span>
-                                </Box>
-                            </>
-                        ) : (
-                            ''
-                        )}
-                    </Box>
+                {/* Nội dung modal */}
+                <Box sx={{ height: 420, position: 'relative' }}>
+                    <>
+                        <Box height="95%" overflow="scroll" sx={{ '&::-webkit-scrollbar': { width: '0 !important' } }}>
+                            {(invoiceTable?.data || []).map((item) => {
+                                return <ProductModal key={v4()} data={item} />;
+                            })}
+                        </Box>
+                    </>
+                </Box>
 
-                    {/* All buttom action */}
-                    <Box mt={2} display="flex" gap="12px 6px" justifyContent="space-between" flexWrap="wrap">
-                        <Button fullWidth variant="contained">
-                            Thanh toán
+                {/* All buttom action */}
+                <Box mt={2} display="flex" justifyContent="space-between" flexWrap="wrap">
+                    <Box mb={1} width="100%" display="flex" justifyContent="space-between">
+                        <span>Tổng tiền: </span>
+                        <span>{fomatMoney(invoiceTable.totalPrice)}</span>
+                    </Box>
+                    <Button fullWidth variant="contained" sx={{ mb: 1 }}>
+                        Thanh toán
+                    </Button>
+                    {buttomAction.map((item) => (
+                        <Button
+                            key={v4()}
+                            variant="contained"
+                            color={item.color}
+                            onClick={() => handleOpenMdoalChild(item.componentName)}
+                        >
+                            {item.title}
                         </Button>
-                        {buttomList.map((item) => {
-                            return (
-                                <Button
-                                    key={v4()}
-                                    variant="contained"
-                                    color={item.color}
-                                    onClick={() => handleClickOpenMenu(item.contentModalChild)}
-                                >
-                                    {item.title}
-                                </Button>
-                            );
+                    ))}
+                </Box>
+
+                {/* Modal child */}
+                {openModalChild && (
+                    <Box sx={{ ...styleModalChild }}>
+                        {conponentChild.map((item) => {
+                            if (item.name === componentName) {
+                                const ComponentChild = item.component;
+                                return (
+                                    <Box key={v4()}>
+                                        {/* Header Modal Child */}
+                                        <Box py={2} sx={styleHeader}>
+                                            <Box
+                                                sx={{
+                                                    cursor: 'pointer',
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    right: 0,
+                                                    transform: 'translate(150%, -50%)',
+                                                }}
+                                                onClick={() => setOpenModalChild((prev) => !prev)}
+                                            >
+                                                <Delete />
+                                            </Box>
+                                            {item.title}
+                                        </Box>
+
+                                        {/* Content Modal Child */}
+                                        <ComponentChild />
+                                    </Box>
+                                );
+                            }
                         })}
                     </Box>
-
-                    {/* Modal child */}
-                    <ModalChild />
-                </Box>
-            </Modal>
-        </ContextModalChild.Provider>
+                )}
+            </Box>
+        </Modal>
     );
 }
 
@@ -145,15 +159,39 @@ const style = {
     top: '50%',
     left: '50%',
     width: 500,
-    height: 630,
     bgcolor: 'background.paper',
-    fontFamily: '"Roboto Slab",serif',
+    border: '2px solid #fff',
     boxShadow: 24,
-    zIndex: 9999,
-    px: 4,
-    pb: 3,
-    borderRadius: '5px',
     outline: 'none',
+    zIndex: 9999,
+    borderRadius: '5px',
+    py: 1,
+    px: 4,
 };
 
-export default ModalDetail;
+const styleModalChild = {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: 500,
+    background: '#fff',
+    borderRadius: '5px',
+    opacity: 1,
+    height: 620,
+    bgcolor: 'white',
+    transform: 'translate(101%, -0.2%)',
+    py: 1,
+    px: 4,
+};
+
+const styleHeader = {
+    position: 'relative',
+    borderBottom: '1px solid rgb(224, 227, 231)',
+
+    h2: {
+        fontSize: '1.3rem',
+        fontFamily: '"Roboto Slab",serif',
+    },
+};
+
+export default ModalTable;

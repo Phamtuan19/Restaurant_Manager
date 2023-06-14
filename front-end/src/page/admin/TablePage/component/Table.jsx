@@ -1,24 +1,41 @@
-import { Box, styled } from '@mui/material';
-import { RestaurantTable } from './Icons';
+import { useState } from 'react';
+import { styled } from '@mui/material';
+
+import { RestaurantTable } from '~/component/Icons';
+import ModalTable from './ModalTable';
 
 const colorStatsTable = ['var(--color-blur)', '#FFBF00', 'var(--color-red)'];
 
 function Table({ data }) {
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleOpenMdoal = () => {
+        setOpenModal(true);
+    };
+
+    // const GetModalMenu = () => {
+    //     const { getModalMenu } = useModalMenu();
+    //     useEffect(() => {
+    //         getModalMenu();
+    //     }, []);
+    // };
+
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <>
             <BoxRestaurantTable
                 sx={{
                     '&::before': { border: `6px solid ${colorStatsTable[data.status_id - 1]}` },
                     '&::after': { border: `6px solid ${colorStatsTable[data.status_id - 1]}` },
                 }}
+                onClick={handleOpenMdoal}
             >
                 <RestaurantTable />
-
                 <TableItemName sx={{ backgroundColor: colorStatsTable[data.status_id - 1] }}>
-                    {data.index_table + ' - T' + data.floor}
+                    T{data.floor} - {data.index_table}
                 </TableItemName>
             </BoxRestaurantTable>
-        </Box>
+            <ModalTable dataTable={data} openModal={openModal} setOpenModal={setOpenModal} />
+        </>
     );
 }
 

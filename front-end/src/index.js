@@ -7,13 +7,13 @@ import store from './redux/store';
 import InitialApp from './component/InitialApp';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
+    <>
         <Provider store={store}>
             <InitialApp>
                 <App />
             </InitialApp>
         </Provider>
-    </React.StrictMode>,
+    </>,
 );
 
 // If you want to start measuring performance in your app, pass a function

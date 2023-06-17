@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Box, Rating, Stack, Typography, styled } from '@mui/material';
+import fomatMoney from '~/Helpers/fomatMoney';
 import { images } from '~/assets/image';
 import { AddNewIcon } from '~/component/Icons';
 
@@ -17,28 +18,21 @@ function Product({ data, turn = false }) {
         >
             <WrapImage>
                 <Box sx={{ width: '150px', height: '150px', borderRadius: '50%', overflow: 'hidden' }}>
-                    <Image
-                        className="Product_Item_Img"
-                        src={data?.img || data?.image || images.noImage}
-                        alt={data.name}
-                    />
+                    <Image className="Product_Item_Img" src={data?.image || images.noImage} alt={data.name} />
                 </Box>
             </WrapImage>
             <CardBody>
                 <Box sx={{ marginTop: '.5rem' }}>
-                    <Typography
-                        variant="h6"
+                    <Box
                         sx={{
-                            fontWeight: 'bolder',
-                            fontSize: '1rem',
-                            fontFamily: "'Roboto Slab', serif !important",
+                            ...styleName,
                             '&:hover': {
                                 color: '#065fd4',
                             },
                         }}
                     >
-                        name
-                    </Typography>
+                        {data.name}
+                    </Box>
 
                     <Stack spacing={1} sx={{ padding: '12px 0' }}>
                         <Rating name="half-rating-read" defaultValue={3.5} precision={0.5} readOnly />
@@ -59,12 +53,12 @@ function Product({ data, turn = false }) {
                             }}
                         >
                             <Price>
-                                {/* {data?.price_sale !== null ? fomatMoney(data?.price_sale) : fomatMoney(data?.price)} */}
+                                {data?.price_sale !== null ? fomatMoney(data?.price_sale) : fomatMoney(data?.price)}
                             </Price>
                             {/* {data.price_sale !== undefined ? <PriceSale>$ {data.price}</PriceSale> : ''} */}
                         </Box>
                         <Box
-                            // onClick={() => handleAddToCart(data, notifyTypes[0], 'Thêm thành công!')}
+                        // onClick={() => handleAddToCart(data, notifyTypes[0], 'Thêm thành công!')}
                         >
                             <AddNewIcon style={{ color: '#fff' }} />
                         </Box>
@@ -86,6 +80,15 @@ const Wrap = styled(Box)({
     border: '0 solid rgba(0,0,0,.125)',
     color: '#07143b',
 });
+
+const styleName = {
+    fontSize: '1rem',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    fontWeight: 'bolder',
+    textTransform: 'capitalize',
+};
 
 const WrapImage = styled('div')({
     position: 'absolute',

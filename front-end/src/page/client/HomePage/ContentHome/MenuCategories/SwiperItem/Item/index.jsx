@@ -1,31 +1,27 @@
 import { Box, Skeleton, Typography, styled } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { images } from '~/assets/image';
 import { CategoryIcon } from '~/component/Icons';
 
 function Item({ data }) {
-
     return (
         <Wrap>
             <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-                <img width="50%" src={data.img} alt={data.title} />
+                <Box width={100} height={100} overflow="hidden">
+                    <img
+                        width="100%"
+                        height="100%"
+                        src={data.image || images.noImage}
+                        alt={data.name}
+                        style={{ objectFit: 'cover' }}
+                    />
+                </Box>
             </Box>
 
             <CategoryItemTitle className="Category_Item_Title">
-                <Typography
-                    variant="h1"
-                    sx={{
-                        textTransform: 'capitalize',
-                        transition: 'all .4s ease',
-                        fontWeight: 'bolder',
-                        fontSize: '1.5rem',
-                        paddingBottom: '1.5rem',
-                        display: 'block',
-                        fontFamily: '"Poppins", sans-serif',
-                    }}
-                >
-                    {data.title}
-                </Typography>
+                <Box sx={styleName}>{data.name}</Box>
             </CategoryItemTitle>
-            <CategoryItemIcon>
+            <CategoryItemIcon to="/menu">
                 <CategoryIcon />
             </CategoryItemIcon>
         </Wrap>
@@ -46,6 +42,16 @@ const Wrap = styled('div')({
     },
 });
 
+const styleName = {
+    padding: '0 12px 12px',
+    fontSize: '1rem',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    fontWeight: 'bolder',
+    textTransform: 'capitalize',
+};
+
 const CategoryItemTitle = styled('div')({
     position: 'relative',
 
@@ -63,7 +69,7 @@ const CategoryItemTitle = styled('div')({
     },
 });
 
-const CategoryItemIcon = styled('div')({
+const CategoryItemIcon = styled(Link)({
     padding: '1.5rem',
     display: 'flex',
     justifyContent: 'center',

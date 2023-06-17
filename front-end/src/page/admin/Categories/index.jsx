@@ -39,7 +39,7 @@ function CategoriesPage() {
     }, [updateCategoriesList, page]);
 
     return (
-        <DefaultLayoutAdmin>
+        <>
             <Header>
                 <HeaderTitle>Danh mục sản phẩm</HeaderTitle>
             </Header>
@@ -90,7 +90,7 @@ function CategoriesPage() {
                     />
                 </Grid>
             </Grid>
-        </DefaultLayoutAdmin>
+        </>
     );
 }
 

@@ -7,20 +7,25 @@ import './index.css';
 import { ToastContainer } from 'react-toastify';
 import useAuth from './hook/useAuth';
 import LazyLoadingFullScreen from './component/LazyLoadingFullScreen';
+import { createTheme } from './theme';
+import { ThemeProvider } from '@mui/material';
 
+const theme = createTheme();
 
 function App() {
     const { isInitialized } = useAuth();
 
     if (!isInitialized) return <LazyLoadingFullScreen />;
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/*" element={<LayoutClient />} />
-                <Route path="/admin/*" element={<LayoutAdmin />} />
-            </Routes>
-            <ToastContainer autoClose={3000} />
-        </BrowserRouter>
+        <ThemeProvider theme={theme}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/*" element={<LayoutClient />} />
+                    <Route path="/admin/*" element={<LayoutAdmin />} />
+                </Routes>
+                <ToastContainer autoClose={3000} />
+            </BrowserRouter>
+        </ThemeProvider>
     );
 }
 

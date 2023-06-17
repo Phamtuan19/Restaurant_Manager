@@ -27,12 +27,7 @@ function LoginPage() {
         resolver: yupResolver(validate),
     });
 
-    const [btnLoading, setBtnLoaidng] = useState(false);
-    const { getUser, loginAccount } = useAuth();
-
-    useEffect(() => {
-        getUser();
-    }, []);
+    const { loginAccount } = useAuth();
 
     const handleSubmitForm = async (data) => {
         loginAccount(data);
@@ -103,7 +98,6 @@ function LoginPage() {
                                     }}
                                 >
                                     <LoadingButton
-                                        loading={btnLoading}
                                         loadingIndicator="Loading…"
                                         variant="contained"
                                         size="large"

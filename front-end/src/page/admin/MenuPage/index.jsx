@@ -4,10 +4,13 @@ import { AddNew } from '~/component/Icons';
 import { useEffect, useState } from 'react';
 import productSeviver from '~/services/product.service';
 import Product from './component/Product';
+import ModalAdd from './component/ModalAdd';
 
 function ProductsList() {
     const [productList, setProductList] = useState([]);
     const [select, setSelect] = useState(10);
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpen = () => setOpenModal(true);
 
     useEffect(() => {
         const productsList = async () => {
@@ -24,7 +27,7 @@ function ProductsList() {
                 <Box sx={{ fontSize: '1.6rem' }}>Danh sách sản phẩm</Box>
 
                 <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Button variant="contained">
+                    <Button variant="contained" onClick={handleOpen}>
                         <AddNew fill="white" width="1.1rem" height="1.1rem" sx={{ marginLeft: '6px' }} />
                         thêm mới
                     </Button>
@@ -44,6 +47,7 @@ function ProductsList() {
             </Header>
 
             <ViewListProductGrid productList={productList} />
+            <ModalAdd openModal={openModal} setOpenModal={setOpenModal} />
         </>
     );
 }

@@ -9,6 +9,8 @@ import 'swiper/css/pagination';
 import './styles.css';
 import Item from './Item';
 import { styled } from '@mui/material';
+import { useContext } from 'react';
+import { ContextData } from '../..';
 
 const list = [
     {
@@ -62,6 +64,7 @@ const list = [
 ];
 
 function SwiperItem() {
+    const { categories } = useContext(ContextData);
     return (
         <Swiper
             spaceBetween={16}
@@ -75,7 +78,7 @@ function SwiperItem() {
                 1024: { slidesPerView: 5 },
             }}
         >
-            {list.map((item, index) => {
+            {(categories || list).map((item, index) => {
                 return (
                     <SwiperSlideCustom key={index} className="card radius-1-5">
                         <Item data={item} />

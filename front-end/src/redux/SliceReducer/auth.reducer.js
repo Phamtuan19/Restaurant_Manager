@@ -6,39 +6,46 @@ import authService from '~/services/auth.service';
 
 const { setLocalItem, removeLocalItem } = useLocalStorage();
 
-export const actionGetCurrentUser = createAsyncThunk('auth/actionGetCurrentUser', async (action, payload) => {
+export const actionGetCurrentUser = createAsyncThunk('auth/actionGetCurrentUser', async (payload, thunkAPI) => {
     const { getLocalItem } = useLocalStorage();
-    const token = getLocalItem('token');
-    if (token) {
-        const user = await authService.getUser();
-        return user;
+    const accessToken = getLocalItem('accessToken');
+    if (accessToken) {
+        try {
+            const res = await authService.getUser();
+            console.log(res);
+            return res;
+        } catch (error) {
+            console.log(error);
+            return thunkAPI.rejectWithValue('API request failed');
+        }
     } else {
         throw new Error();
     }
 });
 
-export const actionLogout = createAsyncThunk('auth/actionLogout', async (action, payload) => {
+export const actionLogout = createAsyncThunk('auth/actionLogout', async (payload, thunkAPI) => {
     try {
         await authService.logoutAccount();
         setToastMessage('Đăng xuất thành công', 'success');
-        removeLocalItem('token');
+        removeLocalItem('accessToken');
     } catch (error) {
         console.log(error);
         setToastMessage('Có lỗi sảy ra vui lòng thử lại!', 'error');
-        throw new Error();
+        return thunkAPI.rejectWithValue('API request failed');
     }
 });
 
 export const actionLogin = createAsyncThunk('auth/actionLogin', async (data, thunkAPI) => {
     try {
         const res = await authService.loginAccount(data);
+        console.log(res);
         setToastMessage('Đăng nhập thành công', 'success');
-        setLocalItem('token', res?.token?.access_token);
+        setLocalItem('accessToken', res?.token?.accessToken);
+        // setLocalItem('refestToken', res?.token?.refestToken || null);
         return res;
     } catch (error) {
         console.log(error);
-        setToastMessage('Có lỗi sảy ra vui lòng thử lại!', 'error');
-        throw new Error();
+        return thunkAPI.rejectWithValue('API request failed');
     }
 });
 
@@ -70,11 +77,14 @@ const authReducer = createSlice({
                 state.isAuthenticated = false;
                 state.userPermission = null;
             })
-            .addCase(actionLogin.fulfilled, (state, action) => {
-                console.log(action);
-                state.user = action.payload.user;
-                state.userPermission = action.payload.user.roles.name;
+            .addCase(actionLogin.fulfilled, (state, { payload }) => {
+                const { user } = payload;
+                state.user = user || null;
+                state.userPermission = user?.roles?.name;
                 state.isAuthenticated = true;
+                state.isInitialized = true;
+            })
+            .addCase(actionLogin.rejected, (state, action) => {
                 state.isInitialized = true;
             });
     },

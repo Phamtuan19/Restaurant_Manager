@@ -1,7 +1,9 @@
 import SwiperItem from './SwiperItem';
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import Product from '~/component/client/Product';
 import TitleComponent from '../TitleComponent';
+import { useContext } from 'react';
+import { ContextData } from '..';
 
 const productList = [
     {
@@ -33,14 +35,16 @@ const productList = [
 ];
 
 function MenuCategories() {
+    const { menuProducts } = useContext(ContextData);
+
     return (
-        <>
+        <Box minHeight={500}>
             <TitleComponent title="Menu Category" titleRoute="View Title" />
             <SwiperItem />
 
             {/* Product Item Menu */}
             <Grid container spacing={2}>
-                {productList.map((item, index) => {
+                {(menuProducts || productList).map((item, index) => {
                     return (
                         <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
                             <Product data={item} turn={true} />
@@ -48,7 +52,7 @@ function MenuCategories() {
                     );
                 })}
             </Grid>
-        </>
+        </Box>
     );
 }
 

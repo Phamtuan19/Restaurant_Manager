@@ -1,13 +1,16 @@
-import { Box, Stack } from '@mui/material';
-import { useEffect, useState } from 'react';
+/* eslint-disable array-callback-return */
+import { Box, Stack, TextField } from '@mui/material';
+import { useContext, useEffect, useState } from 'react';
 import { v4 } from 'uuid';
 import fomatMoney from '~/Helpers/fomatMoney';
 import { AddNewIcon, Delete } from '~/component/Icons';
 // import Categories from '~/page/admin/TablePage/component/ModalChild/Categories';
 import ordersService from '~/services/orders.service';
+import { ContextModalBooking } from '..';
 
 function ChildMenu({ openModalMenu, setOpenModelMenu }) {
     const [listProducts, setListProducts] = useState([]);
+    const [searchMenu, setSearchMenu] = useState('');
     const [query, setQuery] = useState('');
 
     useEffect(() => {
@@ -31,7 +34,7 @@ function ChildMenu({ openModalMenu, setOpenModelMenu }) {
                     background: '#fff',
                     borderRadius: '5px',
                     width: { xs: '100%', md: 500 },
-                    transform: 'translate(102%, -0%)',
+                    transform: { xs: 'translate(0%, -0.2%)', lg: 'translate(102%, -0.2%)' },
                 }}
             >
                 <Box sx={{ position: 'relative', borderBottom: '1px solid rgb(224, 227, 231)', padding: '12px' }}>
@@ -47,7 +50,15 @@ function ChildMenu({ openModalMenu, setOpenModelMenu }) {
                     >
                         <Delete />
                     </Box>
-                    <Box sx={{ fontSize: '1.3rem', fontFamily: '"Roboto Slab",serif' }}>Danh sách sản phẩm</Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <Box sx={{ fontSize: '1.3rem' }}>Danh sách sản phẩm</Box>
+                        <TextField
+                            variant="standard"
+                            size="small"
+                            value={searchMenu}
+                            onChange={(e) => setSearchMenu(e.target.value)}
+                        />
+                    </Box>
                 </Box>
                 <Box sx={{ height: 540, px: '1rem' }}>
                     {/* <Categories setQuery={setQuery} /> */}
@@ -55,7 +66,9 @@ function ChildMenu({ openModalMenu, setOpenModelMenu }) {
                     <Box sx={{ ...styleModalChild }}>
                         {listProducts.length > 0 ? (
                             listProducts.map((item) => {
-                                return <Product key={v4()} data={item} />;
+                                if (item.name.includes(searchMenu)) {
+                                    return <Product key={v4()} data={item} />;
+                                }
                             })
                         ) : (
                             <Box mt={3}>Không có sản phẩm</Box>
@@ -68,15 +81,32 @@ function ChildMenu({ openModalMenu, setOpenModelMenu }) {
 }
 
 const styleModalChild = {
-    maxHeight: 450,
+    maxHeight: 540,
     overflow: 'scroll',
-
     '::-webkit-scrollbar': {
         width: '0',
     },
 };
 
 const Product = ({ data }) => {
+    const { cartBooking, setCartBooking } = useContext(ContextModalBooking);
+
+    const handleAddCart = (data) => {
+        const { id } = data;
+
+        const existingItem = cartBooking.find((item) => item.id === id);
+
+        if (existingItem) {
+            const updatedCart = cartBooking.map((item) =>
+                item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
+            );
+            setCartBooking(updatedCart);
+        } else {
+            const newItem = { ...data, quantity: 1 };
+            setCartBooking([...cartBooking, newItem]);
+        }
+    };
+
     return (
         <Box sx={{ padding: '12px 0', display: 'flex', cursor: 'pointer', gap: '0 24px' }}>
             <Box sx={{ width: '70px', height: '70px', overflow: 'hidden' }}>
@@ -95,7 +125,7 @@ const Product = ({ data }) => {
                             {fomatMoney(data?.price || data?.price_sale)}
                         </span>
                     </Box>
-                    <Box>
+                    <Box onClick={() => handleAddCart(data)}>
                         <AddNewIcon style={{ color: '#fff' }} />
                     </Box>
                 </Stack>

@@ -1,23 +1,8 @@
-import {
-    Box,
-    Checkbox,
-    FormControl,
-    Input,
-    InputAdornment,
-    InputLabel,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    TextField,
-    styled,
-} from '@mui/material';
 import { useEffect, useState } from 'react';
-import { DownArrow, Search } from '~/component/Icons';
-import { Card } from '~/component/client/Card';
-import productSeviver from '~/services/product.service';
 import { v4 } from 'uuid';
+import { Box, Checkbox, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled } from '@mui/material';
+import { Search } from '~/component/Icons';
+import productSeviver from '~/services/product.service';
 
 function Menu() {
     const [filterCategories, setFilterCategories] = useState([]);

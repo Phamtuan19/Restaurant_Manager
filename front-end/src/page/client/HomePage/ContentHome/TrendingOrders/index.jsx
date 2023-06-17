@@ -2,6 +2,8 @@ import { Box, Grid } from '@mui/material';
 
 import Product from './Product';
 import TitleComponent from '../TitleComponent';
+import { useContext } from 'react';
+import { ContextData } from '..';
 
 const productTrendingList = [
     {
@@ -55,12 +57,14 @@ const productTrendingList = [
 ];
 
 function TrendingOrders() {
+    const { topProducts } = useContext(ContextData);
+
     return (
-        <Box>
+        <Box minHeight={500}>
             <TitleComponent title="Trending orders" sx={{ marginTop: '12px' }} />
 
             <Grid container spacing={2}>
-                {productTrendingList.map((item, index) => {
+                {(topProducts || productTrendingList).map((item, index) => {
                     return (
                         <Grid item key={index} xs={12} sm={6} lg={4}>
                             <Product data={item} />

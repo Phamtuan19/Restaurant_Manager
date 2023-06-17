@@ -9,11 +9,11 @@ const withAuthToken = async (requestConfig) => {
     const { url } = requestConfig;
 
     if (!excludeAuthenApi.some((api) => url.includes(api))) {
-        const authToken = getLocalItem('token');
-        if (authToken) {
+        const accessToken = getLocalItem('accessToken');
+        if (accessToken) {
             requestConfig.headers = {
                 'X-Requested-With': 'XMLHttpRequest',
-                Authorization: `Bearer ${authToken}`,
+                Authorization: `Bearer ${accessToken}`,
             };
             return requestConfig;
         }

@@ -4,7 +4,7 @@ import BaseService from '~/utils/BaseService';
 
 // const { removeLocalItem } = useLocalStorage();
 
-const authEndpoint = {
+export const authEndpoint = {
     base: 'auth',
     loginAccount: '/login/account',
     authGoogle: '/google/url',
@@ -12,6 +12,8 @@ const authEndpoint = {
     logoutAccount: '/logout',
     singupAccount: '/singup/account',
     getUser: '/user',
+
+    refestToken: 'refest-token',
 };
 
 class AuthService extends BaseService {
@@ -44,6 +46,10 @@ class AuthService extends BaseService {
 
     getUser = async () => {
         return this.request.get(this.BASE_ENDPOINT + authEndpoint.getUser);
+    };
+
+    refeshToken = async () => {
+        console.log('Call Api Refesh Token');
     };
 }
 

@@ -130,7 +130,7 @@ function ProductCreate() {
                                             );
                                         })}
                                     </Select>
-                                    <FormHelperText>{errors.categories?.message}</FormHelperText>
+                                    <FormHelperText>{errors.name?.message}</FormHelperText>
                                 </FormControl>
                             </Grid>
                             <Grid item lg={6}>

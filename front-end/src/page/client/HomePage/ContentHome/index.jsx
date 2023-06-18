@@ -14,11 +14,10 @@ export const ContextData = createContext();
 
 function ContentHome() {
     const [data, setData] = useState([]);
-
     useEffect(() => {
         const api = async () => {
             const res = await homePageService.getMenuCategories();
-            console.log(res)
+            console.log(res);
             setData(res);
         };
 

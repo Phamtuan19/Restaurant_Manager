@@ -1,13 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import useAuth from '~/hook/useAuth';
-
-import authService from '~/services/auth.service';
+import React from 'react';
+// import { useLocation, useNavigate } from 'react-router-dom';
 
 function LoginGoogle() {
-    const location = useLocation();
-    const navigate = useNavigate();
+    // const location = useLocation();
+    // const navigate = useNavigate();
 
     // const { setUserInfoLogin } = useAuth();
 

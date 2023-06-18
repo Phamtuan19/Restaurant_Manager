@@ -1,7 +1,6 @@
 import { Grid } from '@mui/material';
 import Cart from './Cart';
 import Delivery from './Delivery';
-import PaymentInfo from './Cart/PaymentInfo';
 
 function ContentCart() {
     return (

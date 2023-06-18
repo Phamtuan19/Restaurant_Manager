@@ -7,7 +7,6 @@ import BookingPage from '~/page/client/BookingPage';
 
 import SignUpPage from '~/page/client/SignUpPage';
 import PublicRouter from './component/PublicRouter';
-import NotFound from '~/page/error/NotFound';
 
 const routeClient = [
     {

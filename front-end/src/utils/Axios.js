@@ -2,7 +2,7 @@ import axios from 'axios';
 import withAuthToken from './Middleware';
 import setToastMessage from '~/Helpers/toastMessage';
 import httpStatusCode from '~/configs/httpStatusCode';
-import authService, { authEndpoint } from '~/services/auth.service';
+import { authEndpoint } from '~/services/auth.service';
 
 // const excludeAuthenApi = [];
 

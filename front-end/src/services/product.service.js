@@ -6,7 +6,6 @@ const authEndpoint = {
     categories: 'admin/products/categories',
     menuProducts: 'client/menu/products',
     menuFilter: 'client/menu/filter',
-
 };
 
 class ProductSeviver extends BaseService {
@@ -15,11 +14,12 @@ class ProductSeviver extends BaseService {
         this.setRequest();
     }
 
-    // Amdin
+    // Amdin Get Products
     adminProducts = async () => {
         return await this.request.get(authEndpoint.list);
     };
 
+    // Admin Create Product
     adminProductsCreate = async (data) => {
         return this.request.post(authEndpoint.create, data);
     };

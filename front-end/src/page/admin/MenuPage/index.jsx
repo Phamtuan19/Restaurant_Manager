@@ -1,16 +1,36 @@
-import { Box, styled, Grid, Stack, Button, FormControl, Select, MenuItem } from '@mui/material';
+import {
+    Box,
+    styled,
+    Grid,
+    Stack,
+    Button,
+    FormControl,
+    Select,
+    MenuItem,
+    Popper,
+    Fade,
+    Paper,
+    Typography,
+    Menu,
+} from '@mui/material';
 import { AddNew } from '~/component/Icons';
 
 import { useEffect, useState } from 'react';
 import productSeviver from '~/services/product.service';
 import Product from './component/Product';
 import ModalAdd from './component/ModalAdd';
+import PopupState, { bindMenu, bindPopper, bindToggle, bindTrigger } from 'material-ui-popup-state';
+
+const CONTENTMODAL = {
+    addProduct: 'addProduct',
+    addCategory: 'addCategory',
+};
 
 function ProductsList() {
     const [productList, setProductList] = useState([]);
     const [select, setSelect] = useState(10);
     const [openModal, setOpenModal] = useState(false);
-    const handleOpen = () => setOpenModal(true);
+    const [contentModal, setContentModal] = useState('addProduct');
 
     useEffect(() => {
         const productsList = async () => {
@@ -21,16 +41,47 @@ function ProductsList() {
         productsList();
     }, []);
 
+    const handleOpenModal = (value) => {
+        setOpenModal(true);
+        setContentModal(value);
+    };
+
     return (
         <>
             <Header>
                 <Box sx={{ fontSize: '1.6rem' }}>Danh sách sản phẩm</Box>
 
                 <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Button variant="contained" onClick={handleOpen}>
-                        <AddNew fill="white" width="1.1rem" height="1.1rem" sx={{ marginLeft: '6px' }} />
-                        thêm mới
-                    </Button>
+                    <PopupState variant="popover" popupId="demo-popup-menu">
+                        {(popupState) => (
+                            <>
+                                <Button variant="contained" {...bindTrigger(popupState)}>
+                                    <AddNew width="16px" height="16px" fill="#fff" sx={{ marginRight: '6px' }} />
+                                    Thêm mới
+                                </Button>
+                                <Menu {...bindMenu(popupState)}>
+                                    <MenuItem
+                                        onClick={() => {
+                                            popupState.close();
+                                            handleOpenModal(CONTENTMODAL.addProduct);
+                                        }}
+                                    >
+                                        <AddNew width="16px" height="16px" fill="#fff" sx={{ marginRight: '6px' }} />
+                                        Thêm sản phẩm
+                                    </MenuItem>
+                                    <MenuItem
+                                        onClick={() => {
+                                            popupState.close();
+                                            handleOpenModal(CONTENTMODAL.addCategory);
+                                        }}
+                                    >
+                                        <AddNew width="16px" height="16px" fill="#fff" sx={{ marginRight: '6px' }} />
+                                        Thêm danh mục
+                                    </MenuItem>
+                                </Menu>
+                            </>
+                        )}
+                    </PopupState>
 
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                         <Select
@@ -47,7 +98,7 @@ function ProductsList() {
             </Header>
 
             <ViewListProductGrid productList={productList} />
-            <ModalAdd openModal={openModal} setOpenModal={setOpenModal} />
+            <ModalAdd openModal={openModal} setOpenModal={setOpenModal} contentComponent={contentModal} />
         </>
     );
 }

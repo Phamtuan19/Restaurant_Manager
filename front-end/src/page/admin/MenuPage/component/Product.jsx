@@ -1,6 +1,5 @@
-import { Box, Typography, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import fomatMoney from '~/Helpers/fomatMoney';
-import { AddNewIcon } from '~/component/Icons';
 
 export default function Product({ data }) {
     return (
@@ -32,7 +31,9 @@ export default function Product({ data }) {
                         }}
                     >
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '0 24px' }}>
-                            <Box sx={{ fontSize: '1rem', fontWeight: 'bold' }}>{fomatMoney(data.price)}</Box>
+                            <Box sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
+                                {data.price_sale ? fomatMoney(data.price_sale) : fomatMoney(data.price_sale)}
+                            </Box>
                             <Box sx={{ fontSize: '.8rem', fontWeight: 'bold' }}>{fomatMoney(data.price)}</Box>
                         </Box>
                     </Box>

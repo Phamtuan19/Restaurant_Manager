@@ -13,13 +13,15 @@ function DefaultLayoutAdmin({ children }) {
 
     return (
         <>
-            <Sidebar activeSidebar={activeSidebar} />
+            {/* <Sidebar activeSidebar={activeSidebar} /> */}
             <Box>
                 <Header handleSetActioveSidebar={handleSetActioveSidebar} />
                 <WrapContent
-                    sx={{
-                        marginLeft: activeSidebar ? 'var(--width-sidebar-admin-active)' : 'var(--width-sidebar-admin)',
-                    }}
+                // sx={
+                //     {
+                //         // marginLeft: activeSidebar ? 'var(--width-sidebar-admin-active)' : 'var(--width-sidebar-admin)',
+                //     }
+                // }
                 >
                     {children}
                 </WrapContent>
@@ -33,7 +35,7 @@ const WrapContent = styled('div')({
     padding: '2.5rem',
     backgroundColor: '#F8F8F8',
     minHeight: '100vh',
-    transition: 'all 0.5s ease'
+    transition: 'all 0.5s ease',
 });
 
 export default DefaultLayoutAdmin;

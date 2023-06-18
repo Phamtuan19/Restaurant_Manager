@@ -1,36 +1,26 @@
 import { styled } from '@mui/material';
-import { useState } from 'react';
+import React from 'react';
 import { RestaurantTable } from '~/component/Icons';
-import ModalTable from './Modal';
-import setToastMessage from '~/Helpers/toastMessage';
 
 const colorStatsTable = ['var(--color-blur)', '#FFBF00', 'var(--color-red)'];
 
-function Table(props) {
-    const { data } = props;
-
-    const [openModal, setOpenModal] = useState(false);
-
+const Table = ({ data }) => {
     return (
-        <>
+        <React.Fragment>
             <BoxRestaurantTable
                 sx={{
                     '&::before': { border: `6px solid ${colorStatsTable[data.status_id - 1]}` },
                     '&::after': { border: `6px solid ${colorStatsTable[data.status_id - 1]}` },
                 }}
-                onClick={() =>
-                    data.status_id === 1 ? setOpenModal(true) : setToastMessage('Bàn đã có khách sử dụng', 'error')
-                }
             >
                 <RestaurantTable />
                 <TableItemName sx={{ backgroundColor: colorStatsTable[data.status_id - 1] }}>
                     T{data.floor} - {data.index_table}
                 </TableItemName>
             </BoxRestaurantTable>
-            <ModalTable data={data} openModal={openModal} setOpenModal={setOpenModal} />
-        </>
+        </React.Fragment>
     );
-}
+};
 
 const BoxRestaurantTable = styled('div')({
     position: 'relative',

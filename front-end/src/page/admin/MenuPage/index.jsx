@@ -1,53 +1,38 @@
-import {
-    Box,
-    styled,
-    Grid,
-    Stack,
-    Button,
-    FormControl,
-    Select,
-    MenuItem,
-    Popper,
-    Fade,
-    Paper,
-    Typography,
-    Menu,
-} from '@mui/material';
+import { Box, styled, Grid, Stack, Button, FormControl, Select, MenuItem, Menu } from '@mui/material';
 import { AddNew } from '~/component/Icons';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import productSeviver from '~/services/product.service';
 import Product from './component/Product';
 import ModalAdd from './component/ModalAdd';
-import PopupState, { bindMenu, bindPopper, bindToggle, bindTrigger } from 'material-ui-popup-state';
+import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 
 const CONTENTMODAL = {
     addProduct: 'addProduct',
     addCategory: 'addCategory',
+    detailProduct: 'detailProduct',
 };
 
 function ProductsList() {
     const [productList, setProductList] = useState([]);
     const [select, setSelect] = useState(10);
     const [openModal, setOpenModal] = useState(false);
-    const [contentModal, setContentModal] = useState('addProduct');
+    const [contentModal, setContentModal] = useState({ component: 'addProduct', data: null });
 
     useEffect(() => {
-        const productsList = async () => {
+        (async () => {
             const res = await productSeviver.adminProducts();
             setProductList(res.products);
-        };
-
-        productsList();
+        })();
     }, []);
 
-    const handleOpenModal = (value) => {
+    const handleOpenModal = (value, data = null) => {
         setOpenModal(true);
-        setContentModal(value);
+        setContentModal((prev) => ({ component: value, data }));
     };
 
     return (
-        <>
+        <React.Fragment>
             <Header>
                 <Box sx={{ fontSize: '1.6rem' }}>Danh sách sản phẩm</Box>
 
@@ -66,7 +51,7 @@ function ProductsList() {
                                             handleOpenModal(CONTENTMODAL.addProduct);
                                         }}
                                     >
-                                        <AddNew width="16px" height="16px" fill="#fff" sx={{ marginRight: '6px' }} />
+                                        <AddNew width="16px" height="16px" fill="#000" sx={{ marginRight: '6px' }} />
                                         Thêm sản phẩm
                                     </MenuItem>
                                     <MenuItem
@@ -75,7 +60,7 @@ function ProductsList() {
                                             handleOpenModal(CONTENTMODAL.addCategory);
                                         }}
                                     >
-                                        <AddNew width="16px" height="16px" fill="#fff" sx={{ marginRight: '6px' }} />
+                                        <AddNew width="16px" height="16px" fill="#000" sx={{ marginRight: '6px' }} />
                                         Thêm danh mục
                                     </MenuItem>
                                 </Menu>
@@ -97,9 +82,24 @@ function ProductsList() {
                 </Stack>
             </Header>
 
-            <ViewListProductGrid productList={productList} />
-            <ModalAdd openModal={openModal} setOpenModal={setOpenModal} contentComponent={contentModal} />
-        </>
+            <Box>
+                <Grid container spacing={2}>
+                    {productList.map((item, index) => {
+                        return (
+                            <Grid
+                                item
+                                xs={3}
+                                key={index}
+                                onClick={() => handleOpenModal(CONTENTMODAL.detailProduct, item.id)}
+                            >
+                                <Product data={item} />
+                            </Grid>
+                        );
+                    })}
+                </Grid>
+            </Box>
+            <ModalAdd openModal={openModal} setOpenModal={setOpenModal} contentModal={contentModal} />
+        </React.Fragment>
     );
 }
 
@@ -109,21 +109,5 @@ const Header = styled('header')({
     justifyContent: 'space-between',
     alignItems: 'center',
 });
-
-const ViewListProductGrid = ({ productList }) => {
-    return (
-        <Box>
-            <Grid container spacing={2}>
-                {productList.map((item, index) => {
-                    return (
-                        <Grid item xs={3} key={index}>
-                            <Product data={item} />
-                        </Grid>
-                    );
-                })}
-            </Grid>
-        </Box>
-    );
-};
 
 export default ProductsList;

@@ -1,5 +1,5 @@
-import { Box, Stack, styled } from '@mui/material';
-import { v4 } from 'uuid';
+import { Box, Stack, Typography } from '@mui/material';
+import React from 'react';
 
 const listNote = [
     {
@@ -16,27 +16,17 @@ const listNote = [
     },
 ];
 
-function ContentHeader() {
+const HeaderPage = () => {
     return (
-        <Stack
-            sx={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                padding: '1rem 1.5rem',
-                backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                border: '1px solid #fff',
-                borderRadius: '1.5rem',
-                gap: '12px 32px',
-            }}
-        >
-            <HeaderTitle>Danh sách bàn</HeaderTitle>
-            <Stack sx={{ gap: '12px 32px', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
+        <Stack sx={style}>
+            <Typography component="h3" fontSize="1.6rem">
+                Danh sách bàn
+            </Typography>
+            <Stack sx={styleContent}>
                 {listNote.map((item, index) => {
                     return (
                         <Stack
-                            key={v4()}
+                            key={index}
                             sx={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
@@ -52,13 +42,26 @@ function ContentHeader() {
             </Stack>
         </Stack>
     );
-}
+};
 
-const HeaderTitle = styled('h3')({
-    fontSize: '1.6rem',
-    fontFamily: '"Roboto Slab",serif',
-    color: 'var(--black)',
-});
+const style = {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    padding: '1rem 1.5rem',
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    border: '1px solid #fff',
+    borderRadius: '1.5rem',
+    gap: '12px 32px',
+};
+
+const styleContent = {
+    gap: '12px 32px',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+};
 
 const styleStatusTable = {
     width: '20px',
@@ -67,4 +70,4 @@ const styleStatusTable = {
     marginRight: '12px',
 };
 
-export default ContentHeader;
+export default HeaderPage;

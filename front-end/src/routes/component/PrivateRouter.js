@@ -7,7 +7,7 @@ function PrivateRouter({ children }) {
     if (isAuthenticated && userPermission === ROLE[1]) {
         return children;
     }
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
 }
 
 export default PrivateRouter;

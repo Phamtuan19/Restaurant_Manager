@@ -1,14 +1,16 @@
 import { Box, Modal } from '@mui/material';
 import AddCategory from './AddCategory';
 import AddProduct from './AddProduct';
+import DetailProduct from './DetailProduct';
 
 const CONTENTMODAL = {
     addProduct: AddProduct,
     addCategory: AddCategory,
+    detailProduct: DetailProduct,
 };
 
-function ModalAdd({ openModal, setOpenModal, contentComponent }) {
-    const Component = CONTENTMODAL[contentComponent];
+function ModalAdd({ openModal, setOpenModal, contentModal }) {
+    const Component = CONTENTMODAL[contentModal.component];
 
     const handleClose = () => {
         setOpenModal(false);
@@ -23,7 +25,7 @@ function ModalAdd({ openModal, setOpenModal, contentComponent }) {
             aria-describedby="keep-mounted-modal-description"
         >
             <Box sx={style}>
-                <Component content={contentComponent} setOpenModal={setOpenModal} />
+                <Component content={contentModal} setOpenModal={setOpenModal} />
             </Box>
         </Modal>
     );

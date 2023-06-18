@@ -28,6 +28,11 @@ class ProductSeviver extends BaseService {
         return this.request.get(authEndpoint.categories);
     };
 
+    // Admin get one
+    adminGetProduct = async (id) => {
+        return this.request.get(authEndpoint.list + '/' + id);
+    };
+
     // Client
     getMenuProducts = async (page) => {
         return this.request.get(authEndpoint.menuProducts + `?page=${page}`);

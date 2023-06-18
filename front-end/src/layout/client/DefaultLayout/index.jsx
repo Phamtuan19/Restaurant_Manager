@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, styled } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { Header } from '../component/Header';
 import Footer from '../component/Footer';
@@ -14,35 +14,32 @@ function DefaultLayout({ children }) {
     };
 
     return (
-        <>
+        <Box>
             <Sidebar sidebarActive={sidebarActive} handleClickSidebar={handleClickSidebar} />
-            <Wrap
-                sx={{
-                    marginLeft: { xs: '0', md: 'var(--width-sidebar)' },
-                    transition: 'all 0.5s',
-                    position: 'relative',
-                    zIndex: 10,
-                }}
-            >
+            <Box sx={style}>
                 <Header handleClickSidebar={handleClickSidebar} />
 
-                <Box
-                    sx={{
-                        minHeight: '100vh',
-                        padding: '16px',
-                        marginTop: { xs: 'var(--header-height-table)', md: 'var(--height-header-client)' },
-                    }}
-                    onClick={() => setSidebarActive(false)}
-                >
+                <Box sx={styleContent} onClick={() => setSidebarActive(false)}>
                     {children}
                 </Box>
                 <Footer />
-            </Wrap>
+            </Box>
             <LayoutSite />
-        </>
+        </Box>
     );
 }
 
-const Wrap = styled('div')({});
+const style = {
+    marginLeft: { xs: '0', md: 'var(--width-sidebar)' },
+    transition: 'all 0.5s',
+    position: 'relative',
+    zIndex: 10,
+};
+
+const styleContent = {
+    minHeight: '100vh',
+    padding: '16px',
+    marginTop: { xs: 'var(--header-height-table)', md: 'var(--height-header-client)' },
+};
 
 export default DefaultLayout;

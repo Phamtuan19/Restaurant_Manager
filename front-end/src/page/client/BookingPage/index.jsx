@@ -1,24 +1,35 @@
 /* eslint-disable array-callback-return */
 import { Box, Grid, styled } from '@mui/material';
-import ContentHeader from './ContentHeader';
-import Table from './Table';
 import tableService from '~/services/tables.service';
 import { useEffect, useState } from 'react';
+import Table from './component/Table';
+import DefaultLayout from '~/layout/client/DefaultLayout';
+import HeaderPage from './component/HeaderPage';
+import setToastMessage from '~/Helpers/toastMessage';
+import ModalConfig from './component/ModalConfig';
+import StepsModal from './component/StepsModal';
 
-function ContentBooking() {
+function BookingPage() {
     const [listTable, setListTable] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [tableId, setTableId] = useState(null);
+
+    const handleOpen = (tableId, statusId) => {
+        if (statusId !== 1) return setToastMessage('Bàn đã có người sử dụng', 'error');
+        setOpen(true);
+        setTableId(tableId);
+    };
 
     useEffect(() => {
-        const apiGetTables = async () => {
+        (async () => {
             const res = await tableService.getAdminTables();
             setListTable(res.tables);
-        };
-        apiGetTables();
+        })();
     }, []);
 
     return (
-        <Box>
-            <ContentHeader />
+        <DefaultLayout>
+            <HeaderPage />
 
             <Box mt="1.5rem">
                 <Grid container spacing={2}>
@@ -26,7 +37,11 @@ function ContentBooking() {
                         <ViewTable sx={{ justifyContent: { lg: 'space-between' } }}>
                             {listTable.map((item, index) => {
                                 if (index <= 8) {
-                                    return <Table key={index} data={item} />;
+                                    return (
+                                        <Box key={index} onClick={() => handleOpen(item.id, item.status_id)}>
+                                            <Table data={item} />
+                                        </Box>
+                                    );
                                 }
                             })}
                         </ViewTable>
@@ -37,7 +52,11 @@ function ContentBooking() {
                         <ViewTable sx={{ justifyContent: { lg: 'space-around' } }}>
                             {listTable.map((item, index) => {
                                 if (index > 8 && index <= 12) {
-                                    return <Table key={index} data={item} />;
+                                    return (
+                                        <Box key={index} onClick={() => handleOpen(item.id, item.status_id)}>
+                                            <Table data={item} />
+                                        </Box>
+                                    );
                                 }
                             })}
                         </ViewTable>
@@ -47,14 +66,21 @@ function ContentBooking() {
                         <ViewTable sx={{ justifyContent: { lg: 'space-between' } }}>
                             {listTable.map((item, index) => {
                                 if (index > 12) {
-                                    return <Table key={index} data={item} />;
+                                    return (
+                                        <Box key={index} onClick={() => handleOpen(item.id, item.status_id)}>
+                                            <Table data={item} />
+                                        </Box>
+                                    );
                                 }
                             })}
                         </ViewTable>
                     </Grid>
                 </Grid>
             </Box>
-        </Box>
+            <ModalConfig open={open} setOpen={setOpen} tableId={tableId}>
+                <StepsModal />
+            </ModalConfig>
+        </DefaultLayout>
     );
 }
 const ViewTable = styled('div')({
@@ -65,4 +91,4 @@ const ViewTable = styled('div')({
     borderRadius: '1.5rem',
 });
 
-export default ContentBooking;
+export default BookingPage;

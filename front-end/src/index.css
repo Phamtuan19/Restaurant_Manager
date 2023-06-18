@@ -264,3 +264,15 @@ body .Modal_Menu_Admin .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
 .radius-1-5 {
 	border-radius: var(--radius-1-5);
 }
+
+.css-8t49rw-MuiStepConnector-line {
+	display: none !important;
+}
+
+.css-17k75iy-MuiStepContent-root,
+.css-7filhy-MuiStepContent-root {
+	margin-left: 0 !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	border-left: none !important;
+}

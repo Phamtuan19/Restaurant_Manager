@@ -3,10 +3,10 @@ import HomePage from '~/page/client/HomePage';
 import CartPage from '~/page/client/CartPage';
 import LoginPage from '~/page/client/LoginPage';
 import LoginGoogle from '~/page/client/LoginGoogle';
-import BookingPage from '~/page/client/BookingPage';
 
 import SignUpPage from '~/page/client/SignUpPage';
 import PublicRouter from './component/PublicRouter';
+import BookingPage from '~/page/client/BookingPage';
 
 const routeClient = [
     {

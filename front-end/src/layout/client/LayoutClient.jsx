@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Route, Routes } from 'react-router-dom';
 import routeClient from '../../routes/client.route';
+import DefaultLayout from './DefaultLayout';
 
 function LayoutClient() {
     return (
@@ -17,7 +18,9 @@ function LayoutClient() {
                             path={route.path}
                             element={
                                 <PublicRouter>
-                                    <Component />
+                                    <DefaultLayout>
+                                        <Component />
+                                    </DefaultLayout>
                                 </PublicRouter>
                             }
                         />

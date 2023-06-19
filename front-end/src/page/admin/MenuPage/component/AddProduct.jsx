@@ -1,27 +1,14 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, FormControl, FormHelperText, Grid, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
-import { Delete } from '~/component/Icons';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { v4 } from 'uuid';
-import React, { useState } from 'react';
+import { Clear } from '@mui/icons-material';
+import React, { useContext, useEffect, useState } from 'react';
+
 import UploadImage from '~/component/UploadImage';
 import productSeviver from '~/services/product.service';
 import setToastMessage from '~/Helpers/toastMessage';
-
-const validate = yup.object({
-    name: yup.string().required('Tên sản phẩm không được để trống'),
-    costCapital: yup.string().required('Giá gốc sản phẩm không được để trống'),
-    price: yup.string().required('Giá sản phẩm không được để trống'),
-    categories: yup.string().required('Danh mục sản phẩm không được để trống'),
-    image: yup.mixed().test('required', 'Hình ảnh không được để trống', (value) => {
-        if (value.length > 0) {
-            return true;
-        }
-        return false;
-    }),
-});
+import { formYup, validateAddCategory, validateAddProduct } from '../validation';
+import categoriesService from '~/services/categories.service';
+import { ContextModalMenu } from '..';
 
 const Listform1 = [
     {
@@ -62,17 +49,20 @@ const Listform2 = [
 ];
 
 function AddProduct({ setOpenModal }) {
-    const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
-    } = useForm({
-        resolver: yupResolver(validate),
-    });
+    const { register, handleSubmit, reset, errors } = formYup(validateAddProduct);
 
     const [valueSelect, setValueSelect] = useState('');
     const [imageUrl, setImageUrl] = useState(null);
+    const [categories, setCategories] = useState([]);
+
+    const { setReRender } = useContext(ContextModalMenu);
+
+    useEffect(() => {
+        (async () => {
+            const res = await categoriesService.adminCategories();
+            setCategories(res.categories);
+        })();
+    }, []);
 
     const handleSubmitForm = async (data) => {
         const dataApi = { ...data, image: imageUrl };
@@ -80,11 +70,12 @@ function AddProduct({ setOpenModal }) {
         console.log(dataApi);
         try {
             await productSeviver.adminProductsCreate(dataApi);
+            setReRender((prev) => !prev);
             reset();
             setImageUrl(null);
             setToastMessage('Thêm danh mục thành công!', 'success');
         } catch (error) {
-            setToastMessage('Đã có lỗi xảy ra!');
+            console.log(error);
         }
     };
 
@@ -100,7 +91,7 @@ function AddProduct({ setOpenModal }) {
                     Thêm sản phẩm
                 </Typography>
                 <Box position="absolute" top={-15} right={-11} sx={{ cursor: 'pointer' }} onClick={handleClose}>
-                    <Delete width="1.2rem" />
+                    <Clear />
                 </Box>
             </Box>
             <Box mt={3}>
@@ -110,7 +101,7 @@ function AddProduct({ setOpenModal }) {
                             <Stack gap="24px 0">
                                 {Listform1.map((item) => {
                                     return (
-                                        <Box key={v4()} sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Box key={item.lableName} sx={{ display: 'flex', alignItems: 'center' }}>
                                             <Box width="50%" fontSize="1rem">
                                                 {item.lableName}
                                             </Box>
@@ -137,9 +128,11 @@ function AddProduct({ setOpenModal }) {
                                                 value={valueSelect}
                                                 onChange={(e) => setValueSelect(e.target.value)}
                                             >
-                                                <MenuItem value="">1</MenuItem>
-                                                <MenuItem value="2">2</MenuItem>
-                                                <MenuItem value="3">3</MenuItem>
+                                                {(categories || []).map((item) => (
+                                                    <MenuItem key={item.id} value={item.id}>
+                                                        {item.name}
+                                                    </MenuItem>
+                                                ))}
                                             </Select>
                                             <FormHelperText>{errors.categories?.message}</FormHelperText>
                                         </Stack>
@@ -151,7 +144,7 @@ function AddProduct({ setOpenModal }) {
                             <Stack gap="24px 0">
                                 {Listform2.map((item) => {
                                     return (
-                                        <Box key={v4()} sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Box key={item.lableName} sx={{ display: 'flex', alignItems: 'center' }}>
                                             <Box width="50%" fontSize="1rem">
                                                 {item.lableName}
                                             </Box>

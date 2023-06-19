@@ -32,6 +32,10 @@ class ProductSeviver extends BaseService {
     adminGetProduct = async (id) => {
         return this.request.get(authEndpoint.list + '/' + id);
     };
+    // Admin update
+    adminPatchProduct = async (id) => {
+        return this.request.patch(authEndpoint.list + '/' + id);
+    };
 
     // Client
     getMenuProducts = async (page) => {

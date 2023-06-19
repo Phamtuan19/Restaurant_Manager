@@ -6,7 +6,7 @@ export default function Product({ data }) {
         <Wrap>
             <Box sx={{ position: 'relative', display: 'flex' }}>
                 <Box sx={{ position: 'absolute', top: '50%', right: 0, transform: 'translate(50%, -50%)' }}>
-                    <Box sx={{ height: '130px', width: '130px', borderRadius: '50rem', overflow: 'hidden' }}>
+                    <Box sx={styleBoxImage}>
                         <img
                             src={data.image}
                             alt={data.title}
@@ -32,9 +32,11 @@ export default function Product({ data }) {
                     >
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '0 24px' }}>
                             <Box sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
-                                {data.price_sale ? fomatMoney(data.price_sale) : fomatMoney(data.price_sale)}
+                                {data.price_sale !== null ? fomatMoney(data.price_sale) : fomatMoney(data.price)}
                             </Box>
-                            <Box sx={{ fontSize: '.8rem', fontWeight: 'bold' }}>{fomatMoney(data.price)}</Box>
+                            <Box sx={{ fontSize: '.8rem', fontWeight: 'bold' }}>
+                                {data.price_sale !== null ? fomatMoney(data.price) : ''}
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
@@ -88,4 +90,12 @@ const styleCalories = {
         textAlign: 'center',
         transition: 'all .4s ease',
     },
+};
+
+const styleBoxImage = {
+    height: '130px',
+    width: '130px',
+    borderRadius: '50rem',
+    overflow: 'hidden',
+    boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
 };

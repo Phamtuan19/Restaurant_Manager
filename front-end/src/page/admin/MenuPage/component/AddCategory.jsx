@@ -12,35 +12,14 @@ import {
     Typography,
 } from '@mui/material';
 import { Delete } from '~/component/Icons';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { v4 } from 'uuid';
 import React, { useEffect, useState } from 'react';
 import UploadImage from '~/component/UploadImage';
 import categoriesService from '~/services/categories.service';
 import setToastMessage from '~/Helpers/toastMessage';
-
-const validate = yup.object({
-    name: yup.string().required('Tên sản phẩm không được để trống'),
-    categoriesTypeId: yup.string().required('Tên sản phẩm không được để trống'),
-    image: yup.mixed().test('required', 'Hình ảnh không được để trống', (value) => {
-        if (value.length > 0) {
-            return true;
-        }
-        return false;
-    }),
-});
+import { formYup, validateAddCategory } from '../validation';
 
 function AddCategory({ setOpenModal }) {
-    const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
-    } = useForm({
-        resolver: yupResolver(validate),
-    });
+    const { register, handleSubmit, reset, errors } = formYup(validateAddCategory);
 
     const [valueSelect, setValueSelect] = useState('');
     const [valueSelectType, setValueSelectType] = useState('');
@@ -97,7 +76,7 @@ function AddCategory({ setOpenModal }) {
                     <Grid container spacing={3}>
                         <Grid item xs={6} lg={6}>
                             <Stack gap="24px 0">
-                                <Box key={v4()} sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                     <Box width="50%" fontSize="1rem">
                                         Tên danh mục
                                     </Box>
@@ -124,7 +103,7 @@ function AddCategory({ setOpenModal }) {
                                             >
                                                 <MenuItem value=""></MenuItem>
                                                 {listCategories.map((item) => (
-                                                    <MenuItem key={v4()} value={item.id}>
+                                                    <MenuItem key={item.id} value={item.id}>
                                                         {item.name}
                                                     </MenuItem>
                                                 ))}
@@ -147,7 +126,7 @@ function AddCategory({ setOpenModal }) {
                                             >
                                                 <MenuItem value=""></MenuItem>
                                                 {listCategoriesType.map((item) => (
-                                                    <MenuItem key={v4()} value={item.id}>
+                                                    <MenuItem key={item.id} value={item.id}>
                                                         {item.name}
                                                     </MenuItem>
                                                 ))}

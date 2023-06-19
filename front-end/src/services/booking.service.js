@@ -1,8 +1,9 @@
 import BaseService from '~/utils/BaseService';
 
 const bookingEndpoint = {
-    base: 'client/',
-    booking: 'booking/create',
+    base: 'client/booking/',
+    booking: 'create',
+    menu: 'menu',
 };
 
 class BookingService extends BaseService {
@@ -15,6 +16,10 @@ class BookingService extends BaseService {
 
     postCreateBooking = async (data) => {
         return this.request.post(this.BASE_ENDPOINT + bookingEndpoint.booking, data);
+    };
+
+    getMenuBooking = async () => {
+        return this.request.get(this.BASE_ENDPOINT + bookingEndpoint.menu);
     };
 }
 

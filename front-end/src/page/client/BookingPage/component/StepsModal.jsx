@@ -1,9 +1,12 @@
-import { Stepper } from '@mui/material';
-import React from 'react';
+import { Box, Button, Step, StepContent, Stepper, TextField, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Clear } from '@mui/icons-material';
 
 import ModalBooking from './ModalBooking';
 import ModalMenu from './ModalMenu';
 import ModalConfirm from './ModalConfirm';
+import moment from 'moment';
+import { formYup } from '../validation';
 
 const steps = [
     {
@@ -20,7 +23,35 @@ const steps = [
     },
 ];
 
-const StepsModal = () => {
+const StepsModal = ({ setOpen, tableId, setOpenDialog }) => {
+    const [dataBooking, setDataBooking] = useState({});
+    const [activeStep, setActiveStep] = useState(0);
+
+    const { register, handleSubmit, reset, errors } = formYup();
+
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
+
+    const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
+
+    const handleSubmitForm = (data) => {
+        setDataBooking({ tableId, ...data, date: moment(data.date).format('YYYY-MM-DD') + ' ' + data.time });
+        handleNext();
+    };
+
+    const handleClose = () => {
+        reset();
+        setActiveStep(0);
+        setOpen(false);
+    };
+
+    const handleCreateBooking = async () => {
+        setOpen(false);
+        setActiveStep(0);
+        setOpenDialog(true);
+    };
+
     return (
         <Stepper activeStep={activeStep} orientation="vertical">
             {steps.map((step, index) => {

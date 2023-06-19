@@ -16,7 +16,7 @@ class CategoriesService extends BaseService {
         return this.request.post(authEndpoint.create, data);
     };
 
-    adminCategories = async (page) => {
+    adminCategories = async (page = null) => {
         return this.request.post(authEndpoint.list + `?page=${page}`);
     };
 

@@ -62,21 +62,19 @@ const Listform2 = [
 ];
 
 function DetailProduct({ content, setOpenModal }) {
-    const { component, data } = content;
+    const { component, productId } = content;
     const [product, setProduct] = useState({});
     const [categories, setCategories] = useState([]);
     const [valueSelect, setValueSelect] = useState(product.category_id || '');
     const [imageUrl, setImageUrl] = useState(product.image);
 
     useEffect(() => {
-        const api = async () => {
-            const res = await productSeviver.adminGetProduct(data);
+        (async () => {
+            const res = await productSeviver.adminGetProduct(productId);
             setProduct(res.product);
             setCategories(res.categories);
-        };
-
-        api();
-    }, [data]);
+        })();
+    }, [productId]);
 
     const {
         register,
@@ -89,15 +87,14 @@ function DetailProduct({ content, setOpenModal }) {
 
     const handleSubmitForm = async (data) => {
         const dataApi = { ...data, image: imageUrl };
-
-        console.log(dataApi);
-        // try {
-        //     reset();
-        //     setImageUrl(null);
-        //     setToastMessage('Thêm danh mục thành công!', 'success');
-        // } catch (error) {
-        //     setToastMessage('Đã có lỗi xảy ra!');
-        // }
+        try {
+            const res = await productSeviver.adminPatchProduct(dataApi, productId);
+            reset();
+            setImageUrl(null);
+            setToastMessage(res.message, 'success');
+        } catch (error) {
+            setToastMessage('Đã có lỗi xảy ra!');
+        }
     };
 
     const handleClose = () => {

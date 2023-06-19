@@ -9,7 +9,7 @@ const CONTENTMODAL = {
     detailProduct: DetailProduct,
 };
 
-function ModalAdd({ openModal, setOpenModal, contentModal }) {
+function ModalConfig({ openModal, setOpenModal, contentModal }) {
     const Component = CONTENTMODAL[contentModal.component];
 
     const handleClose = () => {
@@ -20,7 +20,6 @@ function ModalAdd({ openModal, setOpenModal, contentModal }) {
         <Modal
             keepMounted
             open={openModal}
-            onClose={handleClose}
             aria-labelledby="keep-mounted-modal-title"
             aria-describedby="keep-mounted-modal-description"
         >
@@ -44,4 +43,4 @@ const style = {
     outline: 'none',
 };
 
-export default ModalAdd;
+export default ModalConfig;

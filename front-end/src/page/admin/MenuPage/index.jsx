@@ -1,11 +1,11 @@
 import { Box, styled, Grid, Stack, Button, FormControl, Select, MenuItem, Menu } from '@mui/material';
 import { AddNew } from '~/component/Icons';
 
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import productSeviver from '~/services/product.service';
 import Product from './component/Product';
-import ModalAdd from './component/ModalAdd';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
+import ModalConfig from './component/ModalConfig';
 
 const CONTENTMODAL = {
     addProduct: 'addProduct',
@@ -13,18 +13,23 @@ const CONTENTMODAL = {
     detailProduct: 'detailProduct',
 };
 
+export const ContextModalMenu = createContext();
+
 function ProductsList() {
     const [productList, setProductList] = useState([]);
     const [select, setSelect] = useState(10);
     const [openModal, setOpenModal] = useState(false);
     const [contentModal, setContentModal] = useState({ component: 'addProduct', data: null });
 
+    const [reRender, setReRender] = useState(false);
+
     useEffect(() => {
         (async () => {
             const res = await productSeviver.adminProducts();
+            console.log(res);
             setProductList(res.products);
         })();
-    }, []);
+    }, [reRender]);
 
     const handleOpenModal = (value, data = null) => {
         setOpenModal(true);
@@ -32,7 +37,7 @@ function ProductsList() {
     };
 
     return (
-        <React.Fragment>
+        <ContextModalMenu.Provider value={{ setReRender }}>
             <Header>
                 <Box sx={{ fontSize: '1.6rem' }}>Danh sách sản phẩm</Box>
 
@@ -98,8 +103,8 @@ function ProductsList() {
                     })}
                 </Grid>
             </Box>
-            <ModalAdd openModal={openModal} setOpenModal={setOpenModal} contentModal={contentModal} />
-        </React.Fragment>
+            <ModalConfig openModal={openModal} setOpenModal={setOpenModal} contentModal={contentModal} />
+        </ContextModalMenu.Provider>
     );
 }
 

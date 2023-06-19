@@ -77,9 +77,7 @@ function BookingPage() {
                     </Grid>
                 </Grid>
             </Box>
-            <ModalConfig open={open} setOpen={setOpen} tableId={tableId}>
-                <StepsModal />
-            </ModalConfig>
+            <ModalConfig open={open} setOpen={setOpen} tableId={tableId} />
         </DefaultLayout>
     );
 }

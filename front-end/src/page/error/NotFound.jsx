@@ -1,16 +1,21 @@
-import { Box, Button, Typography } from '@mui/material';
-import { Grid } from 'swiper';
+import { Box, Button, Grid, Typography } from '@mui/material';
 
 function NotFound() {
     return (
         <Grid
             container
-            sx={{ height: '100vh', padding: '30px', justifyContent: 'center', alignItems: 'center' }}
+            sx={{
+                height: '100vh',
+                padding: '30px',
+                justifyContent: 'center',
+                alignItems: 'center',
+                overflow: 'hidden',
+            }}
             spacing={2}
         >
             <Grid item xs={12} sm={6}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '55px', alignItems: 'left' }}>
-                    <Typography variant="body1" sx={{ color: 'blue' }}>
+                    <Typography variant="h1" sx={{ color: 'blue' }}>
                         404 Error
                     </Typography>
                     <Typography variant="h4" sx={{ mt: 2 }}>
@@ -19,7 +24,12 @@ function NotFound() {
                     <Typography variant="body2" sx={{ width: '100%', color: '#0f6da0', mt: 2, opacity: 0.7 }}>
                         Xin lỗi, trang bạn đang tìm kiếm không tồn tại. Đây là liên kết hữu ích nhất:
                     </Typography>
-                    <Button variant="contained" color="primary" href="/" sx={{ width: '200px', height: '40px', mt: 2 }}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        href="/"
+                        sx={{ width: '200px', height: '40px', mt: 2, bgcolor: '' }}
+                    >
                         Quay về trang chủ
                         {/* <HomeIcon sx={{ marginLeft: '4px', fontSize: 20 }} /> */}
                     </Button>

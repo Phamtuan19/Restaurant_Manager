@@ -1,0 +1,39 @@
+import TextField from '@mui/material/TextField';
+import { Controller } from 'react-hook-form';
+import PropTypes from 'prop-types';
+/**
+ * @param {*} props
+ * @interface  Props<T> extends Omit<TextFieldProps, 'name'> {name: FieldPath<T>control: Control<T>};
+ * @returns Form controller JSX element
+ */
+
+const ControllerTextField = (props) => {
+   const { control, name, type, placeholder, disabled, ...rest } = props;
+   return (
+      <Controller
+         render={({ field, fieldState: { error } }) => (
+            <TextField
+               type={type || 'text'}
+               id={name}
+               fullWidth
+               error={Boolean(error)}
+               helperText={error?.message && error.message}
+               placeholder={disabled ? void 0 : placeholder}
+               disabled={disabled}
+               {...field}
+               {...rest}
+            />
+         )}
+         name={name}
+         control={control}
+      />
+   );
+};
+
+ControllerTextField.propTypes = {
+   control: PropTypes.object.isRequired,
+   name: PropTypes.string.isRequired,
+   placeholder: PropTypes.string,
+   disabled: PropTypes.bool,
+};
+export default ControllerTextField;

@@ -7,6 +7,7 @@ import LoginGoogle from '~/page/client/LoginGoogle';
 import SignUpPage from '~/page/client/SignUpPage';
 import PublicRouter from './component/PublicRouter';
 import BookingPage from '~/page/client/BookingPage';
+import NotFound from '~/page/error/NotFound';
 
 const routeClient = [
     {
@@ -39,6 +40,10 @@ const routeClient = [
         path: '/auth/google',
         component: LoginGoogle,
         gurad: PublicRouter,
+    },
+    {
+        path: '/*',
+        component: NotFound,
     },
 ];
 

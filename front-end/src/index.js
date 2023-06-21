@@ -4,16 +4,16 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import InitialApp from './component/InitialApp';
+import InitialApp from './component/customs/InitialApp';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <>
-        <Provider store={store}>
-            <InitialApp>
-                <App />
-            </InitialApp>
-        </Provider>
-    </>,
+   <>
+      <Provider store={store}>
+         <InitialApp>
+            <App />
+         </InitialApp>
+      </Provider>
+   </>,
 );
 
 // If you want to start measuring performance in your app, pass a function

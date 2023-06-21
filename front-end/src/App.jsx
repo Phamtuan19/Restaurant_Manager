@@ -6,27 +6,31 @@ import LayoutAdmin from './layout/admin/LayoutAdmin';
 import './index.css';
 import { ToastContainer } from 'react-toastify';
 import useAuth from './hook/useAuth';
-import LazyLoadingFullScreen from './component/LazyLoadingFullScreen';
 import { createTheme } from './theme';
 import { ThemeProvider } from '@mui/material';
+import NotFound from './page/error/NotFound';
+import ErrorBoundary from './component/customs/ErrorBoundary';
+import LazyLoadingFullScreen from './component/customs/LazyLoadingFullScreen';
 
 const theme = createTheme();
 
 function App() {
-    const { isInitialized } = useAuth();
+   const { isInitialized } = useAuth();
 
-    if (!isInitialized) return <LazyLoadingFullScreen />;
-    return (
-        <ThemeProvider theme={theme}>
+   if (!isInitialized) return <LazyLoadingFullScreen />;
+   return (
+      <ErrorBoundary>
+         <ThemeProvider theme={theme}>
             <BrowserRouter>
-                <Routes>
-                    <Route path="/*" element={<LayoutClient />} />
-                    <Route path="/admin/*" element={<LayoutAdmin />} />
-                </Routes>
-                <ToastContainer autoClose={3000} />
+               <Routes>
+                  <Route path="/*" element={<LayoutClient />} />
+                  <Route path="/admin/*" element={<LayoutAdmin />} />
+               </Routes>
+               <ToastContainer autoClose={3000} />
             </BrowserRouter>
-        </ThemeProvider>
-    );
+         </ThemeProvider>
+      </ErrorBoundary>
+   );
 }
 
 export default App;

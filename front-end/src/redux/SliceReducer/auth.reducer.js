@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import setToastMessage from '~/Helpers/toastMessage';
-import useLocalStorage from '~/hook/useLocalStorage';
+import useLocalStorage from '~/hooks/useLocalStorage';
 import authService from '~/services/auth.service';
 
 const { setLocalItem, removeLocalItem } = useLocalStorage();
@@ -59,8 +59,8 @@ const authReducer = createSlice({
    extraReducers: (builder) => {
       builder
          .addCase(actionGetCurrentUser.fulfilled, (state, action) => {
-            state.user = action.payload.data;
-            state.userPermission = action.payload.data.roles.name;
+            state.user = action?.payload?.data;
+            state.userPermission = action?.payload?.data.roles.name;
             state.isAuthenticated = true;
             state.isInitialized = true;
          })

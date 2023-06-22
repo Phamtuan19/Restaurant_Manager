@@ -1,19 +1,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Box, styled } from '@mui/material';
+import { Box, Rating, Stack, styled } from '@mui/material';
 import fomatMoney from '~/Helpers/fomatMoney';
 import { images } from '~/assets/image';
 import { AddNewIcon } from '~/component/Icons';
-import { useBooking } from '~/redux/SliceReducer/booking.reducer';
+import { useCart } from '~/redux/SliceReducer/carts.reducer';
 
-function ProductMenu({ data }) {
-   const { bookingAddProduct } = useBooking();
+function Product({ data }) {
+   const { useAddCart } = useCart();
 
    const handleAddCart = (data) => {
-      bookingAddProduct(data);
+      console.log(data);
+      useAddCart(data);
    };
 
    return (
-      <Box sx={{ position: 'relative', cursor: 'pointer', marginTop: { md: '75px', xs: '75px' } }}>
+      <Box sx={{ position: 'relative', cursor: 'pointer', marginTop: { md: '85px', xs: '100px' } }}>
          <Box sx={{ position: 'absolute', left: '50%', transform: 'translate(-50%, -50%)' }}>
             <Box
                sx={{
@@ -38,7 +39,24 @@ function ProductMenu({ data }) {
          </Box>
          <CardBody>
             <Box sx={{ marginTop: '.5rem' }}>
-               <Box sx={styleName}>{data.name}</Box>
+               <Box
+                  sx={{
+                     overflow: 'hidden',
+                     textOverflow: 'ellipsis',
+                     whiteSpace: 'nowrap',
+                     fontWeight: 'bolder',
+                     textTransform: 'capitalize',
+                     '&:hover': {
+                        color: '#065fd4',
+                     },
+                  }}
+               >
+                  {data.name}
+               </Box>
+
+               <Stack spacing={1} sx={{ padding: '12px 0' }}>
+                  <Rating name="half-rating-read" defaultValue={3.5} precision={0.5} readOnly />
+               </Stack>
 
                <Box
                   sx={{
@@ -62,30 +80,17 @@ function ProductMenu({ data }) {
 }
 
 const CardBody = styled('div')({
-   paddingTop: '70px !important',
+   paddingTop: '85px !important',
    flex: '1 1 auto',
    padding: '1.5rem',
    backgroundColor: 'rgba(255, 255, 255, 0.5)',
    border: '1px solid #fff',
    borderRadius: '1.5rem',
-   boxShadow: '0 4px 18px rgba(47, 43, 61 ,.1), 0 0 transparent, 0 0 transparent',
 
    '&:hover': {
       backgroundColor: 'rgba(255, 255, 255)',
    },
 });
-
-const styleName = {
-   padding: '12px 0',
-   overflow: 'hidden',
-   textOverflow: 'ellipsis',
-   whiteSpace: 'nowrap',
-   fontWeight: 'bolder',
-   textTransform: 'capitalize',
-   '&:hover': {
-      color: '#065fd4',
-   },
-};
 
 const Price = styled('span')({
    fontSize: '1rem',
@@ -98,4 +103,4 @@ const PriceSale = styled('small')({
    textDecoration: 'line-through',
 });
 
-export default ProductMenu;
+export default Product;

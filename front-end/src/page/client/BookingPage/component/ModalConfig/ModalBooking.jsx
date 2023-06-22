@@ -1,13 +1,12 @@
 import { Box, Button, Grid, TextareaAutosize, Typography, styled } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import { formYup } from '../../utils/validation';
 import ControllerSelect from '~/component/customs/@mui/ControllerSelect';
 import FormLabel from '~/component/customs/@mui/FormLabel';
 import ControllerTextField from '~/component/customs/@mui/ControllerTextField';
 import { listInput, partySizes } from '../../utils';
-import { Clear } from '@mui/icons-material';
 
-const ModalBooking = ({ handleCloseModal, onSubmit, handleClose }) => {
+const ModalBooking = ({ handleCloseModal, onSubmit }) => {
    const form = formYup();
    const { handleSubmit, control } = form;
 
@@ -15,9 +14,6 @@ const ModalBooking = ({ handleCloseModal, onSubmit, handleClose }) => {
       <Box p={2} mx="auto" maxWidth="50%" bgcolor="#fff" borderRadius="15px">
          <Typography id="modal-modal-title" variant="h5" component="h2" mb={2}>
             Điền thông tin
-            <Box position="absolute" top={10} right={10} sx={{ cursor: 'pointer' }} onClick={handleClose}>
-               <Clear />
-            </Box>
          </Typography>
          <Box component="form" onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={1}>

@@ -10,41 +10,41 @@ import BookingPage from '~/page/client/BookingPage';
 import NotFound from '~/page/error/NotFound';
 
 const routeClient = [
-    {
-        path: '/',
-        component: HomePage,
-    },
-    {
-        path: '/menu',
-        component: MenuPage,
-    },
-    {
-        path: '/shopping-cart',
-        component: CartPage,
-    },
-    {
-        path: '/booking',
-        component: BookingPage,
-    },
-    {
-        path: '/login',
-        component: LoginPage,
-        gurad: PublicRouter,
-    },
-    {
-        path: '/sign-up',
-        component: SignUpPage,
-        gurad: PublicRouter,
-    },
-    {
-        path: '/auth/google',
-        component: LoginGoogle,
-        gurad: PublicRouter,
-    },
-    {
-        path: '/*',
-        component: NotFound,
-    },
+   {
+      path: '/',
+      component: HomePage,
+   },
+   {
+      path: '/menu',
+      component: MenuPage,
+   },
+   {
+      path: '/shopping-cart',
+      component: CartPage,
+   },
+   {
+      path: '/booking',
+      component: BookingPage,
+   },
+   {
+      path: '/login',
+      component: LoginPage,
+      gurad: PublicRouter,
+   },
+   {
+      path: '/sign-up',
+      component: SignUpPage,
+      gurad: PublicRouter,
+   },
+   {
+      path: '/auth/google',
+      component: LoginGoogle,
+      gurad: PublicRouter,
+   },
+   {
+      path: '/*',
+      component: NotFound,
+   },
 ];
 
 export default routeClient;

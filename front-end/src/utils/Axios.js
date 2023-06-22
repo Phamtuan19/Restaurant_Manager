@@ -2,6 +2,7 @@ import axios from 'axios';
 import withAuthToken from './Middleware';
 import setToastMessage from '~/Helpers/toastMessage';
 import httpStatusCode from '~/configs/httpStatusCode';
+import { authEndpoint } from '~/services/auth.service';
 
 const createInstance = (baseURL) => {
    const options = {
@@ -32,10 +33,13 @@ const createInstance = (baseURL) => {
          const originalRequest = error.config;
          const { url } = originalRequest;
          // Kiểm tra xem lỗi có phải do token hết hạn hay không
-         // url !== authEndpoint.base + authEndpoint.refestToken &&
-         // url !== authEndpoint.base + authEndpoint.loginAccount &&
-         // !originalRequest._retry
-         if (httpStatusCode.UNAUTHORIZED === error?.response?.status) {
+
+         if (
+            httpStatusCode.UNAUTHORIZED === error?.response?.status &&
+            url !== authEndpoint.base + authEndpoint.refestToken &&
+            url !== authEndpoint.base + authEndpoint.loginAccount &&
+            !originalRequest._retry
+         ) {
             // originalRequest._retry = true;
             // try {
             //     await authService.refeshToken();
@@ -45,7 +49,7 @@ const createInstance = (baseURL) => {
             //     return Promise.reject(error);
             // }
 
-            setToastMessage('Quá thời gian, Vui lòng đăng nhập lại!', 'error');
+            setToastMessage('Vui lòng đăng nhập lại!', 'error');
             return localStorage.removeItem('accessToken');
          } else {
             const errorMessage = error.response.data.message || 'Đã có lỗi xảy ra!';

@@ -5,7 +5,7 @@ import LayoutAdmin from './layout/admin/LayoutAdmin';
 
 import './index.css';
 import { ToastContainer } from 'react-toastify';
-import useAuth from './hook/useAuth';
+import useAuth from './hooks/useAuth';
 import { createTheme } from './theme';
 import { ThemeProvider } from '@mui/material';
 import NotFound from './page/error/NotFound';

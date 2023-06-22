@@ -1,4 +1,4 @@
-import { Box, Modal, Step, StepContent, Stepper } from '@mui/material';
+import { Modal, Stepper } from '@mui/material';
 import React, { createContext, useState } from 'react';
 
 import DialogSuccess from '../DialogSuccess';
@@ -6,7 +6,6 @@ import { formYup } from '../../utils/validation';
 import ModalBooking from './ModalBooking';
 import ModalMenu from './ModalMenu';
 import ModalConfirm from './ModalConfirm';
-import styled from 'styled-components';
 import { useBooking } from '~/redux/SliceReducer/booking.reducer';
 import moment from 'moment/moment';
 
@@ -26,6 +25,7 @@ const ModalConfig = ({ open, setOpen, tableId }) => {
       if (activeStep === 2) {
          setActiveStep(0);
          setOpen(false);
+         setOpenDialog(true);
       } else {
          setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
@@ -40,6 +40,7 @@ const ModalConfig = ({ open, setOpen, tableId }) => {
    const onSubmit = (data) => {
       setBookingUser({
          ...data,
+         tableId,
          date: moment(data.date).format('YYYY-MM-DD'),
       });
       handleNext();
@@ -51,12 +52,6 @@ const ModalConfig = ({ open, setOpen, tableId }) => {
       setOpen(false);
    };
 
-   const handleCreateBooking = async () => {
-      setOpen(false);
-      setActiveStep(0);
-      setOpenDialog(true);
-   };
-
    return (
       <ContextBooking.Provider value={{}}>
          <Modal
@@ -65,7 +60,7 @@ const ModalConfig = ({ open, setOpen, tableId }) => {
             aria-describedby="modal-modal-description"
             sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
          >
-            <Stepper activeStep={activeStep} orientation="vertical" sx={{ outline: 'none' }}>
+            <Stepper activeStep={activeStep} orientation="vertical" sx={{ width: '100%', outline: 'none' }}>
                {STEP1 === activeStep && (
                   <ModalBooking handleCloseModal={handleCloseModal} onSubmit={onSubmit} handleClose={handleClose} />
                )}
@@ -77,7 +72,7 @@ const ModalConfig = ({ open, setOpen, tableId }) => {
                )}
             </Stepper>
          </Modal>
-         {/* <DialogSuccess openDialog={openDialog} setOpenDialog={setOpenDialog} /> */}
+         <DialogSuccess openDialog={openDialog} setOpenDialog={setOpenDialog} />
       </ContextBooking.Provider>
    );
 };

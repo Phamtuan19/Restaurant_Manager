@@ -1,17 +1,17 @@
 import createInstance from './Axios';
 
 class BaseService {
-    BASE_URL = process.env.REACT_APP_BASE_URL_API;
+   BASE_URL = process.env.REACT_APP_BASE_URL_API;
 
-    BASE_ENDPOINT = '';
+   BASE_ENDPOINT = '';
 
-    constructor(props) {
-        this.setRequest();
-    }
+   constructor(props) {
+      this.setRequest();
+   }
 
-    setRequest() {
-        this.request = createInstance(this.BASE_URL, this.middleware);
-    }
+   setRequest() {
+      this.request = createInstance(this.BASE_URL, this.middleware);
+   }
 }
 
 export default BaseService;

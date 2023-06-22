@@ -1,14 +1,14 @@
 import { Navigate } from 'react-router-dom';
-import useAuth from '~/hook/useAuth';
+import useAuth from '~/hooks/useAuth';
 
 function PublicRouter({ children }) {
-    const { isAuthenticated } = useAuth();
+   const { isAuthenticated } = useAuth();
 
-    if (isAuthenticated) {
-        return <Navigate to="/" replace />;
-    }
+   if (isAuthenticated) {
+      return <Navigate to="/" replace />;
+   }
 
-    return children;
+   return children;
 }
 
 export default PublicRouter;

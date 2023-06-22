@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import AvatarHeader from '~/component/customs/AvatartHeader';
 import { CartHeader, LoginIcon, Notification } from '~/component/Icons';
-import useAuth from '~/hook/useAuth';
+import useAuth from '~/hooks/useAuth';
 
 function Authentication() {
    const { user, userPermission, getUser, isAuthenticated } = useAuth();

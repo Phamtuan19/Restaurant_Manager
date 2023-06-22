@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { createSlice } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
-import useAuth from '~/hook/useAuth';
 
 const bookingReducer = createSlice({
    name: 'booking',

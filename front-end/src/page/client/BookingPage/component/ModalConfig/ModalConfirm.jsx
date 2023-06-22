@@ -3,7 +3,6 @@ import {
    Box,
    Button,
    Collapse,
-   Grid,
    IconButton,
    Paper,
    Table,
@@ -15,15 +14,19 @@ import {
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import SaveIcon from '@mui/icons-material/Save';
+import { LoadingButton } from '@mui/lab';
 
 import React, { useEffect, useState } from 'react';
 import { useBooking } from '~/redux/SliceReducer/booking.reducer';
 import ProductModal from '../ProductModal';
+import bookingService from '~/services/booking.service';
 
 const ModalConfirm = ({ handleCloseModal, handleNext, handleBack }) => {
    const { user, products } = useBooking();
    const [infoBooking, setInfoBooking] = useState([]);
    const [open, setOpen] = useState(false);
+   const [loading, setLoading] = useState(false);
 
    useEffect(() => {
       setInfoBooking([
@@ -34,6 +37,10 @@ const ModalConfirm = ({ handleCloseModal, handleNext, handleBack }) => {
          {
             title: 'Số điện thoại:',
             value: user.phone,
+         },
+         {
+            title: 'Vị trí bàn:',
+            value: 'Bàn số: ' + user.tableId,
          },
          {
             title: 'Thời gian:',
@@ -50,7 +57,18 @@ const ModalConfirm = ({ handleCloseModal, handleNext, handleBack }) => {
       ]);
    }, [user]);
 
-   console.log(infoBooking);
+   const handleBookingTable = async () => {
+      const data = { ...user, products: [...products] };
+      try {
+         setLoading(true);
+         await bookingService.postCreateBooking(data);
+         setLoading(false);
+         handleNext();
+      } catch (error) {
+         setLoading(false);
+         console.log(error);
+      }
+   };
 
    return (
       <Box display="flex" width="95%" mx="auto">
@@ -110,15 +128,28 @@ const ModalConfirm = ({ handleCloseModal, handleNext, handleBack }) => {
                </TableContainer>
             </ScrollableBox>
             <Box sx={{ mx: 2, mb: 2, display: 'flex', justifyContent: 'space-between' }}>
-               <Button sx={{ mt: 1, mr: 1 }} variant="contained" color="error" onClick={handleCloseModal}>
+               <Button
+                  sx={{ mt: 1, mr: 1 }}
+                  disabled={loading}
+                  variant="contained"
+                  color="error"
+                  onClick={handleCloseModal}
+               >
                   Close
                </Button>
 
                <Box>
-                  <Button variant="contained" sx={{ mt: 1, mr: 1 }} onClick={handleNext}>
+                  <LoadingButton
+                     loading={loading}
+                     loadingPosition="start"
+                     startIcon={loading && <SaveIcon />}
+                     variant="contained"
+                     sx={{ mt: 1, mr: 1 }}
+                     onClick={handleBookingTable}
+                  >
                      Booking
-                  </Button>
-                  <Button sx={{ mt: 1, mr: 1 }} onClick={handleBack}>
+                  </LoadingButton>
+                  <Button disabled={loading} sx={{ mt: 1, mr: 1 }} onClick={handleBack}>
                      Back
                   </Button>
                </Box>
@@ -127,20 +158,6 @@ const ModalConfirm = ({ handleCloseModal, handleNext, handleBack }) => {
       </Box>
    );
 };
-
-const TotalCategoryItem = styled('span')({
-   padding: '.5em 1.5em',
-   lineHeight: 1.5,
-   borderRadius: '50rem',
-   backgroundColor: 'var(--color-default)',
-   color: 'var(--white)',
-   fontSize: '.75em',
-   fontWeight: 700,
-   textAlign: 'center',
-   whiteSpace: 'nowrap',
-   verticalAlign: 'baseline',
-   cursor: 'pointer',
-});
 
 const ScrollableBox = styled(Box)(() => {
    return {

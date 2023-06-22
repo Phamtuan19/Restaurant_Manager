@@ -1,9 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Route, Routes } from 'react-router-dom';
 import routeClient from '../../routes/client.route';
-import DefaultLayout from './DefaultLayout';
-
-const exceptRoutes = ['/login', '/sign-up', '/auth/google'];
 
 function LayoutClient() {
    return (
@@ -20,15 +17,12 @@ function LayoutClient() {
                      path={route.path}
                      element={
                         <PublicRouter>
-                           <DefaultLayout>
-                              <Component />
-                           </DefaultLayout>
+                           <Component />
                         </PublicRouter>
                      }
                   />
                );
             }
-
             return <Route key={index} path={route.path} element={<Component />} />;
          })}
       </Routes>

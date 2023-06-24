@@ -2,16 +2,16 @@ import NProgress from 'nprogress';
 import { useEffect } from 'react';
 
 const LazyLoadingScreen = () => {
-    NProgress.configure({ showSpinner: false });
+   NProgress.configure({ showSpinner: false });
 
-    useEffect(() => {
-        NProgress.start();
-        return () => {
-            NProgress.done();
-        };
-    }, []);
+   useEffect(() => {
+      NProgress.start();
+      return () => {
+         NProgress.done();
+      };
+   }, []);
 
-    return null;
+   return null;
 };
 
 export default LazyLoadingScreen;

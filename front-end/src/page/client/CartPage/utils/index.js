@@ -13,5 +13,9 @@ export const listInput = [
       xs: 12,
       sm: 6,
    },
-   
 ];
+
+const splitProvinces = (value, key) => {
+   const result = value.split(key);
+   return result;
+};

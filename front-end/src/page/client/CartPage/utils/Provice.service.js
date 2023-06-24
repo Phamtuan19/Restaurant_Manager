@@ -2,20 +2,22 @@ import axios from 'axios';
 
 const baseUrlProvince = 'https://provinces.open-api.vn/api/';
 
-export default function province() {
-   const getDistricts = async () => {
+class ProviceService {
+   getDistricts = async () => {
       const response = await axios.get(baseUrlProvince + 'p/1?depth=2');
-      return response.districts;
+      return response.data.districts;
    };
 
-   const getWards = async (e) => {
+   getWards = async (e) => {
       try {
          const response = await axios.get(`${baseUrlProvince}d/${e}?depth=2`);
-         return response.wards;
+         return response.data.wards;
       } catch (error) {
          console.log(error);
       }
    };
-
-   return { getDistricts, getWards };
 }
+
+const proviceService = new ProviceService();
+
+export default proviceService;

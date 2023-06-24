@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import AvatarHeader from '~/component/customs/AvatartHeader';
-import { CartHeader, LoginIcon, Notification } from '~/component/Icons';
+import { LoginIcon } from '~/component/Icons';
 import useAuth from '~/hooks/useAuth';
 
 function Authentication() {
@@ -18,15 +18,19 @@ function Authentication() {
 
    return (
       <Stack justifyContent="flex-end" flexDirection="row" alignItems="center">
-         <WrapIcon sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <Notification width="2rem" height="2rem" className="HeaderUser_Icon" sx={{ cursor: 'pointer' }} />
-         </WrapIcon>
-         <WrapIcon sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <CartHeader width="2rem" height="2rem" className="HeaderUser_Icon" sx={{ cursor: 'pointer' }} />
-         </WrapIcon>
          <Box>
             {isAuthenticated ? (
-               <AvatarHeader />
+               <Stack direction="row" alignItems="center">
+                  <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                     <Box component="span" sx={{ pr: '0.55rem', fontWeight: 400, fontSize: '.9rem', color: '#959cb6' }}>
+                        Xin chào:
+                     </Box>
+                     <Box component="span" sx={{ pr: '0.55rem', fontWeight: 'Bold', fontSize: '.9rem' }}>
+                        {user.name}
+                     </Box>
+                  </Box>
+                  <AvatarHeader />
+               </Stack>
             ) : (
                <CustomButtom to="/login">
                   <LoginIcon sx={{ marginRight: '12px' }} className="HeaderUser_Icon" />
@@ -37,19 +41,6 @@ function Authentication() {
       </Stack>
    );
 }
-
-const WrapIcon = styled('div')({
-   padding: '6px 16px',
-   alignItems: 'center',
-
-   '&:hover': {
-      svg: {
-         path: {
-            fill: '#0072E5',
-         },
-      },
-   },
-});
 
 const CustomButtom = styled(Link)({
    fontSize: '16px',

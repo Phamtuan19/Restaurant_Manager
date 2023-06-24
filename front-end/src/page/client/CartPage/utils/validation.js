@@ -13,6 +13,8 @@ export const validate = yup
          .string()
          .required('Số điện thoại không được để trống')
          .matches(regexs.phone, 'Số điện thoại không đúng'),
+      district: yup.string().required('Không được để trống'),
+      // ward: yup.string().required('Không được để trống'),
    })
    .required();
 

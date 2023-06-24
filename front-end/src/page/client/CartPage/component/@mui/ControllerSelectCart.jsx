@@ -13,8 +13,8 @@ import FormHelperText from '@mui/material/FormHelperText';
  * @interface Props {label: string, options: string[]}
  */
 
-const ControllerSelect = (props) => {
-   const { label, options } = props;
+const ControllerSelectCart = (props) => {
+   const { label, options, value } = props;
    const { control, isShowMessageError = true, name, placeholder, disabled, ...rest } = props;
    return (
       <Controller
@@ -33,10 +33,11 @@ const ControllerSelect = (props) => {
                   {...rest}
                   labelId="demo-simple-select-label"
                   label={label}
+                  value={value || ''}
                >
-                  {options.map((item, index) => (
-                     <MenuItem key={index} value={item?.value}>
-                        {item?.label}
+                  {options?.map((item, index) => (
+                     <MenuItem key={index} value={item.code}>
+                        {item.name}
                      </MenuItem>
                   ))}
                </Select>
@@ -52,7 +53,7 @@ const ControllerSelect = (props) => {
       />
    );
 };
-ControllerSelect.propTypes = {
+ControllerSelectCart.propTypes = {
    options: PropTypes.array.isRequired,
    label: PropTypes.string,
 };
@@ -63,4 +64,4 @@ export const PropTypeSelect = PropTypes.arrayOf(
       value: PropTypes.string,
    }),
 ).isRequired;
-export default ControllerSelect;
+export default ControllerSelectCart;

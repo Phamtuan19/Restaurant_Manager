@@ -13,51 +13,48 @@ import homePageService from '~/services/homePage.service';
 export const ContextData = createContext();
 
 function ContentHome() {
-    const [data, setData] = useState([]);
-    useEffect(() => {
-        const api = async () => {
-            const res = await homePageService.getMenuCategories();
-            console.log(res);
-            setData(res);
-        };
+   const [data, setData] = useState([]);
 
-        api();
-    }, []);
+   console.log(data);
+   useEffect(() => {
+      (async () => {
+         const res = await homePageService.getMenuCategories();
+         setData(res);
+      })();
+   }, []);
 
-    return (
-        <ContextData.Provider
-            value={{ menuProducts: data.menuProducts, categories: data.categories, topProducts: data.topProducts }}
-        >
-            <Grid container spacing={2}>
-                <Grid item xs={12} md={12} lg={8}>
-                    {/* Banner trang home */}
-                    <Banner
-                        imageUrl={'https://templates.iqonic.design/aprycot/react/build/static/media/01.adcc5f80.png'}
-                    />
+   return (
+      <ContextData.Provider
+         value={{ menuProducts: data.menuProducts, categories: data.categories, topProducts: data.topProducts }}
+      >
+         <Grid container spacing={2}>
+            <Grid item xs={12} md={12} lg={8}>
+               {/* Banner trang home */}
+               <Banner />
 
-                    {/* Menu category */}
-                    <MenuCategories />
+               {/* Menu category */}
+               <MenuCategories />
 
-                    {/* Trending orders */}
+               {/* Trending orders */}
 
-                    <TrendingOrders />
-                </Grid>
-                <Grid item xs={12} md={12} lg={4}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <BannerDiscount />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Categories />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Feedback />
-                        </Grid>
-                    </Grid>
-                </Grid>
+               <TrendingOrders />
             </Grid>
-        </ContextData.Provider>
-    );
+            <Grid item xs={12} md={12} lg={4}>
+               <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                     <BannerDiscount />
+                  </Grid>
+                  <Grid item xs={12}>
+                     <Categories />
+                  </Grid>
+                  <Grid item xs={12}>
+                     <Feedback />
+                  </Grid>
+               </Grid>
+            </Grid>
+         </Grid>
+      </ContextData.Provider>
+   );
 }
 
 export default ContentHome;

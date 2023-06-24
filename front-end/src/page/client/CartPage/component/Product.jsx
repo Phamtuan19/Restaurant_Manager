@@ -1,19 +1,21 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
 import { Box, TextField, styled } from '@mui/material';
+
 import fomatMoney from '~/Helpers/fomatMoney';
 import { Delete } from '~/component/Icons';
+import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
 import { useCart } from '~/redux/SliceReducer/carts.reducer';
 
 function Product({ data }) {
-   const { useQuantityCartItem, useDeleteCartItem } = useCart();
+   const { useQuantityCartItem, actionDeleteCartItem } = useCart();
 
    const handleChangeQuantity = (e, data) => {
       useQuantityCartItem({ ...data, quantityVal: e.target.value });
    };
 
    const handleClickDelete = (data) => {
-      useDeleteCartItem(data);
+      actionDeleteCartItem(data);
    };
 
    return (
@@ -21,11 +23,7 @@ function Product({ data }) {
          <Box sx={{ position: 'relative', display: 'flex' }}>
             <Box sx={{ position: 'absolute', top: '50%', right: 0, transform: 'translate(50%, -50%)' }}>
                <Box sx={{ height: '130px', width: '130px', borderRadius: '50rem', overflow: 'hidden' }}>
-                  <img
-                     src={data.image}
-                     alt={data.title}
-                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
+                  <ImageLazyLoading src={data.image} alt={data.title} />
                </Box>
             </Box>
 

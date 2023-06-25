@@ -15,7 +15,6 @@ export const ContextData = createContext();
 function ContentHome() {
    const [data, setData] = useState([]);
 
-   console.log(data);
    useEffect(() => {
       (async () => {
          const res = await homePageService.getMenuCategories();

@@ -3,13 +3,15 @@ import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import DefaultLayout from '~/layout/client/DefaultLayout';
 import TitleComponent from '../HomePage/ContentHome/TitleComponent';
 import { useCart } from '~/redux/SliceReducer/carts.reducer';
-import { useEffect, useState } from 'react';
-import DialogSuccess from './component/DialogSuccess';
-import ModalConfig from './component/ModalConfig';
-import DialogComfirmDelete from './component/DialogComfirmDelete';
+import { lazy, useEffect, useState } from 'react';
 import TableProducts from './component/TableProducts';
 import styled from '@emotion/styled';
 import fomatMoney from '~/Helpers/fomatMoney';
+import Loadable from '~/routes/component/Loadable';
+
+const DialogSuccess = Loadable(lazy(() => import('./component/DialogSuccess')));
+const ModalConfig = Loadable(lazy(() => import('./component/ModalConfig')));
+const DialogComfirmDelete = Loadable(lazy(() => import('./component/DialogComfirmDelete')));
 
 function CartPage() {
    const [openDialog, setOpenDialog] = useState(false);

@@ -96,12 +96,6 @@ const WrapImage = styled('div')({
    alignItems: 'center',
 });
 
-const Image = styled('img')({
-   width: '100%',
-   height: '100%',
-   objectFit: 'cover',
-});
-
 const CardBody = styled('div')({
    paddingTop: '85px !important',
    flex: '1 1 auto',

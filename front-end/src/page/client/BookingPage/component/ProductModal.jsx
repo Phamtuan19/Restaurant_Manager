@@ -1,3 +1,5 @@
+import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
+
 const { Box, Stack, TextField } = require('@mui/material');
 const { default: styled } = require('styled-components');
 const { default: fomatMoney } = require('~/Helpers/fomatMoney');
@@ -7,7 +9,7 @@ function ProductModal({ data, actionDeleteCartItem, actionSetQuantityItem }) {
    return (
       <ProductItemModal>
          <Box sx={{ width: '70px', height: '70px', overflow: 'hidden' }}>
-            <Image src={data.image} alt={data.name} />
+            <ImageLazyLoading src={data.image} alt={data.name} />
          </Box>
          <ProductItemModalDetail>
             <h3 style={{ marginTop: '8px' }}>{data.name}</h3>
@@ -45,12 +47,6 @@ const ProductItemModal = styled(Box)({
    backgroundColor: '#fff',
    borderRadius: '15px',
    width: '100%',
-});
-
-const Image = styled('img')({
-   width: '100%',
-   height: '100%',
-   objectFit: 'cover',
 });
 
 const ProductItemModalDetail = styled('div')({

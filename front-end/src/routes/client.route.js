@@ -1,13 +1,16 @@
-import MenuPage from '~/page/client/MenuPage';
-import HomePage from '~/page/client/HomePage';
-import CartPage from '~/page/client/CartPage';
-import LoginPage from '~/page/client/LoginPage';
-import LoginGoogle from '~/page/client/LoginGoogle';
+import { lazy } from 'react';
+import Loadable from './component/Loadable';
 
-import SignUpPage from '~/page/client/SignUpPage';
-import PublicRouter from './component/PublicRouter';
-import BookingPage from '~/page/client/BookingPage';
-import NotFound from '~/page/error/NotFound';
+const MenuPage = Loadable(lazy(() => import('~/page/client/MenuPage')));
+const HomePage = Loadable(lazy(() => import('~/page/client/HomePage')));
+const CartPage = Loadable(lazy(() => import('~/page/client/CartPage')));
+const LoginPage = Loadable(lazy(() => import('~/page/client/LoginPage')));
+const LoginGoogle = Loadable(lazy(() => import('~/page/client/LoginGoogle')));
+
+const SignUpPage = Loadable(lazy(() => import('~/page/client/SignUpPage')));
+const PublicRouter = Loadable(lazy(() => import('./component/PublicRouter')));
+const BookingPage = Loadable(lazy(() => import('~/page/client/BookingPage')));
+const NotFound = Loadable(lazy(() => import('~/page/error/NotFound')));
 
 const routeClient = [
    {

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Box, Rating, Stack, styled } from '@mui/material';
 import fomatMoney from '~/Helpers/fomatMoney';
-import { images } from '~/assets/image';
 import { AddNewIcon } from '~/component/Icons';
 import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
 import { useCart } from '~/redux/SliceReducer/carts.reducer';
@@ -92,7 +91,6 @@ const Price = styled('span')({
 const PriceSale = styled('small')({
    fontSize: '0.9rem',
    fontWeight: 'bold',
-   textDecoration: 'line-through',
 });
 
 export default Product;

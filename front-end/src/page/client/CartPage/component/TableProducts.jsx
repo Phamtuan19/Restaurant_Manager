@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import React from 'react';
 import fomatMoney from '~/Helpers/fomatMoney';
 import { Delete } from '~/component/Icons';
-import DefaultLayout from '~/layout/client/DefaultLayout';
+import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
 import { useCart } from '~/redux/SliceReducer/carts.reducer';
 
 const TableProducts = ({ handleClickDown }) => {
@@ -34,13 +34,7 @@ const TableProducts = ({ handleClickDown }) => {
                            </TableCell>
                            <TableCell align="center">
                               <Box width={50} height={50}>
-                                 <img
-                                    width="100%"
-                                    height="100%"
-                                    src={item.image}
-                                    alt={item.name}
-                                    style={{ objectFit: 'cover' }}
-                                 />
+                                 <ImageLazyLoading src={item.image} alt={item.name} />
                               </Box>
                            </TableCell>
                            <TableCell align="left" sx={styleName}>

@@ -86,12 +86,6 @@ const SwiperSlideCustom = styled(SwiperSlide)({
    marginBottom: 0,
    paddingTop: 0,
 
-   img: {
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-   },
-
    span: {
       whiteSpace: 'nowrap',
       maxWidth: '90px',

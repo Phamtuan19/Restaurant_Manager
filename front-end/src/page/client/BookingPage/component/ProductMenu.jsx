@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Box, styled } from '@mui/material';
 import fomatMoney from '~/Helpers/fomatMoney';
-import { images } from '~/assets/image';
 import { AddNewIcon } from '~/component/Icons';
+import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
 import { useBooking } from '~/redux/SliceReducer/booking.reducer';
 
 function ProductMenu({ data }) {
@@ -24,16 +24,7 @@ function ProductMenu({ data }) {
                   boxShadow: '0 0.3125rem 0.3125rem 0 rgba(82,63,105,.05)',
                }}
             >
-               <img
-                  className="Product_Item_Img"
-                  src={data?.img || data?.image || images.noImage}
-                  alt={data.name}
-                  style={{
-                     width: '100%',
-                     height: '100%',
-                     objectFit: 'cover',
-                  }}
-               />
+               <ImageLazyLoading src={data?.image} alt={data.name} />
             </Box>
          </Box>
          <CardBody>

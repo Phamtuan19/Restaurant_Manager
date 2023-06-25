@@ -6,9 +6,9 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 
+import { styled } from '@mui/material';
 import './styles.css';
 import Item from './Item';
-import { styled } from '@mui/material';
 import { useContext } from 'react';
 import { ContextData } from '../..';
 

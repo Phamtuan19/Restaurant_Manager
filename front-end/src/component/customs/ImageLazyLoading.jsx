@@ -12,7 +12,7 @@ const ImageLazyLoading = ({ className, src, alt }) => {
          effect="blur"
          width="100%"
          height="100%"
-         objectFit="cover"
+         style={{ objectFit: 'cover' }}
       />
    );
 };

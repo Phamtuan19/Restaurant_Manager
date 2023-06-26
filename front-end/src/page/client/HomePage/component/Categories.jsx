@@ -6,6 +6,7 @@ import ComponentTitle from './ComponentTitle';
 import { ContextData } from '..';
 import { Alacarteroom, Both, Buffe, CategoryIcon, Room, Ship, VipRoom } from '~/component/Icons';
 import Product from '~/component/client/Product';
+import { images } from '~/assets/image';
 
 const catetoryList = [
    {
@@ -38,6 +39,33 @@ const catetoryList = [
       image: Ship,
       name: 'Đặt Ship',
       path: '/dat-ban',
+   },
+];
+
+const trendingOrder = [
+   {
+      image: images.image1,
+      name: 'Tôm Hùm',
+      price: 120,
+      price_sale: null,
+   },
+   {
+      image: images.image1,
+      name: 'Tôm Hùm',
+      price: 120,
+      price_sale: null,
+   },
+   {
+      image: images.image1,
+      name: 'Tôm Hùm',
+      price: 120,
+      price_sale: null,
+   },
+   {
+      image: images.image1,
+      name: 'Tôm Hùm',
+      price: 120,
+      price_sale: null,
    },
 ];
 
@@ -81,7 +109,7 @@ function Categories() {
 
          {/* Product Item Menu */}
          <Grid container spacing={2}>
-            {(menuProducts || []).map((item, index) => {
+            {(menuProducts || trendingOrder).map((item, index) => {
                return (
                   <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
                      <Product data={item} turn={true} />

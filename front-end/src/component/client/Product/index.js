@@ -52,8 +52,9 @@ function Product({ data, turn = false }) {
                         gap: '0 24px',
                      }}
                   >
-                     <Price>{data?.price_sale !== null ? fomatMoney(data?.price_sale) : fomatMoney(data?.price)}</Price>
-                     {/* {data.price_sale !== undefined ? <PriceSale>$ {data.price}</PriceSale> : ''} */}
+                     <Box component="span" fontSize="1rem" fontWeight="bold">
+                        {data?.price_sale !== null ? fomatMoney(data?.price_sale) : fomatMoney(data?.price)}
+                     </Box>
                   </Box>
                   <Box
                   // onClick={() => handleAddToCart(data, notifyTypes[0], 'Thêm thành công!')}
@@ -108,16 +109,5 @@ const CardBody = styled('div')({
       backgroundColor: 'var(--white)',
    },
 });
-
-const Price = styled('span')({
-   fontSize: '1rem',
-   fontWeight: 'bold',
-});
-
-// const PriceSale = styled('small')({
-//     fontSize: '0.9rem',
-//     fontWeight: 'bold',
-//     textDecoration: 'line-through',
-// });
 
 export default Product;

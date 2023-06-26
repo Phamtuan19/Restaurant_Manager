@@ -3,56 +3,50 @@ import { Box, Grid, Typography } from '@mui/material';
 import Product from './Product';
 import { useContext } from 'react';
 import { ContextData } from '..';
-import ComponentTitle from './ComponentTitle';
+import { images } from '~/assets/image';
 
-const productTrendingList = [
+const trendingOrder = [
    {
-      top: 'Top of the week',
-      name: 'Mushroom',
-      img: 'https://templates.iqonic.design/aprycot/react/build/static/media/16.2717f609.png',
-      alt: 'profileimage',
-      price: 12,
+      top: 'Top of the day',
+      image: images.image5,
+      name: 'Tôm Hùm',
       persons: '4 persons',
+      price: 120,
    },
    {
       top: 'Top of the week',
-      name: 'Mushroom',
-      img: 'https://templates.iqonic.design/aprycot/react/build/static/media/16.2717f609.png',
-      alt: 'profileimage',
-      price: 12,
+      image: images.image5,
+      name: 'Tôm Hùm',
       persons: '4 persons',
+      price: 120,
+   },
+   {
+      top: 'Top of the month',
+      image: images.image5,
+      name: 'Tôm Hùm',
+      persons: '4 persons',
+      price: 120,
    },
    {
       top: 'Top of the week',
-      name: 'Mushroom',
-      img: 'https://templates.iqonic.design/aprycot/react/build/static/media/16.2717f609.png',
-      alt: 'profileimage',
-      price: 12,
+      image: images.image5,
+      name: 'Tôm Hùm',
       persons: '4 persons',
+      price: 120,
+   },
+   {
+      top: 'Top of the month',
+      image: images.image5,
+      name: 'Tôm Hùm',
+      persons: '4 persons',
+      price: 120,
    },
    {
       top: 'Top of the week',
-      name: 'Mushroom',
-      img: 'https://templates.iqonic.design/aprycot/react/build/static/media/16.2717f609.png',
-      alt: 'profileimage',
-      price: 12,
+      image: images.image5,
+      name: 'Tôm Hùm',
       persons: '4 persons',
-   },
-   {
-      top: 'Top of the week',
-      name: 'Mushroom',
-      img: 'https://templates.iqonic.design/aprycot/react/build/static/media/16.2717f609.png',
-      alt: 'profileimage',
-      price: 12,
-      persons: '4 persons',
-   },
-   {
-      top: 'Top of the week',
-      name: 'Mushroom',
-      img: 'https://templates.iqonic.design/aprycot/react/build/static/media/16.2717f609.png',
-      alt: 'profileimage',
-      price: 12,
-      persons: '4 persons',
+      price: 120,
    },
 ];
 
@@ -68,7 +62,7 @@ function TrendingOrders() {
          </Typography>
 
          <Grid container spacing={2}>
-            {(topProducts || productTrendingList).map((item, index) => {
+            {(topProducts || trendingOrder).map((item, index) => {
                return (
                   <Grid item key={index} xs={12} sm={6} lg={4}>
                      <Product data={item} />

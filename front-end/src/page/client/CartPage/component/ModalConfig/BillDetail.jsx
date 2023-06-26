@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Box, Button, Card, Stack, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import fomatMoney from '~/Helpers/fomatMoney';
-import TitleComponent from '~/page/client/HomePage/ContentHome/TitleComponent';
+import TitleComponent from '~/page/client/HomePage/component/TitleComponent';
 import { useCart } from '~/redux/SliceReducer/carts.reducer';
 import { ContextModalCart } from '.';
 

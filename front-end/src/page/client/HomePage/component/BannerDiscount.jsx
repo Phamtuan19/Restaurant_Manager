@@ -5,7 +5,7 @@ import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
 function BannerDiscount() {
    return (
       <Card className={{ backgroundColor: 'transparent', width: '100%' }}>
-         <WrapSaleOf sx={{ paddingBottom: { xs: '50%', lg: '60%' } }}>
+         <WrapSaleOf sx={{ paddingBottom: { xs: '50%', lg: '59%' } }}>
             <DivImage>
                <Box width="70%" height="70%">
                   <ImageLazyLoading

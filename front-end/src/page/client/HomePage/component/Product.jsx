@@ -47,7 +47,7 @@ const Wrap = styled('div')({
    padding: '1.5rem',
    background: '#fff',
    transition: 'all .4s ease',
-   marginBottom: '2rem',
+   // marginBottom: '2rem',
    position: 'relative',
    display: 'flex',
    flexDirection: 'column',

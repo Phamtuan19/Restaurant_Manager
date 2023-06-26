@@ -14,7 +14,7 @@ function ContentMenu() {
    const [checked, setChecked] = useState([]);
    const [search, setSearch] = useState('');
 
-   const [valueSelect, setValueSelect] = useState('');
+   // const [valueSelect, setValueSelect] = useState('');
    const [products, setProducts] = useState([]);
    const [page, setPage] = useState(1);
 
@@ -28,9 +28,9 @@ function ContentMenu() {
       })();
    }, [searchDebounce, page, checked]);
 
-   const handleChange = (event) => {
-      setValueSelect(event.target.value);
-   };
+   // const handleChange = (event) => {
+   //    setValueSelect(event.target.value);
+   // };
 
    return (
       <DefaultLayout>

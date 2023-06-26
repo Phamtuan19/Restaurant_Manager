@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 
 import DefaultLayout from '~/layout/client/DefaultLayout';
-import TitleComponent from '../HomePage/ContentHome/TitleComponent';
+import TitleComponent from '../HomePage/component/TitleComponent';
 import { useCart } from '~/redux/SliceReducer/carts.reducer';
 import { lazy, useEffect, useState } from 'react';
 import TableProducts from './component/TableProducts';

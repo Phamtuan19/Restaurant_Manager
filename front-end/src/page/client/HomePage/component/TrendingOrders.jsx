@@ -1,9 +1,9 @@
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 
 import Product from './Product';
-import TitleComponent from '../TitleComponent';
 import { useContext } from 'react';
 import { ContextData } from '..';
+import ComponentTitle from './ComponentTitle';
 
 const productTrendingList = [
    {
@@ -61,7 +61,11 @@ function TrendingOrders() {
 
    return (
       <Box minHeight={500}>
-         <TitleComponent title="Trending orders" sx={{ marginTop: '12px' }} />
+         {/* <ComponentTitle title="Đơn hàng thịnh hành" sx={{ marginTop: '12px' }} /> */}
+
+         <Typography component="h3" fontSize="calc(1.2978rem + .5736vw)" py="1.5rem">
+            Đơn hàng thịnh hành
+         </Typography>
 
          <Grid container spacing={2}>
             {(topProducts || productTrendingList).map((item, index) => {

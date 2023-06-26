@@ -1,7 +1,7 @@
 const typography = {
-    typography: {
-        fontFamily: ['"roboto"', 'sans-serif'].join(','),
-        fontSize: 14,
-    },
+   typography: {
+      fontFamily: ["'Roboto Slab', serif"].join(','),
+      fontSize: 14,
+   },
 };
 export default typography;

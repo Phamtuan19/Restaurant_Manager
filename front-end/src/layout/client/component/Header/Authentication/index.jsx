@@ -21,14 +21,22 @@ function Authentication() {
          <Box>
             {isAuthenticated ? (
                <Stack direction="row" alignItems="center">
-                  <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-                     <Box component="span" sx={{ pr: '0.55rem', fontWeight: 400, fontSize: '.9rem', color: '#959cb6' }}>
-                        Xin chào:
+                  <Stack>
+                     <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                        <Box
+                           component="span"
+                           sx={{ pr: '0.55rem', fontWeight: 400, fontSize: '.9rem', color: '#959cb6' }}
+                        >
+                           Xin chào:
+                        </Box>
+                        <Box component="span" sx={{ pr: '0.55rem', fontWeight: 'Bold', fontSize: '.9rem' }}>
+                           {user.name}
+                        </Box>
                      </Box>
-                     <Box component="span" sx={{ pr: '0.55rem', fontWeight: 'Bold', fontSize: '.9rem' }}>
-                        {user.name}
-                     </Box>
-                  </Box>
+
+                     {userPermission !== 2 ? <RedirectAdmin to="/admin/products">Trang quản trị</RedirectAdmin> : ''}
+                  </Stack>
+
                   <AvatarHeader />
                </Stack>
             ) : (
@@ -41,6 +49,17 @@ function Authentication() {
       </Stack>
    );
 }
+
+const RedirectAdmin = styled(Link)({
+   pr: '0.55rem',
+   fontWeight: 400,
+   fontSize: '.9rem',
+   color: 'var(--black)',
+
+   '&:hover': {
+      color: '#0072E5',
+   },
+});
 
 const CustomButtom = styled(Link)({
    fontSize: '16px',

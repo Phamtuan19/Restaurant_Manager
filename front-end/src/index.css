@@ -40,9 +40,7 @@
 	--width-sidebar-active: 250px;
 
 	/* Admin */
-	--height-header-admin: 60px;
 	--width-sidebar-admin-active: 250px;
-	--width-sidebar-admin: 80px;
 	--width-sidebar-active-admin: 250px;
 	--width-navbar-table-page: 300px;
 }

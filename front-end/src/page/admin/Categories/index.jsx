@@ -20,7 +20,6 @@ import { v4 } from 'uuid';
 import categoriesService from '~/services/categories.service';
 import { Link } from 'react-router-dom';
 import FormCreateCategories from './CategoriesList/ContentCreate/FormCreateCategories';
-import DefaultLayoutAdmin from '~/layout/admin/component/DefaultLayoutAdmin';
 
 function CategoriesPage() {
     const [updateCategoriesList, setUpdateCategoriesList] = useState(false);

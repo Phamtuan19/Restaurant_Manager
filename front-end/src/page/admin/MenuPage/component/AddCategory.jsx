@@ -1,16 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import {
-   Box,
-   FormControl,
-   FormHelperText,
-   Grid,
-   MenuItem,
-   Modal,
-   Select,
-   Stack,
-   TextField,
-   Typography,
-} from '@mui/material';
+import { Box, FormControl, FormHelperText, Grid, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import { Delete } from '~/component/Icons';
 import React, { useEffect, useState } from 'react';
 import categoriesService from '~/services/categories.service';

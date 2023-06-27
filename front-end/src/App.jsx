@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LayoutClient from './layout/client/LayoutClient';
-import LayoutAdmin from './layout/admin/LayoutAdmin';
 
 import './index.css';
 import { ToastContainer } from 'react-toastify';
@@ -11,6 +10,7 @@ import { ThemeProvider } from '@mui/material';
 import NotFound from './page/error/NotFound';
 import ErrorBoundary from './component/customs/ErrorBoundary';
 import LazyLoadingFullScreen from './component/customs/LazyLoadingFullScreen';
+import LayoutAdmin from './layout/admin';
 
 const theme = createTheme();
 

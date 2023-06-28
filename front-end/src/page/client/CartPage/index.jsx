@@ -45,7 +45,7 @@ function CartPage() {
                {listCart.length > 0 ? (
                   <Box mb="1rem">
                      <TitleComponent
-                        title="Cart"
+                        title="Giỏ hàng"
                         sx={{
                            padding: '1rem 1.5rem',
                            backgroundColor: 'rgba(255, 255, 255,0.5)',
@@ -57,7 +57,7 @@ function CartPage() {
                   </Box>
                ) : (
                   <Typography variant="h4" component="h1">
-                     There are no products available
+                     Không có sản phẩm nào trong giỏ hàng.
                   </Typography>
                )}
             </Grid>
@@ -77,27 +77,27 @@ function CartPage() {
                      }}
                   >
                      <Typography variant="h4" component="h2" sx={{ mb: 3 }}>
-                        Order Summary
+                        Hóa đơn xem trước
                      </Typography>
                      <Stack direction="row" sx={{ borderBottom: '1px dashed  rgb(227, 225, 225)', pb: '2rem' }}>
                         <InputPromocode placeholder="Promo Code ..." />
                         <Button sx={{ borderRadius: '0 10px 10px 0', boxShadow: 'none' }} variant="contained">
-                           Apply
+                           Áp dụng
                         </Button>
                      </Stack>
 
                      <Box>
                         <Stack sx={{ cursor: 'pointer', borderBottom: '1px dashed  rgb(227, 225, 225)' }}>
                            <Box sx={{ padding: '1rem 0' }}>
-                              <p style={{ float: 'left' }}>SubTotal</p>
+                              <p style={{ float: 'left' }}>Giá</p>
                               <p style={{ float: 'right' }}>{fomatMoney(totalPrice)}</p>
                            </Box>
                            <Box sx={{ padding: '.7rem 0', color: '#989898' }}>
-                              <p style={{ float: 'left' }}>Discount</p>
+                              <p style={{ float: 'left' }}>Giảm</p>
                               <p style={{ float: 'right' }}>$0.00</p>
                            </Box>
                            <Box sx={{ padding: '.7rem 0', color: '#989898' }}>
-                              <p style={{ float: 'left' }}>Ship</p>
+                              <p style={{ float: 'left' }}>Phí Ship</p>
                               <p style={{ float: 'right' }}>$0.00</p>
                            </Box>
                         </Stack>
@@ -109,13 +109,13 @@ function CartPage() {
                            }}
                         >
                            <Box sx={{ padding: '1rem 0' }}>
-                              <p style={{ float: 'left' }}>Total</p>
+                              <p style={{ float: 'left' }}>Tổng:</p>
                               <p style={{ float: 'right' }}>{fomatMoney(totalPrice)}</p>
                            </Box>
                         </Stack>
 
                         <Button variant="contained" fullWidth onClick={() => setOpenModalOrder(true)}>
-                           Continue
+                           Đặt hàng
                         </Button>
                      </Box>
                   </Box>

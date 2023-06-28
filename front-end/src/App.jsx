@@ -7,7 +7,6 @@ import { ToastContainer } from 'react-toastify';
 import useAuth from './hooks/useAuth';
 import { createTheme } from './theme';
 import { ThemeProvider } from '@mui/material';
-import NotFound from './page/error/NotFound';
 import ErrorBoundary from './component/customs/ErrorBoundary';
 import LazyLoadingFullScreen from './component/customs/LazyLoadingFullScreen';
 import LayoutAdmin from './layout/admin';

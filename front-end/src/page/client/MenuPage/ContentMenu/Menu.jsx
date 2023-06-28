@@ -1,30 +1,21 @@
 import { useEffect, useState } from 'react';
-import { v4 } from 'uuid';
-import { Box, Checkbox, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled } from '@mui/material';
+import { Box, FormControl, FormControlLabel, FormLabel, List, Radio, RadioGroup, styled } from '@mui/material';
 import { Search } from '~/component/Icons';
 import productSeviver from '~/services/product.service';
 
-function Categories({ search, setSearch, checked, setChecked }) {
-   const [categories, setCategories] = useState([]);
-
-   const handleToggle = (value) => () => {
-      const currentIndex = checked.indexOf(value);
-      const newChecked = [...checked];
-      if (currentIndex === -1) {
-         newChecked.push(value);
-      } else {
-         newChecked.splice(currentIndex, 1);
-      }
-      setChecked(newChecked);
-   };
+function Categories({ search, setSearch, category, setCategory }) {
+   const [listFilter, setListFilter] = useState([]);
 
    useEffect(() => {
-      const menuFilter = async () => {
+      (async () => {
          const res = await productSeviver.getMenuFilter();
-         setCategories(res.categories);
-      };
-      menuFilter();
+         setListFilter(res.categories);
+      })();
    }, []);
+
+   const handleChangeRadioCategories = (e) => {
+      setCategory(e.target.value);
+   };
 
    return (
       <>
@@ -38,10 +29,9 @@ function Categories({ search, setSearch, checked, setChecked }) {
                   transform: 'translateY(-50%)',
                }}
             />
-
             <InputCategories
                value={search}
-               onChange={(e) => setSearch(e.target.value)}
+               onChange={(e) => setSearch(e.target.value.trim())}
                placeholder="Nhập sản phẩm tìm kiếm ... "
             />
          </Box>
@@ -55,30 +45,24 @@ function Categories({ search, setSearch, checked, setChecked }) {
             }}
          >
             <Box>
-               <WrapTitle>
-                  <Box sx={{ fontSize: '18px' }}>Categories</Box>
-               </WrapTitle>
-
                <List sx={{ width: '100%', maxWidth: 360 }}>
-                  {categories.map((value) => {
-                     const labelId = `checkbox-list-label-${value.id}`;
-                     return (
-                        <ListItem key={v4()} disablePadding>
-                           <ListItemButton role={undefined} onClick={handleToggle(value.id)} dense>
-                              <ListItemIcon>
-                                 <Checkbox
-                                    edge="start"
-                                    checked={checked.indexOf(value.id) !== -1}
-                                    tabIndex={-1}
-                                    disableRipple
-                                    inputProps={{ 'aria-labelledby': labelId }}
-                                 />
-                              </ListItemIcon>
-                              <ListItemText id={labelId} primary={value.name} />
-                           </ListItemButton>
-                        </ListItem>
-                     );
-                  })}
+                  <FormControl fullWidth>
+                     <ExtendFormLabel id="demo-radio-buttons-group-label">Danh mục sản phẩm</ExtendFormLabel>
+                     <RadioGroup
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        defaultValue="female"
+                        name="radio-buttons-group"
+                        value={category}
+                        onChange={(e) => handleChangeRadioCategories(e)}
+                     >
+                        <FormControlLabel value="" control={<Radio />} label="Tất cả" />
+                        {(listFilter || []).map((item) => {
+                           return (
+                              <FormControlLabel key={item.id} value={item.id} control={<Radio />} label={item.name} />
+                           );
+                        })}
+                     </RadioGroup>
+                  </FormControl>
                </List>
             </Box>
          </Box>
@@ -96,12 +80,11 @@ const InputCategories = styled('input')({
    border: '1px solid #e3e1e1',
 });
 
-const WrapTitle = styled('div')({
-   display: 'flex',
-   justifyContent: 'space-between',
-   alignItems: 'center',
-   cursor: 'pointer',
-   mb: 12,
-});
+const ExtendFormLabel = styled(FormLabel)(({ theme }) => ({
+   marginBottom: '12px',
+   paddingBottom: '6px',
+   borderBottom: '2px solid rgb(0 0 0 / 10%)',
+   fontSize: '18px',
+}));
 
 export default Categories;

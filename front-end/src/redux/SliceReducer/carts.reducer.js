@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
+import setToastMessage from '~/Helpers/toastMessage';
 
 const cartsReducer = createSlice({
    name: 'carts',
@@ -41,7 +42,8 @@ export const useCart = () => {
 
    const listCart = useSelector((state) => state.carts);
 
-   const useAddCart = (payload) => {
+   const actionAddCart = (payload) => {
+      setToastMessage('thêm sản phẩm thành công!', 'success');
       dispatch(addToCart({ ...payload }));
    };
 
@@ -60,7 +62,7 @@ export const useCart = () => {
       dispatch(deleteCart(payload));
    };
 
-   return { listCart, useAddCart, handleUp, handleDown, actionDeleteCartItem, clearCart };
+   return { listCart, actionAddCart, handleUp, handleDown, actionDeleteCartItem, clearCart };
 };
 
 export default cartsReducer;

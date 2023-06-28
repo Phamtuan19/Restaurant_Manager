@@ -19,10 +19,10 @@ const TableProducts = ({ handleClickDown }) => {
                      <TableRow>
                         <TableCell>STT</TableCell>
                         <TableCell align="right"></TableCell>
-                        <TableCell align="center">Product</TableCell>
-                        <TableCell align="center">Unit Price</TableCell>
-                        <TableCell align="center">Quantity</TableCell>
-                        <TableCell align="center">Into Money</TableCell>
+                        <TableCell align="left">Tên sản phẩm</TableCell>
+                        <TableCell align="center">Giá</TableCell>
+                        <TableCell align="center">Số lượng</TableCell>
+                        <TableCell align="center">Thành tiền</TableCell>
                         <TableCell align="right"></TableCell>
                      </TableRow>
                   </TableHead>

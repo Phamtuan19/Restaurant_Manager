@@ -3,8 +3,11 @@ import { Box, Rating, Stack, styled } from '@mui/material';
 import fomatMoney from '~/Helpers/fomatMoney';
 import { AddNewIcon } from '~/component/Icons';
 import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
+import { useCart } from '~/redux/SliceReducer/carts.reducer';
 
 function Product({ data, turn = false }) {
+   const { actionAddCart } = useCart();
+
    return (
       <Wrap
          sx={{
@@ -56,9 +59,7 @@ function Product({ data, turn = false }) {
                         {data?.price_sale !== null ? fomatMoney(data?.price_sale) : fomatMoney(data?.price)}
                      </Box>
                   </Box>
-                  <Box
-                  // onClick={() => handleAddToCart(data, notifyTypes[0], 'Thêm thành công!')}
-                  >
+                  <Box onClick={() => actionAddCart(data)}>
                      <AddNewIcon style={{ color: '#fff' }} />
                   </Box>
                </Box>

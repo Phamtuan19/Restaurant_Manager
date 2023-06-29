@@ -1,5 +1,4 @@
 import { Box, Grid, Pagination, PaginationItem, Stack } from '@mui/material';
-import DefaultLayout from '~/layout/client/DefaultLayout';
 import Categories from './ContentMenu/Menu';
 import { useEffect, useState } from 'react';
 import useDebounce from '~/hooks/useDebounce';
@@ -29,7 +28,7 @@ function ContentMenu() {
    }, [searchDebounce, page, category]);
 
    return (
-      <DefaultLayout>
+      <>
          <Grid container spacing={2}>
             <Grid item xs={12} md={4} lg={3}>
                <Categories search={search} setSearch={setSearch} category={category} setCategory={setCategory} />
@@ -69,7 +68,7 @@ function ContentMenu() {
                </Box>
             </Grid>
          </Grid>
-      </DefaultLayout>
+      </>
    );
 }
 

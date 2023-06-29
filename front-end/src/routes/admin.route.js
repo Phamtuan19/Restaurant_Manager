@@ -4,7 +4,7 @@ import { lazy } from 'react';
 const Bartender = Loadable(lazy(() => import('~/page/admin/Bartender')));
 const CategoriesPage = Loadable(lazy(() => import('~/page/admin/Categories')));
 const DashboardPage = Loadable(lazy(() => import('~/page/admin/DashboardPage')));
-const MenuPage = Loadable(lazy(() => import('~/page/admin/MenuPage')));
+const ProductList = Loadable(lazy(() => import('~/page/admin/ProductList')));
 const ProductCreate = Loadable(lazy(() => import('~/page/admin/ProductCreate')));
 const TablePage = Loadable(lazy(() => import('~/page/admin/TablePage')));
 
@@ -19,7 +19,7 @@ const routeAdmin = [
    },
    {
       path: '/products',
-      component: MenuPage,
+      component: ProductList,
    },
    {
       path: '/products/create',

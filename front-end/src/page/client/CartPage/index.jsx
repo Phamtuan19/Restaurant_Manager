@@ -1,6 +1,5 @@
 import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 
-import DefaultLayout from '~/layout/client/DefaultLayout';
 import TitleComponent from '../HomePage/component/TitleComponent';
 import { useCart } from '~/redux/SliceReducer/carts.reducer';
 import { lazy, useEffect, useState } from 'react';
@@ -39,7 +38,7 @@ function CartPage() {
    };
 
    return (
-      <DefaultLayout>
+      <>
          <Grid container spacing={2}>
             <Grid item xs={12}>
                {listCart.length > 0 ? (
@@ -134,7 +133,7 @@ function CartPage() {
             openDialogComfirm={openDialogComfirm}
             setOpenDialogComfirm={setOpenDialogComfirm}
          />
-      </DefaultLayout>
+      </>
    );
 }
 

@@ -1,9 +1,8 @@
 /* eslint-disable array-callback-return */
 import { Box, Grid, styled } from '@mui/material';
 import tableService from '~/services/tables.service';
-import { createContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Table from './component/Table';
-import DefaultLayout from '~/layout/client/DefaultLayout';
 import HeaderPage from './component/HeaderPage';
 import setToastMessage from '~/Helpers/toastMessage';
 import ModalConfig from './component/ModalConfig';
@@ -27,7 +26,7 @@ function BookingPage() {
    }, []);
 
    return (
-      <DefaultLayout>
+      <>
          <HeaderPage />
          <Box mt="1.5rem">
             <Grid container spacing={2}>
@@ -76,7 +75,7 @@ function BookingPage() {
             </Grid>
          </Box>
          <ModalConfig open={open} setOpen={setOpen} tableId={tableId} />
-      </DefaultLayout>
+      </>
    );
 }
 const ViewTable = styled('div')({

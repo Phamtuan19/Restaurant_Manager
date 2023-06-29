@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Route, Routes } from 'react-router-dom';
 import routeClient from '../../routes/client.route';
+import DefaultLayout from './DefaultLayout';
 
 function LayoutClient() {
    return (
@@ -23,7 +24,17 @@ function LayoutClient() {
                   />
                );
             }
-            return <Route key={index} path={route.path} element={<Component />} />;
+            return (
+               <Route
+                  key={index}
+                  path={route.path}
+                  element={
+                     <DefaultLayout>
+                        <Component />
+                     </DefaultLayout>
+                  }
+               />
+            );
          })}
       </Routes>
    );

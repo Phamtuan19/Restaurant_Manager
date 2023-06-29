@@ -14,8 +14,8 @@ function DefaultLayout({ children }) {
    };
 
    return (
-      <Box>
-         <Sidebar sidebarActive={sidebarActive} handleClickSidebar={handleClickSidebar} />
+      <>
+         <Sidebar sidebarActive={sidebarActive} handleClickSidebar={handleClickSidebar}  />
          <Box sx={style}>
             <Header handleClickSidebar={handleClickSidebar} />
 
@@ -25,7 +25,7 @@ function DefaultLayout({ children }) {
             <Footer />
          </Box>
          <LayoutSite />
-      </Box>
+      </>
    );
 }
 

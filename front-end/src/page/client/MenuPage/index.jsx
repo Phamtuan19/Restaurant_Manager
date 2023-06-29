@@ -1,5 +1,4 @@
 import { Box, Grid, Pagination, PaginationItem, Stack } from '@mui/material';
-import DefaultLayout from '~/layout/client/DefaultLayout';
 import Categories from './ContentMenu/Menu';
 import { useEffect, useState } from 'react';
 import useDebounce from '~/hooks/useDebounce';
@@ -11,7 +10,7 @@ import { Link } from 'react-router-dom';
 const listSekeleton = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 function ContentMenu() {
-   const [checked, setChecked] = useState([]);
+   const [category, setCategory] = useState([]);
    const [search, setSearch] = useState('');
 
    // const [valueSelect, setValueSelect] = useState('');
@@ -23,20 +22,16 @@ function ContentMenu() {
    useEffect(() => {
       setProducts((prevProduct) => ({ ...prevProduct, data: null }));
       (async () => {
-         const res = await productSeviver.getMenuProducts(searchDebounce, checked, page);
+         const res = await productSeviver.getMenuProducts(searchDebounce, category, page);
          setProducts(res.products);
       })();
-   }, [searchDebounce, page, checked]);
-
-   // const handleChange = (event) => {
-   //    setValueSelect(event.target.value);
-   // };
+   }, [searchDebounce, page, category]);
 
    return (
-      <DefaultLayout>
+      <>
          <Grid container spacing={2}>
             <Grid item xs={12} md={4} lg={3}>
-               <Categories search={search} setSearch={setSearch} checked={checked} setChecked={setChecked} />
+               <Categories search={search} setSearch={setSearch} category={category} setCategory={setCategory} />
             </Grid>
             <Grid item xs={12} md={8} lg={9}>
                <Box className={{ backgroundColor: 'transparent' }}>
@@ -73,7 +68,7 @@ function ContentMenu() {
                </Box>
             </Grid>
          </Grid>
-      </DefaultLayout>
+      </>
    );
 }
 

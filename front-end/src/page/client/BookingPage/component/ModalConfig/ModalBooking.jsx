@@ -11,7 +11,7 @@ const ModalBooking = ({ handleCloseModal, onSubmit }) => {
    const { handleSubmit, control } = form;
 
    return (
-      <Box p={2} mx="auto" maxWidth="50%" bgcolor="#fff" borderRadius="15px">
+      <Box p={2} mx="auto" width={600} maxWidth="50%" bgcolor="#fff" borderRadius="15px">
          <Typography id="modal-modal-title" variant="h5" component="h2" mb={2}>
             Điền thông tin
          </Typography>

@@ -6,11 +6,11 @@ import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
 import { useCart } from '~/redux/SliceReducer/carts.reducer';
 
 function Product({ data }) {
-   const { useAddCart } = useCart();
+   const { actionAddCart } = useCart();
 
    const handleAddCart = (data) => {
       console.log(data);
-      useAddCart(data);
+      actionAddCart(data);
    };
 
    return (

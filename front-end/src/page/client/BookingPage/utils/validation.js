@@ -8,9 +8,10 @@ import { useBooking } from '~/redux/SliceReducer/booking.reducer';
 
 export const validate = yup
    .object({
-      name: yup.string().required('Tên không được để trống'),
+      name: yup.string().trim().required('Tên không được để trống'),
       phone: yup
          .string()
+         .trim()
          .required('Số điện thoại không được để trống')
          .matches(regexs.phone, 'Số điện thoại không đúng'),
 
@@ -22,10 +23,6 @@ export const validate = yup
             return value >= yesterday;
          }),
       time: yup.string().required('Thời gian nhận bàn không được để trống'),
-      // .test('is-valid-time', 'Vui lòng chọn đúng giờ nhận', (value) => {
-      //     const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      //     return value >= currentTime;
-      // }),
    })
    .required();
 
@@ -37,6 +34,7 @@ export const formYup = () => {
    currentTime.setMinutes(currentTime.getMinutes() + 30);
    const options = { hour: '2-digit', minute: '2-digit' };
    const form = useForm({
+      mode: 'onBlur',
       resolver: yupResolver(validate),
       defaultValues: {
          date: user?.date || currentTime.toISOString().substr(0, 10),

@@ -42,32 +42,6 @@ const catetoryList = [
    },
 ];
 
-const trendingOrder = [
-   {
-      image: images.image1,
-      name: 'Tôm Hùm',
-      price: 120,
-      price_sale: null,
-   },
-   {
-      image: images.image1,
-      name: 'Tôm Hùm',
-      price: 120,
-      price_sale: null,
-   },
-   {
-      image: images.image1,
-      name: 'Tôm Hùm',
-      price: 120,
-      price_sale: null,
-   },
-   {
-      image: images.image1,
-      name: 'Tôm Hùm',
-      price: 120,
-      price_sale: null,
-   },
-];
 
 function Categories() {
    const { menuProducts } = useContext(ContextData);
@@ -109,7 +83,7 @@ function Categories() {
 
          {/* Product Item Menu */}
          <Grid container spacing={2}>
-            {(menuProducts || trendingOrder).map((item, index) => {
+            {(menuProducts || []).map((item, index) => {
                return (
                   <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
                      <Product data={item} turn={true} />

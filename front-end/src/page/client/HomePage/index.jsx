@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 import { Box, Grid, Typography } from '@mui/material';
 import { createContext, useEffect, useState } from 'react';
-import DefaultLayout from '~/layout/client/DefaultLayout';
 import homePageService from '~/services/homePage.service';
 import TrendingOrders from './component/TrendingOrders';
 import BannerDiscount from './component/BannerDiscount';
@@ -25,7 +24,7 @@ function ContentHome() {
    }, []);
 
    return (
-      <DefaultLayout>
+      <>
          <ContextData.Provider
             value={{ menuProducts: data.menuProducts, categories: data.categories, topProducts: data.topProducts }}
          >
@@ -85,7 +84,7 @@ function ContentHome() {
                </Grid>
             </Grid>
          </ContextData.Provider>
-      </DefaultLayout>
+      </>
    );
 }
 

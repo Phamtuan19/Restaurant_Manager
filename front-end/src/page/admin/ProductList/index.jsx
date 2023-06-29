@@ -5,21 +5,22 @@ import CoreTable from '~/component/customs/@mui/Table/CoreTable';
 import productSeviver from '~/services/product.service';
 
 const header = [
-   { label: 'Hình Ảnh', name: 'image', w: 100, align: 'center' },
-   { label: 'Tên sản phẩm', name: 'name', w: 150, align: 'center' },
-   { label: 'Danh mục', name: 'categori_name', w: 120, align: 'center' },
-   { label: 'Giá gốc', name: 'cost_capital', w: 100, align: 'center' },
-   { label: 'Giá bán', name: 'price', w: 100, align: 'center' },
-   { label: 'Giá km', name: 'price_sale', w: 100, align: 'center' },
-   { label: 'Mô tả', name: 'description', w: 200, align: 'center' },
-   { label: 'Người tạo', name: 'user_name', w: 100, align: 'center' },
-   { label: 'Thời gian tạo', name: 'created_at', w: 140, align: 'center' },
-   { label: 'Hành Động', name: '', w: 150, align: 'center' },
+   { label: 'STT', name: 'stt', w: 100, align: 'center', type: 'index' },
+   { label: 'Hình Ảnh', name: 'image', w: 100, align: 'center', type: 'image' },
+   { label: 'Tên sản phẩm', name: 'name', w: 150, align: 'center', type: 'text' },
+   { label: 'Danh mục', name: 'categori_name', w: 120, align: 'center', type: 'text' },
+   { label: 'Giá gốc', name: 'cost_capital', w: 100, align: 'center', type: 'text' },
+   { label: 'Giá bán', name: 'price', w: 100, align: 'center', type: 'text' },
+   { label: 'Giá km', name: 'price_sale', w: 100, align: 'center', type: 'text' },
+   { label: 'Mô tả', name: 'description', w: 200, align: 'center', type: 'text' },
+   { label: 'Người tạo', name: 'user_name', w: 100, align: 'center', type: 'text' },
+   { label: 'Thời gian tạo', name: 'created_at', w: 140, align: 'center', type: 'text' },
+   { label: 'Hành Động', name: '', w: 150, align: 'center', type: 'text' },
 ];
 
 export const ContextModalMenu = createContext();
 
-function ProductsList() {
+function ProductList() {
    const [page, setPage] = useState(0);
 
    const [table, setTable] = useState({ header: header, body: [], isPagination: true });
@@ -52,4 +53,4 @@ const Header = styled('header')({
    alignItems: 'center',
 });
 
-export default ProductsList;
+export default ProductList;

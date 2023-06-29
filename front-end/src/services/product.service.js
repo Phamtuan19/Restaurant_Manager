@@ -15,8 +15,8 @@ class ProductSeviver extends BaseService {
    }
 
    // Amdin Get Products
-   adminProducts = async () => {
-      return await this.request.get(authEndpoint.list);
+   adminProducts = async (page) => {
+      return await this.request.get(authEndpoint.list + `?page=${page}`);
    };
 
    // Admin Create Product
@@ -39,12 +39,8 @@ class ProductSeviver extends BaseService {
 
    // Client
    getMenuProducts = async (search, categoryId, page) => {
-      if (!Array.isArray(categoryId) && categoryId.length > 0) {
-         categoryId = [categoryId];
-      }
-
       return this.request.get(
-         authEndpoint.menuProducts + `?q=${encodeURIComponent(search)}&categoryId=${[categoryId]}&page=${page}`,
+         authEndpoint.menuProducts + `?q=${encodeURIComponent(search)}&categoryId=${categoryId}&page=${page}`,
       );
    };
    getMenuFilter = async () => {

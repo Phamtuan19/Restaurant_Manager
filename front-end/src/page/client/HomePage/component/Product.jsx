@@ -2,8 +2,11 @@ import { Box, styled } from '@mui/material';
 import fomatMoney from '~/Helpers/fomatMoney';
 import { AddNewIcon } from '~/component/Icons';
 import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
+import { useCart } from '~/redux/SliceReducer/carts.reducer';
 
 export default function Product({ data }) {
+   const { actionAddCart } = useCart();
+
    return (
       <Wrap>
          <Box sx={{ position: 'relative', display: 'flex' }}>
@@ -32,7 +35,7 @@ export default function Product({ data }) {
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: '0 24px' }}>
                      <Box sx={{ fontSize: '1rem', fontWeight: 'bold' }}>{fomatMoney(data.price)}</Box>
                   </Box>
-                  <Box>
+                  <Box onClick={() => actionAddCart(data)}>
                      <AddNewIcon className={'AddNewIcon'} style={{ color: '#fff' }} />
                   </Box>
                </Box>

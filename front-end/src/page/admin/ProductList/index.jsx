@@ -1,37 +1,101 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, styled } from '@mui/material';
+import { useRequest } from 'ahooks';
+import moment from 'moment';
 
 import React, { createContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import fomatMoney from '~/Helpers/fomatMoney';
+import setToastMessage from '~/Helpers/toastMessage';
 import CoreTable from '~/component/customs/@mui/Table/CoreTable';
+import { CoreTableActionEdit, CoreTableActionView } from '~/component/customs/@mui/Table/component/CoreTableActions';
+import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
 import productSeviver from '~/services/product.service';
-
-const header = [
-   { label: 'STT', name: 'stt', w: 100, align: 'center', type: 'index' },
-   { label: 'Hình Ảnh', name: 'image', w: 100, align: 'center', type: 'image' },
-   { label: 'Tên sản phẩm', name: 'name', w: 150, align: 'center', type: 'text' },
-   { label: 'Danh mục', name: 'categori_name', w: 120, align: 'center', type: 'text' },
-   { label: 'Giá gốc', name: 'cost_capital', w: 100, align: 'center', type: 'text' },
-   { label: 'Giá bán', name: 'price', w: 100, align: 'center', type: 'text' },
-   { label: 'Giá km', name: 'price_sale', w: 100, align: 'center', type: 'text' },
-   { label: 'Mô tả', name: 'description', w: 200, align: 'center', type: 'text' },
-   { label: 'Người tạo', name: 'user_name', w: 100, align: 'center', type: 'text' },
-   { label: 'Thời gian tạo', name: 'created_at', w: 140, align: 'center', type: 'text' },
-   { label: 'Hành Động', name: '', w: 150, align: 'center', type: 'text' },
-];
 
 export const ContextModalMenu = createContext();
 
 function ProductList() {
-   const [page, setPage] = useState(0);
+   const [page, setPage] = useState(1);
 
-   const [table, setTable] = useState({ header: header, body: [], isPagination: true });
+   const navigate = useNavigate();
+
+   const {
+      data,
+      run: getProductList,
+      loading,
+   } = useRequest(
+      async () => {
+         const res = await productSeviver.index(page);
+         return res;
+      },
+      {
+         manual: true,
+         onError: (err) => {
+            setToastMessage('Đã có lỗi xảy ra!', 'error');
+         },
+      },
+   );
 
    useEffect(() => {
-      (async () => {
-         const res = await productSeviver.adminProducts(page);
-         console.log(res);
-         setTable((tablePrev) => ({ ...tablePrev, body: res.products.data }));
-      })();
+      getProductList(page);
    }, [page]);
+
+   const columns = [
+      {
+         header: 'STT',
+         cell: (_, index) => index + 1,
+      },
+      {
+         header: 'Hình Ảnh',
+         cell: (row) => (
+            <Box width={50} height={50}>
+               <ImageLazyLoading src={row.image} alt={row.name} />
+            </Box>
+         ),
+      },
+      {
+         header: 'Tên sản phẩm',
+         cell: (row) => row.name,
+      },
+      {
+         header: 'Danh mục',
+         cell: (row) => row.categoryId.name,
+      },
+      {
+         header: 'Giá gốc',
+         cell: (row) => fomatMoney(row.costCapital),
+      },
+      {
+         header: 'Giá bán',
+         cell: (row) => fomatMoney(row.price),
+      },
+      {
+         header: 'Giá Km',
+         cell: (row) => (row.priceSale ? fomatMoney(row.priceSale) : ''),
+      },
+      {
+         header: 'Mô tả',
+         cell: (row) => row.description,
+      },
+      {
+         header: 'Người tạo',
+         cell: (row) => row.userId.name,
+      },
+      {
+         header: 'Thời gian tạo',
+         cell: (row) => moment(row.createdAt).format('YYYY-MM-DD'),
+      },
+      {
+         header: 'Thao tác',
+         align: 'center',
+         cell: (row) => (
+            <Box>
+               <CoreTableActionEdit callback={() => navigate(`/admin/products/${row.id}`)} />
+               <CoreTableActionView />
+            </Box>
+         ),
+      },
+   ];
 
    return (
       <>
@@ -39,9 +103,16 @@ function ProductList() {
             <Box sx={{ fontSize: '1.6rem' }}>Danh sách sản phẩm</Box>
          </Header>
 
-         <Box>
-            <CoreTable table={table} />
-         </Box>
+         <CoreTable
+            columns={columns}
+            data={data?.data || []}
+            page={page}
+            pageCount={data?.pageCount || 1}
+            height={580}
+            loading={loading}
+            isPagination={true}
+            setPage={setPage}
+         />
       </>
    );
 }

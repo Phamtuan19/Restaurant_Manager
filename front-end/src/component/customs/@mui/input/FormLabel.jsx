@@ -11,17 +11,18 @@ const FormLabel = (props) => {
             display: 'block',
             mb: gutterBottom ? '0.35em' : 0,
             [`& .${formLabelClasses.asterisk}`]: {
-               color: 'error.light'
+               color: 'error.light',
             },
             ...(noWrap && {
-               whiteSpace: 'nowrap'
+               whiteSpace: 'nowrap',
             }),
-            ...sx
+            ...sx,
          }}
          htmlFor={name}
          required={required}
-         {...rest}>
-         <Typography component='span' variant='body2' sx={{ fontWeight: '500' }} {...TypographyProps}>
+         {...rest}
+      >
+         <Typography component="span" variant="body2" sx={{ fontWeight: '500' }} {...TypographyProps}>
             {title}
          </Typography>
       </MuiFormLabel>
@@ -34,6 +35,6 @@ FormLabel.propTypes = {
    gutterBottom: PropTypes.bool,
    noWrap: PropTypes.bool,
    required: PropTypes.bool,
-   TypographyProps: PropTypes.object
+   TypographyProps: PropTypes.object,
 };
 export default FormLabel;

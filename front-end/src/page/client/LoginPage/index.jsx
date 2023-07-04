@@ -10,6 +10,7 @@ import SvgLogo from '~/assets/iconSvg/SvgLogo';
 import { Facebook, Google } from '~/component/Icons';
 import { LoadingButton } from '@mui/lab';
 import useAuth from '~/hooks/useAuth';
+import { useState } from 'react';
 
 const validate = yup.object({
    email: yup.string().required('Email không được để trống').email('Email không hợp lệ'),
@@ -17,6 +18,8 @@ const validate = yup.object({
 });
 
 function LoginPage() {
+   const [loading, setLoading] = useState(false);
+
    const {
       register,
       handleSubmit,
@@ -29,7 +32,14 @@ function LoginPage() {
    const { loginAccount } = useAuth();
 
    const handleSubmitForm = async (data) => {
-      loginAccount(data);
+      setLoading(true);
+      try {
+         loginAccount(data);
+         setLoading(false);
+      } catch (err) {
+         setLoading(false);
+         console.log(err);
+      }
    };
 
    return (
@@ -96,7 +106,7 @@ function LoginPage() {
                               justifyContent: 'center',
                            }}
                         >
-                           <LoadingButton loadingIndicator="Loading…" variant="contained" size="large" type="submit">
+                           <LoadingButton loading={loading} variant="contained" size="large" type="submit">
                               Sing In
                            </LoadingButton>
                         </Box>

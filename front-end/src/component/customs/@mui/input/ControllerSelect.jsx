@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import FormHelperText from '@mui/material/FormHelperText';
+import { styled } from '@mui/material';
 
 /**
  *
@@ -14,7 +15,7 @@ import FormHelperText from '@mui/material/FormHelperText';
  */
 
 const ControllerSelect = (props) => {
-   const { label, options } = props;
+   const { label, options, valuepath, titlepath } = props;
    const { control, isShowMessageError = true, name, placeholder, disabled, ...rest } = props;
    return (
       <Controller
@@ -24,19 +25,19 @@ const ControllerSelect = (props) => {
                   {label}
                </InputLabel>
                <Select
+                  type="select"
                   id={name}
                   fullWidth
                   error={Boolean(error)}
                   placeholder={disabled ? void 0 : placeholder}
                   disabled={disabled}
+                  labelId="demo-simple-select-label"
                   {...field}
                   {...rest}
-                  labelId="demo-simple-select-label"
-                  label={label}
                >
                   {options.map((item, index) => (
-                     <MenuItem key={index} value={item?.value}>
-                        {item?.label}
+                     <MenuItem key={index} value={item[valuepath]}>
+                        {item[titlepath]}
                      </MenuItem>
                   ))}
                </Select>
@@ -47,14 +48,18 @@ const ControllerSelect = (props) => {
                )}
             </FormControl>
          )}
+         defaultValue=""
          name={name}
          control={control}
       />
    );
 };
+
 ControllerSelect.propTypes = {
    options: PropTypes.array.isRequired,
    label: PropTypes.string,
+   valuepath: PropTypes.string.isRequired,
+   titlepath: PropTypes.string.isRequired,
 };
 
 export const PropTypeSelect = PropTypes.arrayOf(

@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { ROLE } from '~/configs/roles';
 import useAuth from '~/hooks/useAuth';
 

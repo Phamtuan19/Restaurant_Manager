@@ -5,20 +5,11 @@ import { AddNewIcon } from '~/component/Icons';
 import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
 import { useCart } from '~/redux/SliceReducer/carts.reducer';
 
-function Product({ data, turn = false }) {
+function Product({ data }) {
    const { actionAddCart } = useCart();
 
    return (
-      <Wrap
-         sx={{
-            marginTop: { md: '85px', xs: '100px' },
-            '&:hover': {
-               '.Product_Item_Img': {
-                  animation: turn ? 'rotate-smooth 14s cubic-bezier(.26,.26,1,1) infinite' : '',
-               },
-            },
-         }}
-      >
+      <Wrap sx={{ marginTop: { md: '85px', xs: '100px' } }}>
          <WrapImage>
             <Box sx={{ width: '150px', height: '150px', borderRadius: '50%', overflow: 'hidden' }}>
                <ImageLazyLoading className="Product_Item_Img" src={data.image} alt={data.name} />
@@ -26,17 +17,7 @@ function Product({ data, turn = false }) {
          </WrapImage>
          <CardBody>
             <Box sx={{ marginTop: '.5rem' }}>
-               <Box
-                  sx={{
-                     ...styleName,
-                     '&:hover': {
-                        color: '#065fd4',
-                     },
-                  }}
-               >
-                  {data.name}
-               </Box>
-
+               <Box sx={{ ...styleName, '&:hover': { color: '#065fd4' } }}>{data.name}</Box>
                <Stack spacing={1} sx={{ padding: '12px 0' }}>
                   <Rating name="half-rating-read" defaultValue={3.5} precision={0.5} readOnly />
                </Stack>
@@ -56,7 +37,7 @@ function Product({ data, turn = false }) {
                      }}
                   >
                      <Box component="span" fontSize="1rem" fontWeight="bold">
-                        {data?.price_sale !== null ? fomatMoney(data?.price_sale) : fomatMoney(data?.price)}
+                        {data?.priceSale !== null ? fomatMoney(data?.priceSale) : fomatMoney(data?.price)}
                      </Box>
                   </Box>
                   <Box onClick={() => actionAddCart(data)}>

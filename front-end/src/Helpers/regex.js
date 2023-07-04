@@ -1,6 +1,13 @@
 /* eslint-disable import/no-anonymous-default-export */
 class Regexs {
-    phone = /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
+   phone = /(84|0[2|3|5|7|8|9])+([0-9]{8})\b/g;
+   optionalEmail = /^(?:[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})?$/i;
+   email = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}$/i;
+   number = /^\d*\.?\d*$/;
+   soundNumber = /^-\d+(\.\d+)?$/;
+   decimal = /^[0-9]{1,7}(\.[0-9]{1,2})?$/;
+   decimalNumber = /^\d+\.?\d+$/;
+   className = /^[1-5]*[a-zA-Z]$/;
 }
 
 const regexs = new Regexs();

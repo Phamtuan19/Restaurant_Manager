@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
    Box,
    Button,
@@ -23,31 +24,38 @@ import ProductMenu from '../ProductMenu';
 import ProductModal from '../ProductModal';
 import { Link } from 'react-router-dom';
 import useDebounce from '~/hooks/useDebounce';
+import productSeviver from '~/services/product.service';
+import categoriesService from '~/services/categories.service';
 
 const listLoadingProducts = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const ModalMenu = ({ handleCloseModal, handleNext, handleBack }) => {
-   const [products, setProducts] = useState({});
+   const [data, setData] = useState({});
    const [categories, setCategories] = useState([]);
    const [search, setSearch] = useState('');
-   const [searchCategory, setSearchCategory] = useState(0);
+   const [category, setCategory] = useState(0);
    const [loadingSearch, setLoadingSearch] = useState(false);
    const [page, setPage] = useState(1);
 
    const searchDebounce = useDebounce(search, 500);
 
-   const { products: listProductModal, actionDeleteCartItem, actionSetQuantityItem } = useBooking();
+   const { products: listProductModal } = useBooking();
 
    useEffect(() => {
-      setLoadingSearch(true);
       (async () => {
-         setProducts((prevProducts) => ({ ...prevProducts, data: null }));
-         const res = await bookingService.getMenuBooking(searchDebounce, searchCategory, page);
-         setProducts(res.products);
-         setCategories(res.categories);
+         const res = await categoriesService.bookingCategories();
+         setCategories(res);
+      })();
+   }, []);
+
+   useEffect(() => {
+      if (search.trim().length > 0) setLoadingSearch(true);
+      (async () => {
+         const res = await productSeviver.bookingProducts(page, category, searchDebounce);
+         setData(res);
          setLoadingSearch(false);
       })();
-   }, [searchDebounce, page, searchCategory]);
+   }, [page, category, searchDebounce]);
 
    return (
       <Box display="flex" width="95%" mx="auto">
@@ -60,13 +68,9 @@ const ModalMenu = ({ handleCloseModal, handleNext, handleBack }) => {
             <ScrollableBox flex={1}>
                <Grid container spacing={2} sx={{ px: 2 }}>
                   {listProductModal.length > 0 &&
-                     listProductModal.map((item) => (
-                        <Grid item xs={12} key={item.id}>
-                           <ProductModal
-                              data={item}
-                              actionDeleteCartItem={actionDeleteCartItem}
-                              actionSetQuantityItem={actionSetQuantityItem}
-                           />
+                     listProductModal.map((item, index) => (
+                        <Grid item xs={12} key={index}>
+                           <ProductModal data={item} />
                         </Grid>
                      ))}
                </Grid>
@@ -108,10 +112,10 @@ const ModalMenu = ({ handleCloseModal, handleNext, handleBack }) => {
                      />
                   </FormControl>
                   <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                     <Select value={searchCategory} onChange={(e) => setSearchCategory(e.target.value)}>
+                     <Select value={category} onChange={(e) => setCategory(e.target.value)}>
                         <MenuItem value="0">Tất cả</MenuItem>
-                        {categories?.map((item) => (
-                           <MenuItem key={item.id} value={item.id}>
+                        {categories?.map((item, index) => (
+                           <MenuItem key={index} value={item._id}>
                               {item.name}
                            </MenuItem>
                         ))}
@@ -121,8 +125,8 @@ const ModalMenu = ({ handleCloseModal, handleNext, handleBack }) => {
             </Box>
             <ScrollableBox flex={1}>
                <Grid container spacing={2}>
-                  {products?.data
-                     ? products?.data.map((item, index) => (
+                  {data?.data
+                     ? data?.data.map((item, index) => (
                           <Grid key={index} item xs={3} md={3}>
                              <ProductMenu data={item} />
                           </Grid>
@@ -137,7 +141,7 @@ const ModalMenu = ({ handleCloseModal, handleNext, handleBack }) => {
             <Box padding={2} display="flex" justifyContent="flex-end">
                <Pagination
                   page={page}
-                  count={products?.last_page || 1}
+                  count={data?.pageCount || 1}
                   onChange={(event, value) => setPage(value)}
                   renderItem={(item) => <PaginationItem component={Link} to={`?page=${item.page}`} {...item} />}
                />

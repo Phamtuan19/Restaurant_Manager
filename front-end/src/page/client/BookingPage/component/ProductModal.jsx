@@ -1,11 +1,14 @@
 import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
+import { useBooking } from '~/redux/SliceReducer/booking.reducer';
 
 const { Box, Stack, TextField } = require('@mui/material');
 const { default: styled } = require('styled-components');
 const { default: fomatMoney } = require('~/Helpers/fomatMoney');
 const { Delete } = require('~/component/Icons');
 
-function ProductModal({ data, actionDeleteCartItem, actionSetQuantityItem }) {
+function ProductModal({ data }) {
+   const { actionDeleteCartItem, actionSetQuantityItem } = useBooking();
+
    return (
       <ProductItemModal>
          <Box sx={{ width: '70px', height: '70px', overflow: 'hidden' }}>
@@ -26,11 +29,11 @@ function ProductModal({ data, actionDeleteCartItem, actionSetQuantityItem }) {
                      variant="outlined"
                      value={data.quantity}
                      size="small"
-                     onChange={(e) => actionSetQuantityItem({ quantityVal: e.target.value, id: data.id })}
+                     onChange={(e) => actionSetQuantityItem({ quantityVal: e.target.value, _id: data._id })}
                   />
                </Box>
 
-               <Box onClick={() => actionDeleteCartItem(data.id)}>
+               <Box onClick={() => actionDeleteCartItem(data._id)}>
                   <Delete style={{ color: '#fff' }} />
                </Box>
             </Stack>

@@ -38,9 +38,10 @@ export const actionLogin = createAsyncThunk('auth/actionLogin', async (data, thu
    try {
       const res = await authService.loginAccount(data);
       setToastMessage('Đăng nhập thành công', 'success');
-      setLocalItem('accessToken', res?.token?.accessToken);
-      // setLocalItem('refestToken', res?.token?.refestToken || null);
-      return res;
+      setLocalItem('accessToken', res.token);
+      setLocalItem('refreshToken', res.refreshToken);
+      console.log(res)
+      return res.user;
    } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue('API request failed');
@@ -59,8 +60,9 @@ const authReducer = createSlice({
    extraReducers: (builder) => {
       builder
          .addCase(actionGetCurrentUser.fulfilled, (state, action) => {
-            state.user = action?.payload?.data;
-            state.userPermission = action?.payload?.data.roles.name;
+            const { role_id, ...user } = action.payload;
+            state.user = user;
+            state.userPermission = role_id.name;
             state.isAuthenticated = true;
             state.isInitialized = true;
          })
@@ -75,10 +77,10 @@ const authReducer = createSlice({
             state.isAuthenticated = false;
             state.userPermission = null;
          })
-         .addCase(actionLogin.fulfilled, (state, { payload }) => {
-            const { user } = payload;
-            state.user = user || null;
-            state.userPermission = user?.roles?.name;
+         .addCase(actionLogin.fulfilled, (state, action) => {
+            const { role_id, ...user } = action.payload;
+            state.user = user;
+            state.userPermission = role_id.name;
             state.isAuthenticated = true;
             state.isInitialized = true;
          })

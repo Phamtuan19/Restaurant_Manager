@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 import tableService from '~/services/tables.service';
 import Table from './component/Table';
-import ModalAddTable from './component/ModalAddTable';
+// import ModalAddTable from './component/ModalAddTable';
 
 const listNote = [
    {
@@ -87,7 +87,7 @@ function TablePage() {
                })}
             </Stack>
 
-            <ModalAddTable open={openModalAdd} handleClose={handleCloseModallAdd} />
+            {/* <ModalAddTable open={openModalAdd} handleClose={handleCloseModallAdd} /> */}
          </Stack>
          <Stack
             sx={{

@@ -2,6 +2,8 @@ import { Avatar, Box, Divider, Menu, MenuItem, styled } from '@mui/material';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '~/hooks/useAuth';
+import { useConfirm } from './@mui/CoreConfirmProvider';
+import routeConfig from '~/configs/routeConfig';
 
 function AvatarHeader() {
    const { user, logoutAccount } = useAuth();
@@ -14,8 +16,10 @@ function AvatarHeader() {
       setAnchorEl(null);
    };
 
+   const confirm = useConfirm();
    const handleLogout = async () => {
-      logoutAccount();
+      handleClose();
+      confirm({ title: 'Đăng xuất', content: 'Bạn có chắc muốn đăng xuất?', okText: 'Đăng xuất', onOk: logoutAccount });
    };
 
    return (
@@ -50,7 +54,7 @@ function AvatarHeader() {
             </MenuItem>
             <Divider sx={hrStyle} />
             <MenuItem>
-               <LinkDom to="/">Trang cá nhân</LinkDom>
+               <LinkDom to={`/${routeConfig.profile}`}>Trang cá nhân</LinkDom>
             </MenuItem>
             <MenuItem onClick={handleLogout}>
                <LinkDom>Đăng xuất</LinkDom>

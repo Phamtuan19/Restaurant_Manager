@@ -8,12 +8,11 @@ import PropTypes from 'prop-types';
  */
 
 const ControllerTextField = (props) => {
-   const { control, name, type, placeholder, disabled, ...rest } = props;
+   const { control, name, defaultValue, type, placeholder, disabled, sx, ...rest } = props;
    return (
       <Controller
          render={({ field, fieldState: { error } }) => (
             <TextField
-               type={type || 'text'}
                id={name}
                fullWidth
                error={Boolean(error)}
@@ -24,6 +23,7 @@ const ControllerTextField = (props) => {
                {...rest}
             />
          )}
+         defaultValue={defaultValue || ''}
          name={name}
          control={control}
       />

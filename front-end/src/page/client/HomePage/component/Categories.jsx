@@ -1,12 +1,11 @@
-import { useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Grid, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import ComponentTitle from './ComponentTitle';
-import { ContextData } from '..';
 import { Alacarteroom, Both, Buffe, CategoryIcon, Room, Ship, VipRoom } from '~/component/Icons';
 import Product from '~/component/client/Product';
-import { images } from '~/assets/image';
+import productSeviver from '~/services/product.service';
 
 const catetoryList = [
    {
@@ -42,9 +41,17 @@ const catetoryList = [
    },
 ];
 
-
 function Categories() {
-   const { menuProducts } = useContext(ContextData);
+
+   const [productList, setProductList] = useState([]);
+
+   useEffect(() => {
+      (async () => {
+         const res = await productSeviver.homeProductCategories();
+         console.log(res)
+         setProductList(res.data);
+      })();
+   }, []);
 
    return (
       <Box minHeight={500}>
@@ -83,7 +90,7 @@ function Categories() {
 
          {/* Product Item Menu */}
          <Grid container spacing={2}>
-            {(menuProducts || []).map((item, index) => {
+            {(productList || []).map((item, index) => {
                return (
                   <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
                      <Product data={item} turn={true} />

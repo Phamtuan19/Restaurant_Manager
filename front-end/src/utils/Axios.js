@@ -23,11 +23,7 @@ const createInstance = (baseURL) => {
 
    instance.interceptors.response.use(
       (response) => {
-         if (response.data) {
-            return response.data;
-         } else {
-            return response;
-         }
+         return response.data || response;
       },
       async (error) => {
          const originalRequest = error.config;

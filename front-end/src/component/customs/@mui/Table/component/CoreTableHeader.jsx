@@ -3,16 +3,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { styled } from '@mui/material/styles';
 
-const CoreTableHeader = ({ table }) => {
+const CoreTableHeader = ({ columns }) => {
    return (
       <TableHead>
          <TableRow>
-            <ExtendTableCell align="center" style={{ width: 50 }}>
-               STT
-            </ExtendTableCell>
-            {table?.header.map((row, index) => (
-               <ExtendTableCell key={index} align={row.align} style={{ minWidth: row.minWidth }}>
-                  {row.label}
+            {columns.map((row, index) => (
+               <ExtendTableCell key={index} align={row.align} width={row.width}>
+                  {row.header}
                </ExtendTableCell>
             ))}
          </TableRow>
@@ -20,6 +17,12 @@ const CoreTableHeader = ({ table }) => {
    );
 };
 
-const ExtendTableCell = styled(TableCell)(({ theme }) => ({}));
+const ExtendTableCell = styled(TableCell)(({ theme }) => ({
+   // padding: '12px 6px',
+}));
+
+CoreTableHeader.prototype = {
+   columns: PropTypes.array.isRequired,
+};
 
 export default React.memo(CoreTableHeader);

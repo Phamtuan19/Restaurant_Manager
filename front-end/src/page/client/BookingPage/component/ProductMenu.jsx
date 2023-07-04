@@ -7,11 +7,7 @@ import { useBooking } from '~/redux/SliceReducer/booking.reducer';
 
 function ProductMenu({ data }) {
    const { bookingAddProduct } = useBooking();
-
-   const handleAddCart = (data) => {
-      bookingAddProduct(data);
-   };
-
+   
    return (
       <Box sx={{ position: 'relative', cursor: 'pointer', marginTop: { md: '75px', xs: '75px' } }}>
          <Box sx={{ position: 'absolute', left: '50%', transform: 'translate(-50%, -50%)' }}>
@@ -42,7 +38,7 @@ function ProductMenu({ data }) {
                      <Price>{data?.price_sale ? fomatMoney(data?.price_sale) : fomatMoney(data?.price)}</Price>
                      {data.price_sale && <PriceSale>{fomatMoney(data.price)}</PriceSale>}
                   </Box>
-                  <Box onClick={() => handleAddCart(data)}>
+                  <Box onClick={() => bookingAddProduct(data)}>
                      <AddNewIcon style={{ color: '#fff' }} />
                   </Box>
                </Box>

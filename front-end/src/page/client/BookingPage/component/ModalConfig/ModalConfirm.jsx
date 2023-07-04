@@ -21,12 +21,15 @@ import React, { useEffect, useState } from 'react';
 import { useBooking } from '~/redux/SliceReducer/booking.reducer';
 import ProductModal from '../ProductModal';
 import bookingService from '~/services/booking.service';
+import { useConfirm } from '~/component/customs/@mui/CoreConfirmProvider';
 
 const ModalConfirm = ({ handleCloseModal, handleNext, handleBack }) => {
    const { user, products } = useBooking();
    const [infoBooking, setInfoBooking] = useState([]);
    const [open, setOpen] = useState(false);
    const [loading, setLoading] = useState(false);
+
+   const confirm = useConfirm();
 
    useEffect(() => {
       setInfoBooking([
@@ -40,7 +43,7 @@ const ModalConfirm = ({ handleCloseModal, handleNext, handleBack }) => {
          },
          {
             title: 'Vị trí bàn:',
-            value: 'Bàn số: ' + user.tableId,
+            value: 'Bàn số: ' + user.index,
          },
          {
             title: 'Thời gian:',
@@ -61,9 +64,14 @@ const ModalConfirm = ({ handleCloseModal, handleNext, handleBack }) => {
       const data = { ...user, products: [...products] };
       try {
          setLoading(true);
-         await bookingService.postCreateBooking(data);
+         // await bookingService.postCreateBooking(data);
          setLoading(false);
          handleNext();
+         confirm({
+            title: 'Thông báo đặt hàng thành công',
+            content: 'Đơn hàng của bạn đã được xác nhận',
+            btnLoading: false,
+         });
       } catch (error) {
          setLoading(false);
          console.log(error);
@@ -71,7 +79,7 @@ const ModalConfirm = ({ handleCloseModal, handleNext, handleBack }) => {
    };
 
    return (
-      <Box display="flex" width="95%" mx="auto">
+      <Box display="flex" justifyContent="center" width="95%" mx="auto">
          <Box display="flex" flexDirection="column" width={600} height={600} bgcolor="#FFF" borderRadius="15px">
             <Box px={2} mt={2}>
                <Typography variant="h5" component="h2">
@@ -111,7 +119,7 @@ const ModalConfirm = ({ handleCloseModal, handleNext, handleBack }) => {
                                     <Table size="small" aria-label="purchases">
                                        <TableBody>
                                           {products.map((product) => (
-                                             <TableRow key={product.id}>
+                                             <TableRow key={product._id}>
                                                 <TableCell component="th" scope="row" rowSpan={1}>
                                                    <ProductModal data={product} />
                                                 </TableCell>
@@ -141,8 +149,7 @@ const ModalConfirm = ({ handleCloseModal, handleNext, handleBack }) => {
                <Box>
                   <LoadingButton
                      loading={loading}
-                     loadingPosition="start"
-                     startIcon={loading && <SaveIcon />}
+                     startIcon={<SaveIcon />}
                      variant="contained"
                      sx={{ mt: 1, mr: 1 }}
                      onClick={handleBookingTable}

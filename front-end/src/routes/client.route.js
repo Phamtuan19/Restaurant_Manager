@@ -1,53 +1,40 @@
 import { lazy } from 'react';
 import Loadable from './component/Loadable';
+import { element } from 'prop-types';
+import { Outlet } from 'react-router-dom';
+import routeConfig from '~/configs/routeConfig';
+import Profile from '~/page/client/Profile';
 
 const MenuPage = Loadable(lazy(() => import('~/page/client/MenuPage')));
 const HomePage = Loadable(lazy(() => import('~/page/client/HomePage')));
 const CartPage = Loadable(lazy(() => import('~/page/client/CartPage')));
-const LoginPage = Loadable(lazy(() => import('~/page/client/LoginPage')));
-const LoginGoogle = Loadable(lazy(() => import('~/page/client/LoginGoogle')));
 
-const SignUpPage = Loadable(lazy(() => import('~/page/client/SignUpPage')));
-const PublicRouter = Loadable(lazy(() => import('./component/PublicRouter')));
 const BookingPage = Loadable(lazy(() => import('~/page/client/BookingPage')));
-const NotFound = Loadable(lazy(() => import('~/page/error/NotFound')));
 
-const routeClient = [
-   {
-      path: '/',
-      component: HomePage,
-   },
-   {
-      path: '/menu',
-      component: MenuPage,
-   },
-   {
-      path: '/shopping-cart',
-      component: CartPage,
-   },
-   {
-      path: '/booking',
-      component: BookingPage,
-   },
-   {
-      path: '/login',
-      component: LoginPage,
-      gurad: PublicRouter,
-   },
-   {
-      path: '/sign-up',
-      component: SignUpPage,
-      gurad: PublicRouter,
-   },
-   {
-      path: '/auth/google',
-      component: LoginGoogle,
-      gurad: PublicRouter,
-   },
-   {
-      path: '/*',
-      component: NotFound,
-   },
-];
-
-export default routeClient;
+const clientRoute = {
+   path: '/',
+   element: <Outlet />,
+   children: [
+      {
+         index: true,
+         element: <HomePage />,
+      },
+      {
+         path: routeConfig.menu,
+         element: <MenuPage />,
+      },
+      {
+         path: routeConfig.cart,
+         element: <CartPage />,
+      },
+      {
+         path: routeConfig.booking,
+         element: <BookingPage />,
+      },
+      {
+         path: routeConfig.profile,
+         element: <Profile />,
+      },
+   ],
+};
+export default clientRoute;

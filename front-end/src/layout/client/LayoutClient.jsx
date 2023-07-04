@@ -24,6 +24,7 @@ function LayoutClient() {
                   />
                );
             }
+
             return (
                <Route
                   key={index}

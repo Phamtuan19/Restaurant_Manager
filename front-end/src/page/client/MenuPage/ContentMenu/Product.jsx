@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Box, Rating, Stack, styled } from '@mui/material';
+import { useEffect } from 'react';
 import fomatMoney from '~/Helpers/fomatMoney';
 import { AddNewIcon } from '~/component/Icons';
 import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
 import { useCart } from '~/redux/SliceReducer/carts.reducer';
+import productSeviver from '~/services/product.service';
 
 function Product({ data }) {
    const { actionAddCart } = useCart();
@@ -12,7 +14,6 @@ function Product({ data }) {
       console.log(data);
       actionAddCart(data);
    };
-
    return (
       <Box sx={{ position: 'relative', cursor: 'pointer', marginTop: { md: '85px', xs: '100px' } }}>
          <Box sx={{ position: 'absolute', left: '50%', transform: 'translate(-50%, -50%)' }}>

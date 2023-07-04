@@ -3,10 +3,14 @@ import { useEffect } from 'react';
 import useAuth from '~/hooks/useAuth';
 
 function InitialApp({ children }) {
-   const { getUser } = useAuth();
+   const { user, getUser } = useAuth();
+
    useEffect(() => {
-      getUser();
+      if (!user) {
+         getUser();
+      }
    }, []);
+
    return children;
 }
 

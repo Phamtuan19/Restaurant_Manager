@@ -2,12 +2,12 @@ import BaseService from '~/utils/BaseService';
 
 const authEndpoint = {
    base: 'admin/',
-   createTable: 'tables/create',
+   create: 'admin/tables/create',
    adminTables: 'tables',
    tableStatus: 'tables/empty',
    modalMenuProducts: 'tables/menu/products',
 
-   getTableClient: 'client/table',
+   tableList: 'booking/tables',
    getInvoiceTable: 'orders/invoice/',
 };
 
@@ -17,17 +17,25 @@ class TableService extends BaseService {
       this.setRequest();
    }
 
-   postTableCreate = async (data) => {
-      return await this.request.post(authEndpoint.base + authEndpoint.createTable, data);
+   // *************************************** API ADMIN ***************************************
+
+   create = async (data) => {
+      return await this.request.post(authEndpoint.create, data);
+   };
+
+   // *************************************** API COMMON ***************************************
+
+   tableList = async () => {
+      return await this.request.get(authEndpoint.tableList);
    };
 
    getAdminTables = async () => {
       return await this.request.get(authEndpoint.base + authEndpoint.adminTables);
    };
 
-   getClientTables = async () => {
-      return await this.request.get(authEndpoint.getTableClient);
-   };
+
+
+ 
 
    getAdminTableStatus = async (status = 1, tableId) => {
       return await this.request.get(

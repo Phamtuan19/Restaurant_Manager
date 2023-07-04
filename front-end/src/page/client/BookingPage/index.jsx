@@ -7,21 +7,24 @@ import HeaderPage from './component/HeaderPage';
 import setToastMessage from '~/Helpers/toastMessage';
 import ModalConfig from './component/ModalConfig';
 
+const status = [];
+
 function BookingPage() {
    const [listTable, setListTable] = useState([]);
    const [open, setOpen] = useState(false);
-   const [tableId, setTableId] = useState(null);
+   const [dataTable, setDataTable] = useState(null);
 
-   const handleOpen = (tableId, statusId) => {
-      if (statusId !== 1) return setToastMessage('Bàn đã có người sử dụng', 'error');
+   const handleOpen = (table, statusId) => {
+      if (statusId !== '64a3f26f35ee74932a5ad977') return setToastMessage('Bàn đã có người sử dụng', 'error');
       setOpen(true);
-      setTableId(tableId);
+      setDataTable(table);
    };
 
    useEffect(() => {
       (async () => {
-         const res = await tableService.getClientTables();
-         setListTable(res.tables);
+         const res = await tableService.tableList();
+         console.log(res);
+         setListTable(res);
       })();
    }, []);
 
@@ -35,7 +38,7 @@ function BookingPage() {
                      {listTable.map((item, index) => {
                         if (index <= 8) {
                            return (
-                              <Box key={index} onClick={() => handleOpen(item.id, item.status_id)}>
+                              <Box key={index} onClick={() => handleOpen(item, item.statusId._id)}>
                                  <Table data={item} />
                               </Box>
                            );
@@ -50,7 +53,7 @@ function BookingPage() {
                      {listTable.map((item, index) => {
                         if (index > 8 && index <= 12) {
                            return (
-                              <Box key={index} onClick={() => handleOpen(item.id, item.status_id)}>
+                              <Box key={index} onClick={() => handleOpen(item, item.statusId._id)}>
                                  <Table data={item} />
                               </Box>
                            );
@@ -64,7 +67,7 @@ function BookingPage() {
                      {listTable.map((item, index) => {
                         if (index > 12) {
                            return (
-                              <Box key={index} onClick={() => handleOpen(item.id, item.status_id)}>
+                              <Box key={index} onClick={() => handleOpen(item, item.statusId._id)}>
                                  <Table data={item} />
                               </Box>
                            );
@@ -74,10 +77,11 @@ function BookingPage() {
                </Grid>
             </Grid>
          </Box>
-         <ModalConfig open={open} setOpen={setOpen} tableId={tableId} />
+         <ModalConfig open={open} setOpen={setOpen} dataTable={dataTable} />
       </>
    );
 }
+
 const ViewTable = styled('div')({
    display: 'flex',
    flexWrap: 'wrap',

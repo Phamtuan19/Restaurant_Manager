@@ -15,9 +15,9 @@ const bookingReducer = createSlice({
       addToCartBooking: (state, action) => {
          console.log(action.payload);
 
-         const item = state.products.find((item) => item.id === action.payload.id);
+         const item = state.products.find((item) => item._id === action.payload._id);
          if (item) {
-            const newCarts = state.products.filter((val) => val.id !== item.id);
+            const newCarts = state.products.filter((val) => val._id !== item._id);
             return {
                ...state,
                products: [...newCarts, { ...item, quantity: item.quantity + 1 }],
@@ -32,7 +32,7 @@ const bookingReducer = createSlice({
 
       setQuantityCartItem: (state, action) => {
          const updatedCarts = state.products.map((item) => {
-            if (item.id === action.payload.id) {
+            if (item._id === action.payload._id) {
                return {
                   ...item,
                   quantity: action.payload.quantityVal < 1 ? 1 : action.payload.quantityVal,
@@ -44,7 +44,7 @@ const bookingReducer = createSlice({
          return { ...state, products: updatedCarts };
       },
       deleteCartItem: (state, action) => {
-         const newCarts = state.products.filter((item) => item.id !== action.payload);
+         const newCarts = state.products.filter((item) => item._id !== action.payload);
          return { ...state, products: newCarts };
       },
    },

@@ -5,6 +5,7 @@ import { Header } from '../component/Header';
 import Footer from '../component/Footer';
 import LayoutSite from '../component/LayoutSite';
 import { Sidebar } from '../component/Sidebar';
+import { Outlet } from 'react-router-dom';
 
 function DefaultLayout({ children }) {
    const [sidebarActive, setSidebarActive] = useState(false);
@@ -15,12 +16,12 @@ function DefaultLayout({ children }) {
 
    return (
       <>
-         <Sidebar sidebarActive={sidebarActive} handleClickSidebar={handleClickSidebar}  />
+         <Sidebar sidebarActive={sidebarActive} handleClickSidebar={handleClickSidebar} />
          <Box sx={style}>
             <Header handleClickSidebar={handleClickSidebar} />
 
             <Box sx={styleContent} onClick={() => setSidebarActive(false)}>
-               {children}
+               <Outlet />
             </Box>
             <Footer />
          </Box>

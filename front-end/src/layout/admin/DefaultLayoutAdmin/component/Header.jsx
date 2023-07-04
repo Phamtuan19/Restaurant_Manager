@@ -39,6 +39,7 @@ const WrapHeader = styled(Box)(({ theme }) => {
       backgroundColor: theme.palette.layoutAdmin.text.white,
       boxShadow: 'var(--box-shadow-fa)',
       transition: 'all .5s ease',
+      zIndex: 9999,
    };
 });
 

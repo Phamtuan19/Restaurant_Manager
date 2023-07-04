@@ -5,11 +5,14 @@ import App from './App';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import InitialApp from './component/customs/InitialApp';
+import CoreConfirmProvider from './component/customs/@mui/CoreConfirmProvider';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
    <Provider store={store}>
       <InitialApp>
-         <App />
+         <CoreConfirmProvider>
+            <App />
+         </CoreConfirmProvider>
       </InitialApp>
    </Provider>,
 );

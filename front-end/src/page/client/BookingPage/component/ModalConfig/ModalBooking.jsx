@@ -1,12 +1,11 @@
 import { Box, Button, Grid, TextareaAutosize, Typography, styled } from '@mui/material';
 import React from 'react';
 import { formYup } from '../../utils/validation';
-import ControllerSelect from '~/component/customs/@mui/ControllerSelect';
-import FormLabel from '~/component/customs/@mui/FormLabel';
-import ControllerTextField from '~/component/customs/@mui/ControllerTextField';
-import { listInput, partySizes } from '../../utils';
+import { listInput } from '../../utils';
+import FormLabel from '~/component/customs/@mui/input/FormLabel';
+import ControllerTextField from '~/component/customs/@mui/input/ControllerTextField';
 
-const ModalBooking = ({ handleCloseModal, onSubmit }) => {
+const ModalBooking = ({ handleCloseModal, onSubmit, dataTable }) => {
    const form = formYup();
    const { handleSubmit, control } = form;
 
@@ -26,7 +25,7 @@ const ModalBooking = ({ handleCloseModal, onSubmit }) => {
 
                <ExtendGrid item xs={12} sm={4}>
                   <FormLabel required title="Số khách" name="partySize" gutterBottom />
-                  <ControllerSelect id="outlined-basic" options={partySizes} name="partySize" control={control} />
+                  <ControllerTextField name="partySize" defaultValue={dataTable.totalUser} control={control} />
                </ExtendGrid>
                <ExtendGrid item xs={12}>
                   <FormLabel required title="Ghi chú" name="note" gutterBottom />

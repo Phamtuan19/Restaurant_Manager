@@ -1,40 +1,20 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, FormControl, FormControlLabel, FormLabel, List, Radio, RadioGroup, styled } from '@mui/material';
-import { Search } from '~/component/Icons';
 import productSeviver from '~/services/product.service';
+import { Link } from 'react-router-dom';
 
-function Categories({ search, setSearch, category, setCategory }) {
+function Categories({ category, setCategory }) {
    const [listFilter, setListFilter] = useState([]);
 
    useEffect(() => {
       (async () => {
-         const res = await productSeviver.getMenuFilter();
-         setListFilter(res.categories);
+         const res = await productSeviver.menuCategories();
+         setListFilter(res.data);
       })();
    }, []);
 
-   const handleChangeRadioCategories = (e) => {
-      setCategory(e.target.value);
-   };
-
    return (
       <>
-         <Box sx={{ position: 'relative' }}>
-            <Search
-               width="18px"
-               sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '15px',
-                  transform: 'translateY(-50%)',
-               }}
-            />
-            <InputCategories
-               value={search}
-               onChange={(e) => setSearch(e.target.value.trim())}
-               placeholder="Nhập sản phẩm tìm kiếm ... "
-            />
-         </Box>
          <Box
             sx={{
                mt: 3,
@@ -53,12 +33,12 @@ function Categories({ search, setSearch, category, setCategory }) {
                         defaultValue="female"
                         name="radio-buttons-group"
                         value={category}
-                        onChange={(e) => handleChangeRadioCategories(e)}
+                        onChange={(e) => setCategory(e.target.value)}
                      >
                         <FormControlLabel value="" control={<Radio />} label="Tất cả" />
                         {(listFilter || []).map((item) => {
                            return (
-                              <FormControlLabel key={item.id} value={item.id} control={<Radio />} label={item.name} />
+                              <FormControlLabel key={item._id} value={item._id} control={<Radio />} label={item.name}  />
                            );
                         })}
                      </RadioGroup>
@@ -70,16 +50,6 @@ function Categories({ search, setSearch, category, setCategory }) {
    );
 }
 
-const InputCategories = styled('input')({
-   width: '100%',
-   padding: '0.4rem 1rem 0.4rem 3rem',
-   fontSize: '1rem',
-   lineHeight: '2.25',
-   backgroundColor: '#fff',
-   borderRadius: '1rem',
-   border: '1px solid #e3e1e1',
-});
-
 const ExtendFormLabel = styled(FormLabel)(({ theme }) => ({
    marginBottom: '12px',
    paddingBottom: '6px',
@@ -87,4 +57,4 @@ const ExtendFormLabel = styled(FormLabel)(({ theme }) => ({
    fontSize: '18px',
 }));
 
-export default Categories;
+export default React.memo(Categories);

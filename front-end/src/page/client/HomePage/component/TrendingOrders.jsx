@@ -1,11 +1,18 @@
 import { Box, Grid, Typography } from '@mui/material';
 
 import Product from './Product';
-import { useContext } from 'react';
-import { ContextData } from '..';
+import { useContext, useEffect, useState } from 'react';
+import productSeviver from '~/services/product.service';
 
 function TrendingOrders() {
-   const { topProducts } = useContext(ContextData);
+   const [productList, setProductList] = useState([]);
+
+   useEffect(() => {
+      (async () => {
+         const res = await productSeviver.homeTrendingOrder();
+         setProductList(res.data);
+      })();
+   }, []);
 
    return (
       <Box minHeight={500}>
@@ -16,7 +23,7 @@ function TrendingOrders() {
          </Typography>
 
          <Grid container spacing={2}>
-            {(topProducts || []).map((item, index) => {
+            {(productList || []).map((item, index) => {
                return (
                   <Grid item key={index} xs={12} sm={6} lg={4}>
                      <Product data={item} />

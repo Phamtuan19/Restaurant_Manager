@@ -1,31 +1,23 @@
+import { useState } from 'react';
+import { useBooking } from '~/redux/SliceReducer/booking.reducer';
+import moment from 'moment/moment';
 import { Modal, Stepper } from '@mui/material';
-import React, { createContext, useState } from 'react';
-
-import DialogSuccess from '../DialogSuccess';
-import { formYup } from '../../utils/validation';
 import ModalBooking from './ModalBooking';
 import ModalMenu from './ModalMenu';
 import ModalConfirm from './ModalConfirm';
-import { useBooking } from '~/redux/SliceReducer/booking.reducer';
-import moment from 'moment/moment';
-
-export const ContextBooking = createContext();
 
 const STEP1 = 0;
 const STEP2 = 1;
 const STEP3 = 2;
 
-const ModalConfig = ({ open, setOpen, tableId }) => {
-   const [openDialog, setOpenDialog] = useState(false);
+const ModalConfig = ({ open, setOpen, dataTable }) => {
    const [activeStep, setActiveStep] = useState(0);
-   const form = formYup();
    const { setBookingUser } = useBooking();
 
    const handleNext = () => {
       if (activeStep === 2) {
          setActiveStep(0);
          setOpen(false);
-         setOpenDialog(true);
       } else {
          setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
@@ -40,40 +32,31 @@ const ModalConfig = ({ open, setOpen, tableId }) => {
    const onSubmit = (data) => {
       setBookingUser({
          ...data,
-         tableId,
+         tableId: dataTable._id,
          date: moment(data.date).format('YYYY-MM-DD'),
       });
       handleNext();
    };
 
-   const handleClose = () => {
-      form.reset();
-      setActiveStep(0);
-      setOpen(false);
-   };
-
    return (
-      <ContextBooking.Provider value={{}}>
-         <Modal
-            open={open}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-         >
-            <Stepper activeStep={activeStep} orientation="vertical" sx={{ width: '100%', outline: 'none' }}>
-               {STEP1 === activeStep && (
-                  <ModalBooking handleCloseModal={handleCloseModal} onSubmit={onSubmit} handleClose={handleClose} />
-               )}
-               {STEP2 === activeStep && (
-                  <ModalMenu handleCloseModal={handleCloseModal} handleNext={handleNext} handleBack={handleBack} />
-               )}
-               {STEP3 === activeStep && (
-                  <ModalConfirm handleCloseModal={handleCloseModal} handleNext={handleNext} handleBack={handleBack} />
-               )}
-            </Stepper>
-         </Modal>
-         <DialogSuccess openDialog={openDialog} setOpenDialog={setOpenDialog} />
-      </ContextBooking.Provider>
+      <Modal
+         open={open}
+         aria-labelledby="modal-modal-title"
+         aria-describedby="modal-modal-description"
+         sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      >
+         <Stepper activeStep={activeStep} orientation="vertical" sx={{ width: '100%', outline: 'none' }}>
+            {STEP1 === activeStep && (
+               <ModalBooking handleCloseModal={handleCloseModal} onSubmit={onSubmit} dataTable={dataTable} />
+            )}
+            {STEP2 === activeStep && (
+               <ModalMenu handleCloseModal={handleCloseModal} handleNext={handleNext} handleBack={handleBack} />
+            )}
+            {STEP3 === activeStep && (
+               <ModalConfirm handleCloseModal={handleCloseModal} handleNext={handleNext} handleBack={handleBack} />
+            )}
+         </Stepper>
+      </Modal>
    );
 };
 

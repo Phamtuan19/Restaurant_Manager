@@ -27,44 +27,49 @@ const TableProducts = ({ handleClickDown }) => {
                      </TableRow>
                   </TableHead>
                   <TableBody>
-                     {listCart.map((item, index) => (
-                        <TableRow key={item.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                           <TableCell component="th" scope="row">
-                              {index + 1}
-                           </TableCell>
-                           <TableCell align="center">
-                              <Box width={50} height={50}>
-                                 <ImageLazyLoading src={item.image} alt={item.name} />
-                              </Box>
-                           </TableCell>
-                           <TableCell align="left" sx={styleName}>
-                              {item.name}
-                           </TableCell>
-                           <TableCell align="center">{fomatMoney(item.price_sale || item.price)}</TableCell>
-                           <TableCell align="center">
-                              <Box display="flex" alignItems="center" justifyContent="center">
-                                 <ButtonCustomQuantity
-                                    variant="outlined"
-                                    onClick={() => handleClickDown(item.quantity, item.id)}
-                                 >
-                                    -
-                                 </ButtonCustomQuantity>
-                                 <Box sx={styleQuantity}>{item.quantity}</Box>
-                                 <ButtonCustomQuantity variant="outlined" onClick={() => handleUp({ id: item.id })}>
-                                    +
-                                 </ButtonCustomQuantity>
-                              </Box>
-                           </TableCell>
-                           <TableCell align="center">
-                              {fomatMoney(item.quantity * (item.price_sale || item.price))}
-                           </TableCell>
-                           <TableCell align="right" sx={{ cursor: 'pointer' }}>
-                              <Box onClick={() => actionDeleteCartItem({ id: item.id })}>
-                                 <Delete />
-                              </Box>
-                           </TableCell>
-                        </TableRow>
-                     ))}
+                     {listCart.map((item, index) => {
+                        return (
+                           <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                              <TableCell component="th" scope="row">
+                                 {index + 1}
+                              </TableCell>
+                              <TableCell align="center">
+                                 <Box width={50} height={50}>
+                                    <ImageLazyLoading src={item.image} alt={item.name} />
+                                 </Box>
+                              </TableCell>
+                              <TableCell align="left" sx={styleName}>
+                                 {item.name}
+                              </TableCell>
+                              <TableCell align="center">{fomatMoney(item.price_sale || item.price)}</TableCell>
+                              <TableCell align="center">
+                                 <Box display="flex" alignItems="center" justifyContent="center">
+                                    <ButtonCustomQuantity
+                                       variant="outlined"
+                                       onClick={() => handleClickDown({ _id: item._id })}
+                                    >
+                                       -
+                                    </ButtonCustomQuantity>
+                                    <Box sx={styleQuantity}>{item.quantity}</Box>
+                                    <ButtonCustomQuantity
+                                       variant="outlined"
+                                       onClick={() => handleUp({ _id: item._id })}
+                                    >
+                                       +
+                                    </ButtonCustomQuantity>
+                                 </Box>
+                              </TableCell>
+                              <TableCell align="center">
+                                 {fomatMoney(item.quantity * (item.price_sale || item.price))}
+                              </TableCell>
+                              <TableCell align="right" sx={{ cursor: 'pointer' }}>
+                                 <Box onClick={() => actionDeleteCartItem({ _id: item._id })}>
+                                    <Delete />
+                                 </Box>
+                              </TableCell>
+                           </TableRow>
+                        );
+                     })}
                   </TableBody>
                </Table>
             </TableContainer>

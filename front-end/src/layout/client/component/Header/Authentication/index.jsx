@@ -5,16 +5,13 @@ import { Link } from 'react-router-dom';
 
 import AvatarHeader from '~/component/customs/AvatartHeader';
 import { LoginIcon } from '~/component/Icons';
+import { ROLE } from '~/configs/roles';
 import useAuth from '~/hooks/useAuth';
 
 function Authentication() {
    const { user, userPermission, getUser, isAuthenticated } = useAuth();
 
-   useEffect(() => {
-      if (userPermission === null || user === null) {
-         getUser();
-      }
-   }, [userPermission, user]);
+   console.log(userPermission);
 
    return (
       <Stack justifyContent="flex-end" flexDirection="row" alignItems="center">
@@ -34,7 +31,7 @@ function Authentication() {
                         </Box>
                      </Box>
 
-                     {userPermission !== 2 ? <RedirectAdmin to="/admin/products">Trang quản trị</RedirectAdmin> : ''}
+                     {userPermission === ROLE[0] && <RedirectAdmin to="/admin/products">Trang quản trị</RedirectAdmin>}
                   </Stack>
 
                   <AvatarHeader />

@@ -3,7 +3,6 @@ import { Box, Button, Grid, MenuItem, Select, TextareaAutosize, Typography } fro
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { formYup } from '../../utils/validation';
-import ordersService from '~/services/orders.service';
 import { listInput } from '../../utils';
 import { LoadingButton } from '@mui/lab';
 import SaveIcon from '@mui/icons-material/Save';
@@ -12,18 +11,21 @@ import proviceService from '../../utils/Provice.service';
 import ControllerSelectCart from '../@mui/ControllerSelectCart';
 import ControllerTextField from '~/component/customs/@mui/input/ControllerTextField';
 import FormLabel from '~/component/customs/@mui/input/FormLabel';
+import invoiceService from '~/services/invoice.service';
+import useAuth from '~/hooks/useAuth';
 
 const OrderInformation = () => {
    const [loading, setLoading] = useState(false);
+
    const [districts, setDistricts] = useState([]);
    const [wards, setWards] = useState([]);
 
-   const form = formYup();
-   const { handleSubmit, control, register, watch } = form;
+   const { handleSubmit, control, register, watch } = formYup();
    const valueDistrict = watch('district');
    const valueWard = watch('ward');
 
-   const { setOpenDialog, listCart, setOpenModalOrder } = useContext(ContextModalCart);
+   const { setOpenDialog, listCart, setOpenModalOrder, totalPrice } = useContext(ContextModalCart);
+   const { user } = useAuth();
 
    useEffect(() => {
       const fetchDistricts = async () => {
@@ -48,19 +50,27 @@ const OrderInformation = () => {
    const onSubmit = async (data) => {
       const wardValue = wards.find((value) => value.code === data.ward);
       const districtsValue = districts.find((value) => value.code === Number(data.district));
-
-      const dataOrder = { ...data, district: districtsValue.name, ward: wardValue.name, products: [...listCart] };
+      const dataOrder = {
+         userId: user?._id || '',
+         userName: data.name,
+         phone: data.phone,
+         products: [...listCart],
+         quantity: listCart.length,
+         totalPrice,
+         address: 'Hà Nội - ' + districtsValue.name + ' - ' + wardValue.name,
+         note: data.note,
+      };
 
       setLoading(true);
       try {
-         await ordersService.postOrderOnline(dataOrder);
+         await invoiceService.cartCreate(dataOrder);
          setLoading(false);
          setOpenModalOrder(false);
          setOpenDialog(true);
       } catch (error) {
-         setLoading(false);
          console.log(error);
       }
+      setLoading(false);
    };
 
    return (

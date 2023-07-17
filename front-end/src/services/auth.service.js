@@ -12,6 +12,8 @@ export const authEndpoint = {
    getUser: 'user',
 
    refestToken: 'refresh-token',
+   changePassword: 'change-password',
+   edit: 'edit',
 };
 
 class AuthService extends BaseService {
@@ -48,6 +50,14 @@ class AuthService extends BaseService {
 
    refeshToken = async () => {
       return this.request.get(this.BASE_ENDPOINT + authEndpoint.refestToken);
+   };
+
+   changePassword = (data) => {
+      return this.request.put(this.BASE_ENDPOINT + authEndpoint.changePassword, data);
+   };
+
+   edit = (data) => {
+      return this.request.put(this.BASE_ENDPOINT + authEndpoint.edit, data);
    };
 }
 

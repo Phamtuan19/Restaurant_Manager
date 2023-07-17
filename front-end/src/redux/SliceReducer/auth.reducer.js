@@ -40,7 +40,7 @@ export const actionLogin = createAsyncThunk('auth/actionLogin', async (data, thu
       setToastMessage('Đăng nhập thành công', 'success');
       setLocalItem('accessToken', res.token);
       setLocalItem('refreshToken', res.refreshToken);
-      console.log(res)
+      console.log(res);
       return res.user;
    } catch (error) {
       console.log(error);
@@ -60,8 +60,10 @@ const authReducer = createSlice({
    extraReducers: (builder) => {
       builder
          .addCase(actionGetCurrentUser.fulfilled, (state, action) => {
-            const { role_id, ...user } = action.payload;
-            state.user = user;
+            const { role_id, ...user } = action.payload.data;
+            const { createdAt, updatedAt, __v, password, ...data } = user;
+
+            state.user = data;
             state.userPermission = role_id.name;
             state.isAuthenticated = true;
             state.isInitialized = true;

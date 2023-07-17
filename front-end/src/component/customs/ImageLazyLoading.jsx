@@ -3,7 +3,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { images } from '~/assets/image';
 
-const ImageLazyLoading = ({ className, src, alt }) => {
+const ImageLazyLoading = ({ className, src, alt, sx }) => {
    return (
       <LazyLoadImage
          className={className}
@@ -12,7 +12,7 @@ const ImageLazyLoading = ({ className, src, alt }) => {
          effect="blur"
          width="100%"
          height="100%"
-         style={{ objectFit: 'cover' }}
+         style={{ objectFit: 'cover', ...sx }}
       />
    );
 };

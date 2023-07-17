@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material';
 
 import Product from './Product';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import productSeviver from '~/services/product.service';
 
 function TrendingOrders() {

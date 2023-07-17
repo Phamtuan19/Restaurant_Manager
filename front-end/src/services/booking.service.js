@@ -1,8 +1,8 @@
 import BaseService from '~/utils/BaseService';
 
 const bookingEndpoint = {
-   base: 'client/booking/',
-   booking: 'create',
+   base: 'booking/',
+   createInvoice: 'table-book/create',
    menu: 'menu',
 };
 
@@ -14,8 +14,8 @@ class BookingService extends BaseService {
       this.setRequest();
    }
 
-   postCreateBooking = async (data) => {
-      return this.request.post(this.BASE_ENDPOINT + bookingEndpoint.booking, data);
+   createInvoice = (data) => {
+      return this.request.post(this.BASE_ENDPOINT + bookingEndpoint.createInvoice, data);
    };
 
    getMenuBooking = async (search, categoryId, page) => {

@@ -13,6 +13,7 @@ const ControllerTextField = (props) => {
       <Controller
          render={({ field, fieldState: { error } }) => (
             <TextField
+               type={type || 'text'}
                id={name}
                fullWidth
                error={Boolean(error)}

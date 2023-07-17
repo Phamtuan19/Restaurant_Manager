@@ -1,37 +1,30 @@
-import { Box, Grid, Stack, TextField, styled } from '@mui/material';
+import { Box, Grid, Stack, styled } from '@mui/material';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import SaveIcon from '@mui/icons-material/Save';
 import { LoadingButton } from '@mui/lab';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import ControllerTextField from '~/component/customs/@mui/input/ControllerTextField';
 import FormLabel from '~/component/customs/@mui/input/FormLabel';
-import { images } from '~/assets/image';
 import { formYup } from './utils';
 import tableService from '~/services/tables.service';
 import setToastMessage from '~/Helpers/toastMessage';
 
 const TableCreate = () => {
-   const [imgUpload, setImgUpload] = useState(null);
    const [loading, setLoading] = useState(false);
 
    const from = formYup();
-   const { handleSubmit, control, reset, watch } = from;
-
-   const imageUrl = watch('image');
-
-   useEffect(() => {
-      setImgUpload(imageUrl);
-   }, [imageUrl]);
+   const { handleSubmit, control } = from;
 
    const handleSubmitForm = async (data) => {
-      console.log(data);
+      setLoading(true);
       try {
          const res = await tableService.create(data);
          setToastMessage(res.message);
       } catch (error) {
          console.log(error);
       }
+      setLoading(false);
    };
 
    return (

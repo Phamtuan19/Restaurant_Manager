@@ -1,17 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Box, Rating, Stack, styled } from '@mui/material';
-import { useEffect } from 'react';
 import fomatMoney from '~/Helpers/fomatMoney';
 import { AddNewIcon } from '~/component/Icons';
 import ImageLazyLoading from '~/component/customs/ImageLazyLoading';
 import { useCart } from '~/redux/SliceReducer/carts.reducer';
-import productSeviver from '~/services/product.service';
 
 function Product({ data }) {
    const { actionAddCart } = useCart();
 
    const handleAddCart = (data) => {
-      console.log(data);
       actionAddCart(data);
    };
    return (

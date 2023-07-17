@@ -2,7 +2,7 @@ import axios from 'axios';
 import withAuthToken from './Middleware';
 import setToastMessage from '~/Helpers/toastMessage';
 import httpStatusCode from '~/configs/httpStatusCode';
-import { authEndpoint } from '~/services/auth.service';
+import authService, { authEndpoint } from '~/services/auth.service';
 
 const createInstance = (baseURL) => {
    const options = {
@@ -36,17 +36,14 @@ const createInstance = (baseURL) => {
             url !== authEndpoint.base + authEndpoint.loginAccount &&
             !originalRequest._retry
          ) {
-            // originalRequest._retry = true;
-            // try {
-            //     await authService.refeshToken();
-            //     // Gửi lại request đã bị gián đoạn với token mới
-            //     return instance(originalRequest);
-            // } catch (error) {
-            //     return Promise.reject(error);
-            // }
-
-            setToastMessage('Vui lòng đăng nhập lại!', 'error');
-            return localStorage.removeItem('accessToken');
+            originalRequest._retry = true;
+            try {
+               await authService.refeshToken();
+               // Gửi lại request đã bị gián đoạn với token mới
+               return instance(originalRequest);
+            } catch (error) {
+               return Promise.reject(error);
+            }
          } else {
             const errorMessage = error.response.data.message || 'Đã có lỗi xảy ra!';
             setToastMessage(errorMessage, 'error');
@@ -59,3 +56,5 @@ const createInstance = (baseURL) => {
 };
 
 export default createInstance;
+// setToastMessage('Vui lòng đăng nhập lại!', 'error');
+// return localStorage.removeItem('accessToken');

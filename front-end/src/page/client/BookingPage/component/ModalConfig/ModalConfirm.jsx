@@ -20,11 +20,14 @@ import { LoadingButton } from '@mui/lab';
 import React, { useEffect, useState } from 'react';
 import { useBooking } from '~/redux/SliceReducer/booking.reducer';
 import ProductModal from '../ProductModal';
-import bookingService from '~/services/booking.service';
 import { useConfirm } from '~/component/customs/@mui/CoreConfirmProvider';
+import bookingService from '~/services/booking.service';
+import moment from 'moment';
+import useAuth from '~/hooks/useAuth';
 
 const ModalConfirm = ({ handleCloseModal, handleNext, handleBack }) => {
    const { user, products } = useBooking();
+   const { user: userLogin } = useAuth();
    const [infoBooking, setInfoBooking] = useState([]);
    const [open, setOpen] = useState(false);
    const [loading, setLoading] = useState(false);
@@ -61,15 +64,24 @@ const ModalConfirm = ({ handleCloseModal, handleNext, handleBack }) => {
    }, [user]);
 
    const handleBookingTable = async () => {
-      const data = { ...user, products: [...products] };
+      const data = {
+         userId: userLogin?._id || '',
+         userName: user.name,
+         phone: user.phone,
+         note: user.note,
+         partySize: user.partySize,
+         tableId: user.tableId,
+         receivingTime: moment(`${user.date} ${user.time}`, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+         products: [...products],
+      };
       try {
          setLoading(true);
-         // await bookingService.postCreateBooking(data);
+         const res = await bookingService.createInvoice(data);
          setLoading(false);
          handleNext();
          confirm({
-            title: 'Thông báo đặt hàng thành công',
-            content: 'Đơn hàng của bạn đã được xác nhận',
+            title: 'Thông báo đặt bàn thành công',
+            content: 'Yêu cầu đặt bàn đã được chuyển đến nhân viên cửa hàng.',
             btnLoading: false,
          });
       } catch (error) {

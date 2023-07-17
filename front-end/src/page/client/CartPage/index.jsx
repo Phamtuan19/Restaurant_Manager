@@ -126,6 +126,7 @@ function CartPage() {
             setOpenModalOrder={setOpenModalOrder}
             setOpenDialog={setOpenDialog}
             listCart={listCart}
+            totalPrice={totalPrice}
          />
          <DialogSuccess openDialog={openDialog} setOpenDialog={setOpenDialog} />
          <DialogComfirmDelete

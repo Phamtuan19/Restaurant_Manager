@@ -18,7 +18,6 @@ import styled from 'styled-components';
 import { Search } from '@mui/icons-material';
 
 import ProductSkeleton from '~/component/customs/ProductSkeleton';
-import bookingService from '~/services/booking.service';
 import { useBooking } from '~/redux/SliceReducer/booking.reducer';
 import ProductMenu from '../ProductMenu';
 import ProductModal from '../ProductModal';
@@ -52,6 +51,7 @@ const ModalMenu = ({ handleCloseModal, handleNext, handleBack }) => {
       if (search.trim().length > 0) setLoadingSearch(true);
       (async () => {
          const res = await productSeviver.bookingProducts(page, category, searchDebounce);
+         console.log(res);
          setData(res);
          setLoadingSearch(false);
       })();

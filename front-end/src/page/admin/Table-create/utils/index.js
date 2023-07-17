@@ -2,7 +2,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import regexs from '~/Helpers/regex';
 
 const validate = yup.object({
    //    name: yup.string().required('Tên sản phẩm không được để trống').trim(),

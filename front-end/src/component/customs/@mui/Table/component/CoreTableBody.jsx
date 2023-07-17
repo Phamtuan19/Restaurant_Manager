@@ -1,4 +1,4 @@
-import { Box, CircularProgress, TableBody, TableCell, TableRow, Typography } from '@mui/material';
+import { CircularProgress, TableBody, TableCell, TableRow, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
 

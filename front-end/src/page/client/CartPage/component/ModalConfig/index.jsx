@@ -10,11 +10,11 @@ const STEP2 = 1;
 
 export const ContextModalCart = createContext();
 
-const ModalConfig = ({ openModalOrder, setOpenModalOrder, setOpenDialog, listCart }) => {
+const ModalConfig = ({ openModalOrder, setOpenModalOrder, setOpenDialog, listCart, totalPrice }) => {
    const [activeStep, setActiveStep] = useState(0);
 
    return (
-      <ContextModalCart.Provider value={{ setOpenDialog, listCart, setOpenModalOrder }}>
+      <ContextModalCart.Provider value={{ setOpenDialog, listCart, setOpenModalOrder, totalPrice }}>
          <Modal
             open={openModalOrder}
             onClose={() => setOpenModalOrder(false)}

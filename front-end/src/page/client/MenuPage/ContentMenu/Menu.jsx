@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, FormControl, FormControlLabel, FormLabel, List, Radio, RadioGroup, styled } from '@mui/material';
 import productSeviver from '~/services/product.service';
-import { Link } from 'react-router-dom';
 
 function Categories({ category, setCategory }) {
    const [listFilter, setListFilter] = useState([]);

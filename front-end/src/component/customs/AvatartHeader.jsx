@@ -19,7 +19,13 @@ function AvatarHeader() {
    const confirm = useConfirm();
    const handleLogout = async () => {
       handleClose();
-      confirm({ title: 'Đăng xuất', content: 'Bạn có chắc muốn đăng xuất?', okText: 'Đăng xuất', onOk: logoutAccount });
+      confirm({
+         title: 'Đăng xuất',
+         content: 'Bạn có chắc muốn đăng xuất?',
+         okText: 'Đăng xuất',
+         onOk: logoutAccount,
+         btnLoading: true,
+      });
    };
 
    return (
